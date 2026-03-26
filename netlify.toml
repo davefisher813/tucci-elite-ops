@@ -1,0 +1,48 @@
+# Tucci Elite Ops — Netlify Configuration
+
+[build]
+  publish   = "public"
+  functions = "netlify/functions"
+
+# ── Redirect: serve index.html for all routes (SPA) ──
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+# ── Security headers applied to every response ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options             = "SAMEORIGIN"
+    X-Content-Type-Options      = "nosniff"
+    Referrer-Policy             = "same-origin"
+    Strict-Transport-Security   = "max-age=31536000; includeSubDomains"
+    Permissions-Policy          = "camera=(), microphone=(), geolocation=(), payment=()"
+    Content-Security-Policy     = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.netlify.app; frame-ancestors 'self';"
+
+# ── Cache HTML: always fresh ──
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ── Static assets ──
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── Function config ──
+[functions]
+  node_bundler = "esbuild"
+
+[functions."claude"]
+  timeout = 30
+
+[functions."backup"]
+  timeout = 30
+  schedule = "0 */6 * * *"
+
+[functions."restore"]
+  timeout = 15

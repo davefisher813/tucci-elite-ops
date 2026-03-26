@@ -1,0 +1,19 @@
+{
+  "name": "tucci-elite-ops",
+  "version": "1.0.0",
+  "description": "Tucci Elite Baseball — Ops App backend (Netlify Functions)",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
