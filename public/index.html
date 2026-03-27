@@ -28,7 +28,7 @@
   --navy3:   #1A1A1A;
   --panel:   #111111;
   --panel2:  #1C1C1C;
-  --royal:   #2E86B5;  /* Tucci sky blue */
+  --royal:   #5BA8CC;  /* Tucci sky blue */
   --royal2:  #5BA8CC;  /* Tucci sky blue accent */
   --royal-g: rgba(91,168,204,0.22);
   --royal-gd:rgba(91,168,204,0.09);
@@ -40,13 +40,13 @@
   --g3:      #222222;
 
   /* Status colors — high contrast on black */
-  --red:     #FF3B4E;
-  --red-g:   rgba(255,59,78,0.15);
+  --red:     #E8394A;
+  --red-g:   rgba(232,57,74,0.15);
   --amber:   #FFB020;
   --amber-g: rgba(255,176,32,0.15);
-  --green:   #00E676;
-  --green-g: rgba(0,230,118,0.12);
-  --purple:  #A78BFA;
+  --green:   #F5C518;
+  --green-g: rgba(245,197,24,0.12);
+  --purple:  #5BA8CC;
 
   /* Typography */
   --fc: 'Barlow Condensed', sans-serif;
@@ -114,7 +114,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .topbar-right { display:flex; align-items:center; gap:8px; }
 .days-pill {font-weight:500; 
   font-family:var(--fm); font-size:13px; letter-spacing:1px;
-  background:rgba(46,99,240,0.12); border:1px solid rgba(46,99,240,0.35);
+  background:rgba(26,95,138,0.12); border:1px solid rgba(26,95,138,0.35);
   color:var(--royal2); padding:5px 10px; border-radius:20px;
 }
 .sync-btn {
@@ -178,7 +178,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .nb.active::after {
   content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
   width:32px; height:3px; background:var(--royal2); border-radius:0 0 4px 4px;
-  box-shadow:0 0 12px rgba(46,99,240,0.5);
+  box-shadow:0 0 12px rgba(26,95,138,0.5);
 }
 
 /* ══════════════════════════════════════════
@@ -193,12 +193,12 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .sec-lbl:first-child { margin-top:0; }
 .badge {
   font-family:var(--fm); font-size:15px; padding:2px 9px; border-radius:20px;
-  background:rgba(46,99,240,0.15); color:#4A7AFF; border:1px solid rgba(46,99,240,0.35);
+  background:rgba(26,95,138,0.15); color:#5BA8CC; border:1px solid rgba(26,95,138,0.35);
   font-weight:500;
 }
 .badge.red { background:#F5C518; color:#000000; border-color:#F5C518; font-weight:600; }
 .badge.amber { background:rgba(255,176,32,0.15); color:#FFB020; border-color:rgba(255,176,32,0.35); font-weight:600; }
-.badge.green { background:var(--green-g); color:var(--green); border-color:rgba(16,185,129,0.2); }
+.badge.green { background:var(--green-g); color:var(--green); border-color:rgba(245,197,24,0.2); }
 
 .card {
   background:var(--panel); border:1px solid rgba(255,255,255,0.15);
@@ -240,7 +240,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .lb-num {
   font-family:var(--fc); font-size:64px; font-weight:800; font-style:italic;
   color:var(--royal2); line-height:1; letter-spacing:-2px;
-  text-shadow:0 0 30px rgba(27,79,216,0.4);
+  text-shadow:0 0 30px rgba(26,95,138,0.4);
 }
 .lb-label { font-family:var(--fi); font-style:italic; font-size:13px; letter-spacing:0px; color:var(--g0); margin-bottom:4px; }
 .lb-right { text-align:right; }
@@ -270,7 +270,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   pointer-events:none;
 }
 .swipe-reveal-done {
-  background:#10B981;
+  background:#F5C518;
   justify-content:flex-start;
   padding-left:20px;
 }
@@ -311,7 +311,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .tpill.critical { background:#F5C518; color:#000000; border:none; font-weight:800; }
 .tpill.high     { background:rgba(255,176,32,0.18); color:#FFB020; border:1px solid rgba(255,176,32,0.3);  }
-.tpill.medium   { background:rgba(46,99,240,0.18);color:#2E63F0; border:1px solid rgba(46,99,240,0.3); }
+.tpill.medium   { background:rgba(26,95,138,0.18);color:#1A5F8A; border:1px solid rgba(26,95,138,0.3); }
 .tpill.low      { background:rgba(255,255,255,0.08); color:#909090; border:1px solid rgba(255,255,255,0.12); }
 
 /* Task body */
@@ -355,7 +355,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   color:var(--g0); white-space:nowrap; flex-shrink:0; transition:all .12s;
 }
 .chip:hover { border-color:rgba(255,255,255,0.2); color:var(--white); }
-.chip.active { background:rgba(46,99,240,0.18); border-color:#2E63F0; color:#4A7AFF; font-weight:800; }
+.chip.active { background:rgba(26,95,138,0.18); border-color:#1A5F8A; color:#5BA8CC; font-weight:800; }
 .chip.active.red { background:#F5C518; border-color:#F5C518; color:#000000; }
 .chip.active.amber { background:var(--amber-g); border-color:var(--amber); color:var(--amber); }
 
@@ -400,7 +400,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   text-transform:uppercase; padding:10px 16px; cursor:pointer;
   transition:background .15s; flex-shrink:0;
 }
-.btn-red:hover { background:#c0303f; }
+.btn-red:hover { background:#E8394A; }
 .btn-ghost {
   background:none; border:1px solid rgba(255,255,255,0.15); color:var(--g0);
   border-radius:var(--r-sm);
@@ -487,7 +487,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   padding-left:8px; padding-top:2px;
 }
 .tg-slot.open { cursor:pointer; }
-.tg-slot.open:hover { background:rgba(27,79,216,0.06); border-radius:0 var(--r-sm) var(--r-sm) 0; }
+.tg-slot.open:hover { background:rgba(26,95,138,0.06); border-radius:0 var(--r-sm) var(--r-sm) 0; }
 .tg-empty { height:34px; }
 
 /* Booking block */
@@ -517,7 +517,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .bk-status.confirmed { background:var(--green-g); color:var(--green); }
 .bk-status.pending   { background:var(--amber-g); color:var(--amber); }
-.bk-status.tentative { background:rgba(139,92,246,0.14); color:var(--purple); }
+.bk-status.tentative { background:rgba(91,168,204,0.14); color:var(--purple); }
 
 /* Add event btn */
 .add-ev-btn {
@@ -550,7 +550,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .pi-desc { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); margin-top:3px; }
 .pi-rate-wrap { display:flex; align-items:center; gap:6px; }
 .pi-input {
-  background:var(--panel2); border:1px solid rgba(27,79,216,0.3);
+  background:var(--panel2); border:1px solid rgba(26,95,138,0.3);
   border-radius:var(--r-sm); color:var(--royal2);
   font-family:var(--fc); font-size:18px; font-weight:800;
   padding:5px 8px; width:88px; text-align:right; outline:none;
@@ -670,7 +670,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .overlay.open { display:flex; }
 .modal {
   background:var(--panel); border:1px solid rgba(255,255,255,0.1);
-  border-top:1px solid rgba(27,79,216,0.3);
+  border-top:1px solid rgba(26,95,138,0.3);
   border-radius:20px 20px 0 0;
   padding:18px 18px calc(20px + var(--sb));
   width:100%; max-height:90vh; overflow-y:auto;
@@ -717,7 +717,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .price-display {
   display:flex; align-items:baseline; gap:4px;
   padding:12px 14px; background:var(--panel2);
-  border-radius:var(--r-sm); border:1px solid rgba(27,79,216,0.2);
+  border-radius:var(--r-sm); border:1px solid rgba(26,95,138,0.2);
   margin-bottom:4px;
 }
 .price-display-num { font-family:var(--fc); font-size:32px; font-weight:800; color:var(--royal2); }
@@ -736,7 +736,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   white-space:nowrap; pointer-events:none;
 }
 .toast.show { transform:translateX(-50%) translateY(0); }
-.toast.ok  { border-color:rgba(16,185,129,0.4); color:var(--green); }
+.toast.ok  { border-color:rgba(245,197,24,0.4); color:var(--green); }
 .toast.err { border-color:rgba(232,57,74,0.4); color:var(--red); }
 
 /* ══════════════════════════════════════════
@@ -764,7 +764,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .rev-val.blue { color:var(--royal2); }
 .home-hero {
   background:#0D0D0D;
-  border:1px solid rgba(46,99,240,0.3);
+  border:1px solid rgba(26,95,138,0.3);
   border-top:2px solid #5BA8CC; border-radius:var(--r);
   padding:18px 18px 14px; margin-bottom:4px;
 }
@@ -916,7 +916,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .ai-hero-icon {
   width:56px; height:56px; border-radius:50%;
-  background:rgba(46,99,240,0.12); border:1px solid rgba(46,99,240,0.35);
+  background:rgba(26,95,138,0.12); border:1px solid rgba(26,95,138,0.35);
   display:flex; align-items:center; justify-content:center;
   margin:0 auto 10px; color:var(--royal2);
 }
@@ -1010,7 +1010,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .ai-attach-preview {font-weight:500; 
   display:flex; align-items:center; justify-content:space-between;
   padding:8px 12px; background:var(--royal-gd);
-  border:1px solid rgba(27,79,216,0.2); border-radius:var(--r-sm);
+  border:1px solid rgba(26,95,138,0.2); border-radius:var(--r-sm);
   margin-top:6px; font-family:var(--fm); font-size:14px; color:var(--royal2);
 }
 
@@ -1162,7 +1162,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .welcome-enter-btn {
   width:100%; padding:13px 16px; border-radius:10px; border:none;
-  background: linear-gradient(135deg, #5BA8CC 0%, #2E86B5 100%);
+  background: linear-gradient(135deg, #5BA8CC 0%, #5BA8CC 100%);
   color:#FFFFFF;
   font-family:'Barlow Condensed',sans-serif;
   font-size:17px; font-weight:800; letter-spacing:3px;
@@ -1258,8 +1258,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   font-family:var(--fc); font-size:11px; font-weight:700; letter-spacing:1px;
   padding:2px 8px; border-radius:10px; text-transform:uppercase;
 }
-.staff-role-badge.admin { background:rgba(46,99,240,0.2); color:var(--royal2); }
-.staff-role-badge.coach { background:rgba(0,230,118,0.15); color:var(--green); }
+.staff-role-badge.admin { background:rgba(26,95,138,0.2); color:var(--royal2); }
+.staff-role-badge.coach { background:rgba(245,197,24,0.15); color:var(--green); }
 
 /* ── LOGOUT BUTTON ───────────────────────────────────────────── */
 .logout-btn {
@@ -1327,13 +1327,13 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   --g1:       #6B7A8D;
   --g2:       #99A5B3;
   --g3:       #C8D0DC;
-  --red:      #C8102E;
-  --red-g:    rgba(200,16,46,0.08);
+  --red:      #E8394A;
+  --red-g:    rgba(232,57,74,0.08);
   --amber:    #8A5C00;
   --amber-g:  rgba(138,92,0,0.08);
-  --green:    #005C32;
-  --green-g:  rgba(0,92,50,0.08);
-  --purple:   #4F1D91;
+  --green:    #1A5F8A;
+  --green-g:  rgba(26,95,138,0.08);
+  --purple:   #1A5F8A;
   --tucci-red: #1A5F8A;
   --tucci-blue: #5BA8CC;
 }
@@ -1639,7 +1639,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 #app.light .bar-bg  { background:#D4DEE8 !important; }
 #app.light .bar-fill { background:#1A5F8A !important; }
 #app.light .bar-fill.warn { background:#8A5C00 !important; }
-#app.light .bar-fill.over { background:#C8102E !important; }
+#app.light .bar-fill.over { background:#E8394A !important; }
 
 /* ── SOPs / CHECKLISTS ───────────────────────────────────────── */
 #app.light .cl-block {
@@ -1811,8 +1811,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   box-shadow:0 4px 20px rgba(0,0,0,0.12) !important;
   color:#0D1117 !important;
 }
-#app.light .toast.ok  { border-color:rgba(0,92,50,0.35)   !important; color:#005C32 !important; }
-#app.light .toast.err { border-color:rgba(200,16,46,0.35)  !important; color:#C8102E !important; }
+#app.light .toast.ok  { border-color:rgba(26,95,138,0.35)   !important; color:#1A5F8A !important; }
+#app.light .toast.err { border-color:rgba(232,57,74,0.35)  !important; color:#E8394A !important; }
 
 /* ── SCROLLBAR ───────────────────────────────────────────────── */
 #app.light ::-webkit-scrollbar-thumb { background:#B8C4D0 !important; }
@@ -1855,7 +1855,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   background: #F5C518 !important;
   color: #000000 !important;
   border-color: transparent !important;
-  box-shadow: 0 2px 8px rgba(200,16,46,0.35) !important;
+  box-shadow: 0 2px 8px rgba(232,57,74,0.35) !important;
 }
 
 /* Task cards — white with strong left border */
@@ -2853,13 +2853,38 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">
-      <span>Sheets Sync Setup</span>
+      <span>Settings</span>
       <button class="modal-close" onclick="closeModal('sync-settings-modal')">✕</button>
     </div>
 
+    <!-- ── BACKUP & RESTORE ── -->
+    <div style="margin-bottom:20px">
+      <div style="font-family:var(--fm);font-size:10px;letter-spacing:1.5px;color:var(--g1);margin-bottom:10px">BACKUP & RESTORE</div>
+      <div style="background:rgba(245,197,24,0.06);border:1px solid rgba(245,197,24,0.2);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:12px">
+        <div style="font-family:var(--fc);font-size:14px;font-weight:800;color:#F5C518;margin-bottom:4px">Save Everything</div>
+        <div style="font-size:12px;color:var(--g1);line-height:1.5;margin-bottom:12px">Downloads a complete backup of all your data — tasks, bookings, pricing, budget, clients, staff, files, AI history, and settings. Use this before updating the app through Claude so nothing gets lost.</div>
+        <button class="btn-blue full" style="margin-top:0;background:#F5C518;color:#000;font-size:14px" onclick="exportAllData()">⬇ EXPORT ALL DATA</button>
+      </div>
+
+      <div style="background:rgba(91,168,204,0.06);border:1px solid rgba(91,168,204,0.15);border-radius:var(--r-sm);padding:14px 16px">
+        <div style="font-family:var(--fc);font-size:14px;font-weight:800;color:#5BA8CC;margin-bottom:4px">Restore from Backup</div>
+        <div style="font-size:12px;color:var(--g1);line-height:1.5;margin-bottom:12px">Select a previously exported backup file to restore all your data into this version of the app.</div>
+        <label style="display:block;width:100%;background:var(--royal);color:#fff;border:none;border-radius:var(--r-sm);font-family:var(--fc);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:12px;cursor:pointer;text-align:center;margin-top:0">
+          ⬆ IMPORT BACKUP FILE
+          <input type="file" accept=".json" onchange="importAllData(this)" style="display:none">
+        </label>
+        <div id="import-status" style="font-size:12px;color:var(--g1);margin-top:8px;text-align:center;min-height:16px"></div>
+      </div>
+    </div>
+
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin-bottom:18px"></div>
+
+    <!-- ── GOOGLE SHEETS SYNC ── -->
+    <div style="font-family:var(--fm);font-size:10px;letter-spacing:1.5px;color:var(--g1);margin-bottom:10px">GOOGLE SHEETS SYNC</div>
+
     <div style="background:var(--panel2);border-radius:var(--r-sm);padding:14px;margin-bottom:16px">
-      <div style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px">How to get your endpoint URL</div>
-      <div style="font-family:var(--fi);font-style:italic;font-size:14px;color:var(--g1);line-height:1.6">
+      <div style="font-family:var(--fc);font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px">How to get your endpoint URL</div>
+      <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);line-height:1.6">
         1. Open your Tucci Google Workbook<br>
         2. Click <b style="color:var(--white)">Extensions → Apps Script</b><br>
         3. Paste the <b style="color:var(--white)">tucci_sync.gs</b> file contents<br>
@@ -5705,8 +5730,8 @@ const CLIENT_TYPE_LABELS = {
   school:'🏫 School', sponsor:'💼 Sponsor'
 };
 const CLIENT_TYPE_COLORS = {
-  prospect:'#F59E0B', active:'#10B981', team:'#5BA8CC',
-  school:'#8B5CF6', sponsor:'#E8394A'
+  prospect:'#F59E0B', active:'#F5C518', team:'#5BA8CC',
+  school:'#5BA8CC', sponsor:'#E8394A'
 };
 const STAGE_LABELS = {
   new:'🆕 New Lead', contacted:'📞 Contacted', meeting:'🤝 Meeting Sched.',
@@ -5714,7 +5739,7 @@ const STAGE_LABELS = {
 };
 const STAGE_COLORS = {
   new:'#5A6A82', contacted:'#5BA8CC', meeting:'#F59E0B',
-  proposal:'#8B5CF6', won:'#10B981', lost:'#E8394A', nurture:'#F97316'
+  proposal:'#5BA8CC', won:'#F5C518', lost:'#E8394A', nurture:'#F59E0B'
 };
 const INTEREST_LABELS = {
   'cage-rental':'Cage Rentals','lessons':'Lessons','field-rental':'Field/Facility',
@@ -5754,7 +5779,7 @@ function renderClients() {
     statsEl.innerHTML = [
       [total,'Total','#5BA8CC'],
       [prospects,'Prospects','#F59E0B'],
-      [won,'Converted','#10B981'],
+      [won,'Converted','#F5C518'],
       [followToday,'Follow Up Due','#E8394A']
     ].map(([n,l,col])=>`<div style="flex:1;background:var(--card);border-radius:var(--r-sm);padding:10px 8px;text-align:center;border:1px solid rgba(255,255,255,0.07)">
       <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:${col}">${n}</div>
@@ -5914,8 +5939,8 @@ const EMP_ROLE_LABELS = {
   'part-time':'Part-Time Staff', intern:'Intern', other:'Other'
 };
 const EMP_STATUS_COLORS = {
-  active:'#10B981', onboarding:'#5BA8CC', 'part-time':'#F59E0B',
-  seasonal:'#8B5CF6', inactive:'#5A6A82'
+  active:'#F5C518', onboarding:'#5BA8CC', 'part-time':'#F59E0B',
+  seasonal:'#5BA8CC', inactive:'#5A6A82'
 };
 const EMP_STATUS_LABELS = {
   active:'✅ Active', onboarding:'🆕 Onboarding', 'part-time':'⏱ Part-Time',
@@ -5923,8 +5948,8 @@ const EMP_STATUS_LABELS = {
 };
 const HIRE_STAGE_COLORS = {
   applied:'#5A6A82', review:'#5BA8CC', phone:'#F59E0B',
-  interview:'#8B5CF6', reference:'#F97316', offer:'#10B981',
-  hired:'#10B981', rejected:'#E8394A'
+  interview:'#5BA8CC', reference:'#F59E0B', offer:'#F5C518',
+  hired:'#F5C518', rejected:'#E8394A'
 };
 const HIRE_STAGE_LABELS = {
   applied:'📨 Applied', review:'🔍 Under Review', phone:'📞 Phone Screen',
@@ -5972,9 +5997,9 @@ function renderStaffDir() {
       const onboard = all.filter(p=>p.empStatus==='onboarding').length;
       statsEl.innerHTML = [
         [all.length,'Total Staff','#5BA8CC'],
-        [active,'Active','#10B981'],
+        [active,'Active','#F5C518'],
         [coaches,'Coaches','#F59E0B'],
-        [onboard,'Onboarding','#8B5CF6'],
+        [onboard,'Onboarding','#5BA8CC'],
       ].map(([n,l,col])=>`<div style="flex:1;background:var(--card);border-radius:var(--r-sm);padding:10px 8px;text-align:center;border:1px solid rgba(255,255,255,0.07)">
         <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:${col}">${n}</div>
         <div style="font-family:var(--fm);font-size:9px;color:var(--g1);letter-spacing:.8px;margin-top:2px">${l.toUpperCase()}</div>
@@ -5987,8 +6012,8 @@ function renderStaffDir() {
       statsEl.innerHTML = [
         [active,'In Pipeline','#5BA8CC'],
         [interviews,'Interviews','#F59E0B'],
-        [offers,'Offers Out','#8B5CF6'],
-        [hired,'Hired','#10B981'],
+        [offers,'Offers Out','#5BA8CC'],
+        [hired,'Hired','#F5C518'],
       ].map(([n,l,col])=>`<div style="flex:1;background:var(--card);border-radius:var(--r-sm);padding:10px 8px;text-align:center;border:1px solid rgba(255,255,255,0.07)">
         <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:${col}">${n}</div>
         <div style="font-family:var(--fm);font-size:9px;color:var(--g1);letter-spacing:.8px;margin-top:2px">${l.toUpperCase()}</div>
@@ -6040,7 +6065,7 @@ function renderStaffDir() {
     const statusLabel = isEmp ? (EMP_STATUS_LABELS[p.empStatus]||p.empStatus||'') : (HIRE_STAGE_LABELS[p.hireStage]||p.hireStage||'');
     const roleLabel = isEmp ? (EMP_ROLE_LABELS[p.role]||p.role||'—') : (EMP_ROLE_LABELS[p.position]||p.position||'—');
     const initials = (p.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-    const avatarColor = isEmp ? '#1A5F8A' : '#8B5CF6';
+    const avatarColor = isEmp ? '#1A5F8A' : '#5BA8CC';
     const interviewDue = !isEmp && p.interviewDate && p.interviewDate <= dateKey(new Date());
     return `<div class="file-row" onclick="openStaffDetail('${p.id}')" style="align-items:center;padding:12px 14px;gap:12px">
       <div style="width:42px;height:42px;border-radius:50%;background:${avatarColor}33;color:${avatarColor};display:flex;align-items:center;justify-content:center;font-family:var(--fc);font-size:15px;font-weight:800;flex-shrink:0;border:1px solid ${avatarColor}55">${initials}</div>
@@ -6239,18 +6264,18 @@ document.addEventListener('click', function(e) {
 // DOCS & FILES SCREEN
 // ═══════════════════════════════════════════════════════════
 const FOLDERS = [
-  {id:'contracts', name:'Contracts', icon:'📄', color:'#1B4FD8'},
-  {id:'staff',     name:'Staff Docs', icon:'👤', color:'#10B981'},
+  {id:'contracts', name:'Contracts', icon:'📄', color:'#1A5F8A'},
+  {id:'staff',     name:'Staff Docs', icon:'👤', color:'#F5C518'},
   {id:'financial', name:'Financials', icon:'💰', color:'#F59E0B'},
-  {id:'photos',    name:'Photos',     icon:'📸', color:'#8B5CF6'},
+  {id:'photos',    name:'Photos',     icon:'📸', color:'#5BA8CC'},
   {id:'marketing', name:'Marketing',  icon:'⭐', color:'#E8394A'},
   {id:'other',     name:'Other',      icon:'📁', color:'#5A6A82'},
 ];
 
 const FILE_EXT_COLOR = {
-  pdf:'#E8394A',doc:'#1B4FD8',docx:'#1B4FD8',
-  xls:'#10B981',xlsx:'#10B981',png:'#8B5CF6',
-  jpg:'#8B5CF6',jpeg:'#8B5CF6',txt:'#5A6A82',
+  pdf:'#E8394A',doc:'#1A5F8A',docx:'#1A5F8A',
+  xls:'#F5C518',xlsx:'#F5C518',png:'#5BA8CC',
+  jpg:'#5BA8CC',jpeg:'#5BA8CC',txt:'#5A6A82',
 };
 
 function renderDocs() {
@@ -6751,7 +6776,7 @@ const TEMPLATES = [
     type:'Flyer · Print',
     aspect:'portrait',
     bgColor:'#0B1426',
-    accentColor:'#1B4FD8',
+    accentColor:'#1A5F8A',
     fields:[
       {id:'headline',    label:'Headline',    default:'BOOK YOUR CAGE TODAY'},
       {id:'subheadline', label:'Subheading',  default:'Indoor Batting Cages — Norwalk, CT'},
@@ -6767,7 +6792,7 @@ const TEMPLATES = [
     type:'Social · Instagram',
     aspect:'square',
     bgColor:'#0B1426',
-    accentColor:'#1B4FD8',
+    accentColor:'#1A5F8A',
     fields:[
       {id:'headline',  label:'Main Text',   default:'TRAIN LIKE A PRO'},
       {id:'sub',       label:'Subtext',     default:'Tucci Elite Baseball · Norwalk, CT'},
@@ -6781,7 +6806,7 @@ const TEMPLATES = [
     type:'Rate Card · Print',
     aspect:'portrait',
     bgColor:'#0B1426',
-    accentColor:'#1B4FD8',
+    accentColor:'#1A5F8A',
     fields:[
       {id:'title',   label:'Title',     default:'TUCCI ELITE PRICING'},
       {id:'sub',     label:'Subtitle',  default:'Norwalk, CT · tuccielitebaseball.com'},
@@ -6794,7 +6819,7 @@ const TEMPLATES = [
     type:'One-Pager · Print',
     aspect:'portrait',
     bgColor:'#0B1426',
-    accentColor:'#1B4FD8',
+    accentColor:'#1A5F8A',
     fields:[
       {id:'partner',  label:'Partner Name', default:'[PARTNER ORGANIZATION]'},
       {id:'headline', label:'Headline',     default:'PARTNERSHIP OPPORTUNITY'},
@@ -6808,7 +6833,7 @@ const TEMPLATES = [
     type:'Flyer · Print',
     aspect:'portrait',
     bgColor:'#0B1426',
-    accentColor:'#10B981',
+    accentColor:'#F5C518',
     fields:[
       {id:'headline', label:'Camp Name',  default:'SUMMER BASEBALL CAMP 2026'},
       {id:'dates',    label:'Dates',      default:'July 7–11, 2026'},
@@ -6824,7 +6849,7 @@ const TEMPLATES = [
     type:'Social · Instagram',
     aspect:'square',
     bgColor:'#0B1426',
-    accentColor:'#10B981',
+    accentColor:'#F5C518',
     fields:[
       {id:'headline', label:'Headline', default:'SUMMER CAMP REGISTRATION OPEN'},
       {id:'dates',    label:'Dates',    default:'July 7–11 · Ages 8–14 · $299'},
@@ -6909,14 +6934,14 @@ function updatePreview() {
     bodyHTML = `
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:white;letter-spacing:3px;text-align:center;margin-bottom:6px">${vals.title||t.fields[0].default}</div>
       <div style="font-size:10px;color:rgba(255,255,255,0.5);text-align:center;margin-bottom:14px;font-family:monospace">${vals.sub||''}</div>
-      <div style="width:100%;background:rgba(27,79,216,0.15);border-radius:6px;padding:10px;margin-bottom:4px">
+      <div style="width:100%;background:rgba(26,95,138,0.15);border-radius:6px;padding:10px;margin-bottom:4px">
         ${[['Full Cage Hourly',_lr('cage-full-hr')||'$75/hr'],['Half Cage Hourly',_lr('cage-half-hr')||'$50/hr'],['Outside Cage',_lr('cage-outdoor-hr')||'$50/hr']].map(([n,h])=>`
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.10);font-size:10px">
             <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:white">${n}</span>
             <span style="color:${t.accentColor};font-family:monospace">${h}</span>
           </div>`).join('')}
       </div>
-      <div style="width:100%;background:rgba(27,79,216,0.15);border-radius:6px;padding:10px;margin-bottom:12px">
+      <div style="width:100%;background:rgba(26,95,138,0.15);border-radius:6px;padding:10px;margin-bottom:12px">
         ${[['Lesson Tier 1',_lr('lesson-t1')||'$200/hr'],['Lesson Tier 2',_lr('lesson-t2')||'$175/hr'],['Lesson Tier 3',_lr('lesson-t3')||'$150/hr'],['Full Facility',_lr('facility-full')||'$600/hr']].map(([n,r])=>`
           <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.10);font-size:10px">
             <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:white">${n}</span>
@@ -7263,6 +7288,130 @@ function clearSyncSettings() {
   localStorage.removeItem('tucci_sheets_endpoint');
   document.getElementById('ss-endpoint').value = '';
   toast('Endpoint cleared', '');
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT / IMPORT — full app backup
+// ═══════════════════════════════════════════════════════════
+function exportAllData() {
+  try {
+    // Collect everything stored in localStorage for this app
+    const backup = {
+      _version: 'tucci_ops_v1',
+      _exportedAt: new Date().toISOString(),
+      _exportedBy: _currentUser ? _currentUser.name : 'Unknown',
+      // Core app state (all tasks, bookings, pricing, budget, clients, staff, files, etc.)
+      appState: S,
+      // Staff/PIN list (stored separately from app state)
+      staffList: JSON.parse(localStorage.getItem('tucci_staff') || 'null'),
+      // Theme preference
+      theme: localStorage.getItem('tucci_theme') || 'dark',
+      // Google Sheets endpoint
+      sheetsEndpoint: localStorage.getItem('tucci_sheets_endpoint') || '',
+    };
+
+    const json = JSON.stringify(backup, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const dateStr = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = `tucci_ops_backup_${dateStr}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast('Backup downloaded ✓', 'ok');
+    document.getElementById('import-status').textContent = '';
+  } catch(e) {
+    toast('Export failed — ' + e.message, 'err');
+  }
+}
+
+function importAllData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('import-status');
+  statusEl.style.color = 'var(--g1)';
+  statusEl.textContent = 'Reading file…';
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+
+      // Validate it's a tucci backup
+      if (!backup._version || !backup.appState) {
+        statusEl.style.color = 'var(--red)';
+        statusEl.textContent = '✗ Invalid backup file';
+        return;
+      }
+
+      // Restore app state
+      const restored = backup.appState;
+
+      // Ensure all new keys exist (forward-compat with newer app versions)
+      if (!restored.clients)      restored.clients = [];
+      if (!restored.staffDir)     restored.staffDir = [];
+      if (!restored.doneTasks)    restored.doneTasks = [];
+      if (!restored.trashedTasks) restored.trashedTasks = [];
+      if (!restored.files)        restored.files = [];
+      if (!restored.aiHistory)    restored.aiHistory = [];
+      if (!restored.savedTemplates) restored.savedTemplates = {};
+      if (!restored.savedMaterials)  restored.savedMaterials = [];
+      if (!restored.bookings)     restored.bookings = [];
+      if (!restored.checklists)   restored.checklists = JSON.parse(JSON.stringify(DEFAULT_CHECKLISTS));
+
+      // Merge workbook tasks — keep user's status/notes, add any new tasks from updated app
+      const savedIds = new Set((restored.tasks||[]).map(t=>t.id));
+      const newTasks = WORKBOOK_TASKS.filter(t => !savedIds.has(t.id));
+      restored.tasks = [...(restored.tasks||[]), ...newTasks];
+
+      // Save everything to localStorage
+      localStorage.setItem(SK, JSON.stringify(restored));
+
+      // Restore staff list
+      if (backup.staffList) {
+        localStorage.setItem('tucci_staff', JSON.stringify(backup.staffList));
+      }
+
+      // Restore theme
+      if (backup.theme) {
+        localStorage.setItem('tucci_theme', backup.theme);
+      }
+
+      // Restore sheets endpoint
+      if (backup.sheetsEndpoint) {
+        localStorage.setItem('tucci_sheets_endpoint', backup.sheetsEndpoint);
+      }
+
+      // Reload app state live without page refresh
+      S = restored;
+      if (RENDERS[S.currentTab || 'home']) {
+        RENDERS[S.currentTab || 'home']();
+      } else {
+        RENDERS.home();
+      }
+      renderHome();
+
+      const taskCount  = (restored.tasks||[]).length;
+      const bkCount    = (restored.bookings||[]).length;
+      const clientCount = (restored.clients||[]).length;
+      const doneCount  = (restored.doneTasks||[]).length;
+
+      statusEl.style.color = '#F5C518';
+      statusEl.textContent = `✓ Restored: ${taskCount} tasks, ${bkCount} bookings, ${clientCount} contacts, ${doneCount} completed`;
+      toast('Backup restored successfully', 'ok');
+
+      // Reset file input
+      input.value = '';
+    } catch(err) {
+      statusEl.style.color = 'var(--red)';
+      statusEl.textContent = '✗ Failed to read backup: ' + err.message;
+    }
+  };
+  reader.readAsText(file);
 }
 
 // ═══════════════════════════════════════════════════════════
