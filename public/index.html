@@ -268,6 +268,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   display:flex; align-items:center;
   border-radius:var(--r-sm);
   pointer-events:none;
+  opacity:0;
 }
 .swipe-reveal-done {
   background:#F5C518;
@@ -281,11 +282,12 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .swipe-reveal svg { flex-shrink:0; }
 .swipe-inner {
-  position:relative; z-index:1;
+  position:relative; z-index:2;
   transition:transform .18s ease;
   will-change:transform;
   background:#111111;
   border-radius:var(--r-sm);
+  isolation:isolate;
 }
 .swipe-inner.swiping { transition:none; }
 .swipe-wrap.swipe-done .swipe-inner  { transform:translateX(100%); }
