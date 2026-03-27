@@ -2542,14 +2542,12 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 <div id="sc-tasks" class="screen">
   <div class="filter-bar" id="task-filter-bar">
     <button class="chip active" onclick="filterTasks('all',this)">All</button>
-    <button class="chip active red" onclick="filterTasks('Critical',this)" style="display:none" id="chip-critical">Critical</button>
     <button class="chip" onclick="filterTasks('Critical',this)">Critical</button>
     <button class="chip" onclick="filterTasks('High',this)">High</button>
     <button class="chip" onclick="filterTasks('Medium',this)">Medium</button>
     <button class="chip" onclick="filterTasks('Low',this)">Low</button>
     <button class="chip" onclick="filterTasks('Open',this)">Open</button>
     <button class="chip" onclick="filterTasks('In Progress',this)">In Progress</button>
-    <button class="chip" onclick="filterTasks('Done',this)">Done</button>
     <button class="chip" onclick="filterTasks('Revenue',this)">Revenue</button>
     <button class="chip" onclick="filterTasks('Booking & Payments',this)">Booking</button>
     <button class="chip" onclick="filterTasks('Operations',this)">Ops</button>
@@ -2558,6 +2556,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <button class="chip" onclick="filterTasks('Safety',this)">Safety</button>
     <button class="chip" onclick="filterTasks('Facility',this)">Facility</button>
     <button class="chip" onclick="filterTasks('Programs',this)">Programs</button>
+    <button class="chip" id="chip-done-archive" onclick="filterTasks('_done',this)">✅ Completed <span id="done-archive-count"></span></button>
+    <button class="chip" id="chip-trash" onclick="filterTasks('_trash',this)">🗑 Trash <span id="trash-count"></span></button>
   </div>
   <div id="task-list"></div>
   <div class="add-bar">
@@ -3568,6 +3568,8 @@ function loadState() {
       if(!S.savedMaterials) S.savedMaterials=[];
       if(!S.clients) S.clients=[];
       if(!S.staffDir) S.staffDir=[];
+      if(!S.trashedTasks) S.trashedTasks=[];
+      if(!S.doneTasks) S.doneTasks=[];
     } else {
       S = {
         tasks: JSON.parse(JSON.stringify(WORKBOOK_TASKS)),
@@ -3581,6 +3583,8 @@ function loadState() {
         savedMaterials: [],
         clients: [],
         staffDir: [],
+        trashedTasks: [],
+        doneTasks: [],
         currentTab: 'home',
         sheetsConfig: {lastSync:null}
       };
@@ -4684,10 +4688,12 @@ function renderHome() {
   const bks   = S.bookings||[];
   const now   = new Date();
   const todayKey  = dateKey(now);
-  const done  = tasks.filter(t=>t.status==='Done').length;
+  const donArchive = (S.doneTasks||[]).length;
+  const done  = tasks.filter(t=>t.status==='Done').length + donArchive;
   const open  = tasks.filter(t=>t.status!=='Done').length;
   const crit  = tasks.filter(t=>t.priorityLabel==='Critical'&&t.status!=='Done');
-  const pct   = tasks.length ? Math.round(done / Math.max(tasks.length,1) * 100) : 0;
+  const totalAll = tasks.length + donArchive;
+  const pct   = totalAll ? Math.round(done / Math.max(totalAll,1) * 100) : 0;
   const todayBks  = bks.filter(b=>b.date===todayKey);
   const flagged   = bks.filter(b=>b.priceFlagged).length;
 
@@ -4752,7 +4758,16 @@ function renderHome() {
 
   // Critical tasks strip
   document.getElementById('h-crit-ct').textContent = crit.length;
-  document.getElementById('h-critical').innerHTML = crit.slice(0,4).map(t=>taskItemHTML(t)).join('') ||
+  document.getElementById('h-critical').innerHTML = crit.slice(0,4).map(t => {
+    const pl = (t.priorityLabel||'').toLowerCase();
+    return `<div class="titem ${pl}" style="margin-bottom:5px;cursor:pointer" onclick="nav('tasks')">
+      <span class="tpill ${pl}">${t.priorityLabel||''}</span>
+      <div class="titem-body">
+        <div class="titem-name">${t.task}</div>
+        <div class="titem-meta"><span class="titem-bucket">${t.bucket||''}</span></div>
+      </div>
+    </div>`;
+  }).join('') ||
     '<div style="font-family:var(--fm);font-size:10px;color:var(--green);padding:10px 0;letter-spacing:1px">All critical tasks complete ✓</div>';
 }
 RENDERS.home = renderHome;
@@ -4835,7 +4850,52 @@ function taskItemHTML(t) {
   </div>`;
 }
 
+function updateTaskChipCounts() {
+  const dc = document.getElementById('done-archive-count');
+  const tc = document.getElementById('trash-count');
+  const dlen = (S.doneTasks||[]).length;
+  const tlen = (S.trashedTasks||[]).length;
+  if(dc) dc.textContent = dlen ? `(${dlen})` : '';
+  if(tc) tc.textContent = tlen ? `(${tlen})` : '';
+}
+
 function renderTasks() {
+  if(!S.doneTasks) S.doneTasks=[];
+  if(!S.trashedTasks) S.trashedTasks=[];
+
+  // Purge trashed tasks older than 30 days
+  const cutoff = Date.now() - 30*24*60*60*1000;
+  S.trashedTasks = S.trashedTasks.filter(t=>(t.trashedAt||0) > cutoff);
+
+  updateTaskChipCounts();
+
+  if(_tf === '_done') {
+    // Done archive view
+    const done = [...S.doneTasks].reverse();
+    document.getElementById('task-list').innerHTML = done.length
+      ? `<div style="font-family:var(--fm);font-size:10px;color:var(--g1);letter-spacing:1px;padding:8px 0 10px;display:flex;justify-content:space-between;align-items:center">
+          <span>${done.length} COMPLETED TASK${done.length!==1?'S':''}</span>
+          <button onclick="clearDoneArchive()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:var(--g1);border-radius:4px;font-family:var(--fm);font-size:9px;letter-spacing:1px;padding:3px 10px;cursor:pointer">CLEAR ALL</button>
+        </div>` +
+        done.map(t=>archivedTaskHTML(t,'done')).join('')
+      : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:24px 0;text-align:center;letter-spacing:1px">NO COMPLETED TASKS YET</div>';
+    return;
+  }
+
+  if(_tf === '_trash') {
+    // Trash view
+    const trashed = [...S.trashedTasks].reverse();
+    document.getElementById('task-list').innerHTML = trashed.length
+      ? `<div style="font-family:var(--fm);font-size:10px;color:var(--g1);letter-spacing:1px;padding:8px 0 10px;display:flex;justify-content:space-between;align-items:center">
+          <span>${trashed.length} DELETED · AUTO-PURGE AFTER 30 DAYS</span>
+          <button onclick="emptyTrash()" style="background:none;border:1px solid rgba(232,57,74,0.4);color:#E8394A;border-radius:4px;font-family:var(--fm);font-size:9px;letter-spacing:1px;padding:3px 10px;cursor:pointer">EMPTY TRASH</button>
+        </div>` +
+        trashed.map(t=>archivedTaskHTML(t,'trash')).join('')
+      : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:24px 0;text-align:center;letter-spacing:1px">TRASH IS EMPTY</div>';
+    return;
+  }
+
+  // Normal active tasks view
   let list = [...(S.tasks||[])];
   if(_tf !== 'all') {
     list = list.filter(t=>
@@ -4844,127 +4904,169 @@ function renderTasks() {
       t.bucket===_tf
     );
   }
-  // Sort: priority first, then done at bottom
-  list.sort((a,b)=>{
-    if(a.status==='Done' && b.status!=='Done') return 1;
-    if(a.status!=='Done' && b.status==='Done') return -1;
-    return (PRIORITY_ORDER[a.priorityLabel]||9) - (PRIORITY_ORDER[b.priorityLabel]||9);
-  });
+  list.sort((a,b)=>(PRIORITY_ORDER[a.priorityLabel]||9)-(PRIORITY_ORDER[b.priorityLabel]||9));
   document.getElementById('task-list').innerHTML = list.length
     ? list.map(t=>taskItemHTML(t)).join('')
     : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:24px 0;text-align:center;letter-spacing:1px">NO TASKS MATCH THIS FILTER</div>';
 }
-RENDERS.tasks = renderTasks;
+
+function archivedTaskHTML(t, type) {
+  const pl = (t.priorityLabel||'').toLowerCase();
+  const isTrash = type === 'trash';
+  const dateLabel = isTrash
+    ? (t.trashedAt ? 'Deleted ' + new Date(t.trashedAt).toLocaleDateString() : '')
+    : (t.doneAt ? 'Completed ' + new Date(t.doneAt).toLocaleDateString() : '');
+  return `<div style="background:#111;border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-sm);padding:11px 14px;margin-bottom:5px;display:flex;align-items:center;gap:12px;opacity:0.7">
+    <span class="tpill ${pl}" style="flex-shrink:0">${t.priorityLabel||''}</span>
+    <div style="flex:1;min-width:0">
+      <div style="font-family:var(--fc);font-size:15px;font-weight:700;text-decoration:${isTrash?'none':'line-through'};color:var(--g1)">${t.task}</div>
+      <div style="font-size:11px;color:var(--g2);margin-top:2px">${t.bucket||''} · ${dateLabel}</div>
+    </div>
+    ${isTrash
+      ? `<button onclick="restoreTask('${t.id}')" style="background:none;border:1px solid rgba(255,255,255,0.15);color:var(--g1);border-radius:4px;font-family:var(--fm);font-size:9px;letter-spacing:1px;padding:4px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0">RESTORE</button>`
+      : `<button onclick="restoreDoneTask('${t.id}')" style="background:none;border:1px solid rgba(255,255,255,0.15);color:var(--g1);border-radius:4px;font-family:var(--fm);font-size:9px;letter-spacing:1px;padding:4px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0">REOPEN</button>`
+    }
+  </div>`;
+}
+
+function restoreTask(id) {
+  if(!S.trashedTasks) return;
+  const t = S.trashedTasks.find(t=>t.id===id);
+  if(!t) return;
+  S.trashedTasks = S.trashedTasks.filter(t=>t.id!==id);
+  delete t.trashedAt;
+  t.status = 'Open';
+  if(!S.tasks) S.tasks=[];
+  S.tasks.unshift(t);
+  saveState(); renderTasks(); renderHome();
+  toast('Task restored','ok');
+}
+
+function restoreDoneTask(id) {
+  if(!S.doneTasks) return;
+  const t = S.doneTasks.find(t=>t.id===id);
+  if(!t) return;
+  S.doneTasks = S.doneTasks.filter(t=>t.id!==id);
+  delete t.doneAt;
+  t.status = 'Open';
+  if(!S.tasks) S.tasks=[];
+  S.tasks.unshift(t);
+  saveState(); renderTasks(); renderHome();
+  toast('Task reopened','ok');
+}
+
+function emptyTrash() {
+  if(!(S.trashedTasks||[]).length) return;
+  if(!confirm('Permanently delete all trashed tasks? This cannot be undone.')) return;
+  S.trashedTasks = [];
+  saveState(); renderTasks();
+  toast('Trash emptied','ok');
+}
+
+function clearDoneArchive() {
+  if(!(S.doneTasks||[]).length) return;
+  S.doneTasks = [];
+  saveState(); renderTasks();
+  toast('Completed archive cleared','ok');
+}
 
 // ── SWIPE GESTURES FOR TASKS ─────────────────────────────
 function initTaskSwipes() {
   const list = document.getElementById('task-list');
   if(!list) return;
 
-  const THRESHOLD = 80; // px needed to trigger action
+  const THRESHOLD = 80;
   let startX, startY, curX, wrap, inner, taskId, active, axisLocked;
 
   function onStart(e) {
     const el = e.target.closest('.swipe-wrap');
     if(!el) return;
-    // Don't hijack select/button taps
-    if(e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'OPTION') return;
-    wrap = el;
-    inner = wrap.querySelector('.swipe-inner');
-    taskId = wrap.dataset.taskId;
-    startX = e.touches ? e.touches[0].clientX : e.clientX;
-    startY = e.touches ? e.touches[0].clientY : e.clientY;
-    curX = 0;
-    active = true;
-    axisLocked = null;
+    if(e.target.tagName==='SELECT'||e.target.tagName==='BUTTON'||e.target.tagName==='OPTION') return;
+    wrap=el; inner=wrap.querySelector('.swipe-inner'); taskId=wrap.dataset.taskId;
+    startX=e.touches?e.touches[0].clientX:e.clientX;
+    startY=e.touches?e.touches[0].clientY:e.clientY;
+    curX=0; active=true; axisLocked=null;
     inner.classList.add('swiping');
   }
 
   function onMove(e) {
-    if(!active || !inner) return;
-    const cx = e.touches ? e.touches[0].clientX : e.clientX;
-    const cy = e.touches ? e.touches[0].clientY : e.clientY;
-    const dx = cx - startX;
-    const dy = cy - startY;
-
-    // Lock axis on first meaningful move
+    if(!active||!inner) return;
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cy=e.touches?e.touches[0].clientY:e.clientY;
+    const dx=cx-startX; const dy=cy-startY;
     if(!axisLocked) {
-      if(Math.abs(dx) < 4 && Math.abs(dy) < 4) return;
-      axisLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      if(Math.abs(dx)<4&&Math.abs(dy)<4) return;
+      axisLocked=Math.abs(dx)>Math.abs(dy)?'x':'y';
     }
-    if(axisLocked === 'y') { cancel(); return; }
-
+    if(axisLocked==='y'){cancel();return;}
     e.preventDefault();
-    curX = dx;
-
-    // Dampen past threshold
-    const maxPull = 130;
-    const damped = curX > 0
-      ? Math.min(curX, maxPull + (curX - maxPull) * 0.15)
-      : Math.max(curX, -maxPull + (curX + maxPull) * 0.15);
-    inner.style.transform = `translateX(${damped}px)`;
-
-    // Color intensity feedback
-    const pct = Math.min(Math.abs(curX) / THRESHOLD, 1);
-    if(curX > 0) {
-      wrap.querySelector('.swipe-reveal-done').style.opacity = pct;
-      wrap.querySelector('.swipe-reveal-delete').style.opacity = 0;
-    } else {
-      wrap.querySelector('.swipe-reveal-delete').style.opacity = pct;
-      wrap.querySelector('.swipe-reveal-done').style.opacity = 0;
-    }
+    curX=dx;
+    const maxPull=130;
+    const damped=curX>0?Math.min(curX,maxPull+(curX-maxPull)*0.15):Math.max(curX,-maxPull+(curX+maxPull)*0.15);
+    inner.style.transform=`translateX(${damped}px)`;
+    const pct=Math.min(Math.abs(curX)/THRESHOLD,1);
+    if(curX>0){wrap.querySelector('.swipe-reveal-done').style.opacity=pct;wrap.querySelector('.swipe-reveal-delete').style.opacity=0;}
+    else{wrap.querySelector('.swipe-reveal-delete').style.opacity=pct;wrap.querySelector('.swipe-reveal-done').style.opacity=0;}
   }
 
   function onEnd() {
-    if(!active || !inner) return;
+    if(!active||!inner) return;
     inner.classList.remove('swiping');
+    const id = taskId;
 
     if(curX > THRESHOLD) {
-      // Swipe right → mark done
+      // Swipe right → move to Done archive
       wrap.classList.add('swipe-done');
-      inner.style.transform = '';
-      setTimeout(() => {
-        const task = (S.tasks||[]).find(t=>t.id===taskId);
-        if(task) {
-          task.status = task.status === 'Done' ? 'Open' : 'Done';
-          task.updatedAt = Date.now();
+      inner.style.transform='';
+      setTimeout(()=>{
+        const idx=(S.tasks||[]).findIndex(t=>t.id===id);
+        if(idx>=0){
+          const t=S.tasks.splice(idx,1)[0];
+          t.status='Done'; t.doneAt=Date.now(); t.updatedAt=Date.now();
+          if(!S.doneTasks) S.doneTasks=[];
+          S.doneTasks.push(t);
           saveState(); renderTasks(); renderHome();
+          toast('Task completed ✅','ok');
         }
-      }, 200);
+      },200);
     } else if(curX < -THRESHOLD) {
-      // Swipe left → delete
+      // Swipe left → move to Trash
       wrap.classList.add('swipe-delete');
-      inner.style.transform = '';
-      setTimeout(() => {
-        S.tasks = (S.tasks||[]).filter(t=>t.id!==taskId);
-        saveState(); renderTasks(); renderHome();
-        toast('Task deleted','ok');
-      }, 200);
+      inner.style.transform='';
+      setTimeout(()=>{
+        const idx=(S.tasks||[]).findIndex(t=>t.id===id);
+        if(idx>=0){
+          const t=S.tasks.splice(idx,1)[0];
+          t.trashedAt=Date.now();
+          if(!S.trashedTasks) S.trashedTasks=[];
+          S.trashedTasks.push(t);
+          saveState(); renderTasks(); renderHome();
+          toast('Moved to Trash 🗑','ok');
+        }
+      },200);
     } else {
-      // Snap back
-      inner.style.transform = '';
-      wrap.querySelector('.swipe-reveal-done').style.opacity = 0;
-      wrap.querySelector('.swipe-reveal-delete').style.opacity = 0;
+      inner.style.transform='';
+      wrap.querySelector('.swipe-reveal-done').style.opacity=0;
+      wrap.querySelector('.swipe-reveal-delete').style.opacity=0;
     }
     cancel();
   }
 
-  function cancel() {
-    active = false; wrap = null; inner = null; taskId = null; axisLocked = null;
-  }
+  function cancel(){active=false;wrap=null;inner=null;taskId=null;axisLocked=null;}
 
-  list.addEventListener('touchstart', onStart, {passive:true});
-  list.addEventListener('touchmove',  onMove,  {passive:false});
-  list.addEventListener('touchend',   onEnd);
-  list.addEventListener('mousedown',  onStart);
-  list.addEventListener('mousemove',  onMove);
-  list.addEventListener('mouseup',    onEnd);
-  list.addEventListener('mouseleave', () => { if(active) onEnd(); });
+  list.addEventListener('touchstart',onStart,{passive:true});
+  list.addEventListener('touchmove', onMove, {passive:false});
+  list.addEventListener('touchend',  onEnd);
+  list.addEventListener('mousedown', onStart);
+  list.addEventListener('mousemove', onMove);
+  list.addEventListener('mouseup',   onEnd);
+  list.addEventListener('mouseleave',()=>{if(active)onEnd();});
 }
 
-// Re-init swipes after every render
-const _origRenderTasks = RENDERS.tasks;
-RENDERS.tasks = function() { _origRenderTasks(); initTaskSwipes(); };
+RENDERS.tasks = function(){
+  renderTasks();
+  if(_tf!=='_done'&&_tf!=='_trash') initTaskSwipes();
+};
 
 function filterTasks(val, btn) {
   _tf = val;
@@ -4978,8 +5080,22 @@ function filterTasks(val, btn) {
 }
 
 function setTaskStatus(id, status) {
-  const t = (S.tasks||[]).find(t=>t.id===id);
-  if(t) { t.status=status; t.updatedAt=Date.now(); saveState(); renderHome(); }
+  const t=(S.tasks||[]).find(t=>t.id===id);
+  if(!t) return;
+  if(status==='Done'){
+    // Dropdown set to Done → move to archive
+    const idx=S.tasks.findIndex(t=>t.id===id);
+    if(idx>=0){
+      const task=S.tasks.splice(idx,1)[0];
+      task.status='Done'; task.doneAt=Date.now(); task.updatedAt=Date.now();
+      if(!S.doneTasks) S.doneTasks=[];
+      S.doneTasks.push(task);
+      saveState(); renderTasks(); renderHome();
+      toast('Task completed ✅','ok');
+    }
+  } else {
+    t.status=status; t.updatedAt=Date.now(); saveState(); renderTasks(); renderHome();
+  }
 }
 
 function addTask() {
@@ -6167,16 +6283,10 @@ function renderDocs() {
 }
 RENDERS.docs = renderDocs;
 
-function filterFilesByFolder(folderId) {
-  _fileFilter = folderId;
-  renderDocs();
-}
-
 let _fileFilter = 'all';
 function filterFilesByFolder(folderId) {
   _fileFilter = folderId;
-  const files = folderId==='all' ? (S.files||[]) : (S.files||[]).filter(f=>f.folder===folderId);
-  renderFileList(files, 'docs-file-list', 'docs-file-ct');
+  renderDocs();
 }
 
 function renderFileList(files, listId, countId) {
@@ -6516,13 +6626,14 @@ async function sendAI() {
   const bks = S.bookings||[];
   const crit = tasks.filter(t=>t.priorityLabel==='Critical'&&t.status!=='Done');
   const inProgress = tasks.filter(t=>t.status==='In Progress');
-  const doneTasks = tasks.filter(t=>t.status==='Done');
+  const doneTasks = S.doneTasks||[];
+  const doneCount = doneTasks.length;
   const daysToLaunch = Math.max(0,Math.ceil((LAUNCH-new Date())/86400000));
   const todayBks = bks.filter(b=>b.date===dateKey(new Date()));
 
   // Build task summary by bucket
   const tasksByBucket = {};
-  tasks.filter(t=>t.status!=='Done').forEach(t=>{
+  tasks.forEach(t=>{
     if(!tasksByBucket[t.bucket]) tasksByBucket[t.bucket]=[];
     tasksByBucket[t.bucket].push(`[${t.priorityLabel}] ${t.task} (${t.status})`);
   });
@@ -6554,7 +6665,7 @@ async function sendAI() {
     'Staff: Dave (owner/admin), Alberto (operations/finance), Jenna (facility manager)\n\n'+
     '== LAUNCH STATUS ==\n'+
     daysToLaunch+' days to opening (April 15, 2026)\n'+
-    doneTasks.length+'/'+tasks.length+' tasks complete ('+Math.round(doneTasks.length/Math.max(tasks.length,1)*100)+'%)\n'+
+    doneCount+'/'+(tasks.length+doneCount)+' tasks complete ('+Math.round(doneCount/Math.max(tasks.length+doneCount,1)*100)+'%)\n'+
     crit.length+' critical tasks open | '+inProgress.length+' in progress\n\n'+
     '== OPEN TASKS ==\n'+taskSummary+'\n\n'+
     '== BOOKINGS ==\n'+
