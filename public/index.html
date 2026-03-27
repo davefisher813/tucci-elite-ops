@@ -256,6 +256,40 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   display:flex; align-items:flex-start; gap:12px;
   position:relative; overflow:hidden; transition:border-color .12s;
 }
+
+/* Swipe wrapper */
+.swipe-wrap {
+  position:relative; overflow:hidden;
+  border-radius:var(--r-sm); margin-bottom:5px;
+  touch-action:pan-y;
+}
+.swipe-reveal {
+  position:absolute; inset:0;
+  display:flex; align-items:center;
+  border-radius:var(--r-sm);
+  pointer-events:none;
+}
+.swipe-reveal-done {
+  background:#10B981;
+  justify-content:flex-start;
+  padding-left:20px;
+}
+.swipe-reveal-delete {
+  background:#E8394A;
+  justify-content:flex-end;
+  padding-right:20px;
+}
+.swipe-reveal svg { flex-shrink:0; }
+.swipe-inner {
+  position:relative; z-index:1;
+  transition:transform .18s ease;
+  will-change:transform;
+  background:#111111;
+  border-radius:var(--r-sm);
+}
+.swipe-inner.swiping { transition:none; }
+.swipe-wrap.swipe-done .swipe-inner  { transform:translateX(100%); }
+.swipe-wrap.swipe-delete .swipe-inner { transform:translateX(-100%); }
 .titem::before {
   content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
   border-radius:var(--r-sm) 0 0 var(--r-sm);
@@ -1521,6 +1555,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   background:#FFFFFF !important;
   border:1px solid rgba(0,0,0,0.08) !important;
 }
+#app.light .swipe-inner { background:#FFFFFF; }
 #app.light .titem-name   { color:#0D1117 !important; }
 #app.light .titem-bucket {
   background:rgba(26,95,138,0.07) !important;
@@ -4778,15 +4813,23 @@ const PRIORITY_ORDER = {Critical:1, High:2, Medium:3, Low:4};
 function taskItemHTML(t) {
   const pl = (t.priorityLabel||'').toLowerCase();
   const isDone = t.status==='Done';
-  return `<div class="titem ${pl} ${isDone?'done':''}">
-    <span class="tpill ${pl}">${t.priorityLabel||''}</span>
-    <div class="titem-body">
-      <div class="titem-name">${t.task}</div>
-      <div class="titem-meta">
-        <span class="titem-bucket">${t.bucket||''}</span>
-        <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
-          ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
-        </select>
+  return `<div class="swipe-wrap" id="sw-${t.id}" data-task-id="${t.id}">
+    <div class="swipe-reveal swipe-reveal-done">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="swipe-reveal swipe-reveal-delete">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+    </div>
+    <div class="swipe-inner titem ${pl} ${isDone?'done':''}">
+      <span class="tpill ${pl}">${t.priorityLabel||''}</span>
+      <div class="titem-body">
+        <div class="titem-name">${t.task}</div>
+        <div class="titem-meta">
+          <span class="titem-bucket">${t.bucket||''}</span>
+          <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
+            ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
       </div>
     </div>
   </div>`;
@@ -4812,6 +4855,116 @@ function renderTasks() {
     : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:24px 0;text-align:center;letter-spacing:1px">NO TASKS MATCH THIS FILTER</div>';
 }
 RENDERS.tasks = renderTasks;
+
+// ── SWIPE GESTURES FOR TASKS ─────────────────────────────
+function initTaskSwipes() {
+  const list = document.getElementById('task-list');
+  if(!list) return;
+
+  const THRESHOLD = 80; // px needed to trigger action
+  let startX, startY, curX, wrap, inner, taskId, active, axisLocked;
+
+  function onStart(e) {
+    const el = e.target.closest('.swipe-wrap');
+    if(!el) return;
+    // Don't hijack select/button taps
+    if(e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'OPTION') return;
+    wrap = el;
+    inner = wrap.querySelector('.swipe-inner');
+    taskId = wrap.dataset.taskId;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
+    curX = 0;
+    active = true;
+    axisLocked = null;
+    inner.classList.add('swiping');
+  }
+
+  function onMove(e) {
+    if(!active || !inner) return;
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    const dx = cx - startX;
+    const dy = cy - startY;
+
+    // Lock axis on first meaningful move
+    if(!axisLocked) {
+      if(Math.abs(dx) < 4 && Math.abs(dy) < 4) return;
+      axisLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+    if(axisLocked === 'y') { cancel(); return; }
+
+    e.preventDefault();
+    curX = dx;
+
+    // Dampen past threshold
+    const maxPull = 130;
+    const damped = curX > 0
+      ? Math.min(curX, maxPull + (curX - maxPull) * 0.15)
+      : Math.max(curX, -maxPull + (curX + maxPull) * 0.15);
+    inner.style.transform = `translateX(${damped}px)`;
+
+    // Color intensity feedback
+    const pct = Math.min(Math.abs(curX) / THRESHOLD, 1);
+    if(curX > 0) {
+      wrap.querySelector('.swipe-reveal-done').style.opacity = pct;
+      wrap.querySelector('.swipe-reveal-delete').style.opacity = 0;
+    } else {
+      wrap.querySelector('.swipe-reveal-delete').style.opacity = pct;
+      wrap.querySelector('.swipe-reveal-done').style.opacity = 0;
+    }
+  }
+
+  function onEnd() {
+    if(!active || !inner) return;
+    inner.classList.remove('swiping');
+
+    if(curX > THRESHOLD) {
+      // Swipe right → mark done
+      wrap.classList.add('swipe-done');
+      inner.style.transform = '';
+      setTimeout(() => {
+        const task = (S.tasks||[]).find(t=>t.id===taskId);
+        if(task) {
+          task.status = task.status === 'Done' ? 'Open' : 'Done';
+          task.updatedAt = Date.now();
+          saveState(); renderTasks(); renderHome();
+        }
+      }, 200);
+    } else if(curX < -THRESHOLD) {
+      // Swipe left → delete
+      wrap.classList.add('swipe-delete');
+      inner.style.transform = '';
+      setTimeout(() => {
+        S.tasks = (S.tasks||[]).filter(t=>t.id!==taskId);
+        saveState(); renderTasks(); renderHome();
+        toast('Task deleted','ok');
+      }, 200);
+    } else {
+      // Snap back
+      inner.style.transform = '';
+      wrap.querySelector('.swipe-reveal-done').style.opacity = 0;
+      wrap.querySelector('.swipe-reveal-delete').style.opacity = 0;
+    }
+    cancel();
+  }
+
+  function cancel() {
+    active = false; wrap = null; inner = null; taskId = null; axisLocked = null;
+  }
+
+  list.addEventListener('touchstart', onStart, {passive:true});
+  list.addEventListener('touchmove',  onMove,  {passive:false});
+  list.addEventListener('touchend',   onEnd);
+  list.addEventListener('mousedown',  onStart);
+  list.addEventListener('mousemove',  onMove);
+  list.addEventListener('mouseup',    onEnd);
+  list.addEventListener('mouseleave', () => { if(active) onEnd(); });
+}
+
+// Re-init swipes after every render
+const _origRenderTasks = RENDERS.tasks;
+RENDERS.tasks = function() { _origRenderTasks(); initTaskSwipes(); };
 
 function filterTasks(val, btn) {
   _tf = val;
