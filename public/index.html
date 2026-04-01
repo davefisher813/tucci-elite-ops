@@ -267,6 +267,27 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .titem.done { opacity:.3; }
 .titem:hover { border-color:rgba(255,255,255,0.14); }
 
+/* Swipe gestures */
+.titem-wrap {
+  position:relative; overflow:hidden; margin-bottom:5px;
+  border-radius:var(--r-sm);
+}
+.titem-swipe-hint-l, .titem-swipe-hint-r {
+  position:absolute; top:0; bottom:0; width:80px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--fc); font-size:12px; font-weight:700;
+  letter-spacing:.5px; opacity:0; transition:opacity .15s; pointer-events:none;
+}
+.titem-swipe-hint-l { left:0; background:rgba(245,197,24,0.18); color:var(--gold); border-radius:var(--r-sm) 0 0 var(--r-sm); }
+.titem-swipe-hint-r { right:0; background:rgba(232,57,74,0.18); color:#E8394A; border-radius:0 var(--r-sm) var(--r-sm) 0; }
+.titem-wrap .titem {
+  margin-bottom:0; position:relative; z-index:1;
+  transition:transform .18s cubic-bezier(.25,.8,.25,1), opacity .18s;
+  touch-action:pan-y;
+  cursor:grab;
+}
+.titem-wrap .titem:active { cursor:grabbing; }
+
 /* Priority pill */
 .tpill {
   flex-shrink:0; margin-top:1px;
@@ -636,6 +657,26 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
 }
 .overlay.open { display:flex; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(5,10,20,0.92); z-index:300; align-items:center; justify-content:center; }
+.modal-overlay.open { display:flex; }
+.modal-box {
+  background:var(--panel); border:1px solid rgba(255,255,255,0.15);
+  border-radius:var(--r); width:95%; max-height:90vh; overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+}
+.modal-hdr {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px;
+  background:linear-gradient(150deg,#0B2A3D,#1A5F8A);
+  border-radius:var(--r) var(--r) 0 0;
+  position:sticky; top:0; z-index:1;
+}
+.modal-x {
+  background:none; border:none; color:rgba(255,255,255,0.6);
+  font-size:18px; cursor:pointer; padding:4px 6px; line-height:1;
+  border-radius:4px; transition:all .15s;
+}
+.modal-x:hover { color:white; background:rgba(255,255,255,0.1); }
 .modal {
   background:var(--panel); border:1px solid rgba(255,255,255,0.1);
   border-top:1px solid rgba(27,79,216,0.3);
@@ -2371,6 +2412,11 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     SOPs
   </button>
 
+  <button class="sidebar-item" data-sidebar="settings" onclick="nav('settings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+
   <div class="sidebar-spacer"></div>
 </div>
 <!-- ████ DESKTOP MAIN ████ -->
@@ -2763,6 +2809,67 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   </div>
 </div>
 
+<!-- ████ SETTINGS ████ -->
+<div id="sc-settings" class="screen">
+
+  <div class="sec-lbl">Data Backup</div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px">Export Full Backup</div>
+    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Downloads a complete JSON backup of all your data — bookings, tasks, pricing, budget, staff, everything.</div>
+    <button class="btn-blue full" onclick="exportBackup()">&#8659; Download Backup</button>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px">Import / Restore</div>
+    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Restore from a backup file or paste exported data from another device.</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <button class="btn-blue" style="flex:1" onclick="document.getElementById('restore-file-input').click()">&#128194; From File</button>
+      <button class="btn-ghost" style="flex:1" onclick="toggleRestorePaste()">&#128203; Paste Data</button>
+    </div>
+    <input type="file" id="restore-file-input" accept=".json" style="display:none" onchange="importFromFile(this)">
+    <div id="restore-paste-area" style="display:none">
+      <textarea id="restore-paste-input" class="fi-full" rows="4" placeholder="Paste backup JSON or exported clipboard data here..." style="font-size:12px;font-family:monospace;resize:vertical;margin-bottom:8px"></textarea>
+      <button class="btn-blue full" onclick="importFromPasteText()">Import Now</button>
+    </div>
+  </div>
+
+  <div class="sec-lbl" style="margin-top:16px">Device Sync</div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px">Push to Another Device</div>
+    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Copies your full state to clipboard. Open the app on another device, go to Settings, and paste to sync.</div>
+    <button class="btn-blue full" onclick="copyStateToClipboard()">&#128203; Copy State to Clipboard</button>
+    <div id="copy-state-confirm" style="display:none;margin-top:8px;text-align:center;font-family:var(--fi);font-size:13px;color:var(--gold)">&#10003; Copied — paste on the other device</div>
+  </div>
+
+  <div class="sec-lbl" style="margin-top:16px">App Info</div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Storage Used</span>
+      <span id="settings-storage" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Bookings</span>
+      <span id="settings-bookings" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Tasks</span>
+      <span id="settings-tasks" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0">
+      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Last Saved</span>
+      <span id="settings-saved" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+    </div>
+  </div>
+
+  <div class="sec-lbl" style="margin-top:16px">Danger Zone</div>
+  <div class="card" style="margin-bottom:24px;border-color:rgba(232,57,74,0.3)">
+    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px;color:var(--amber)">Clear All Data</div>
+    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Wipes all bookings, tasks, pricing edits, and budget data. Resets to defaults. Cannot be undone — export a backup first.</div>
+    <button class="btn-ghost full" style="border-color:rgba(232,57,74,0.4);color:#E8394A" onclick="confirmClearData()">Clear All Data</button>
+  </div>
+
+</div>
+
 <!-- TEMPLATE EDITOR OVERLAY -->
 <div class="overlay" id="template-editor" onclick="if(event.target===this)closeModal('template-editor')">
   <div class="modal" style="max-height:95vh">
@@ -2815,6 +2922,22 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     </div>
 
     <button class="btn-blue full" onclick="saveSyncSettings()">SAVE &amp; SYNC NOW</button>
+
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)">
+      <div style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px">Device-to-Device Sync</div>
+      <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Push your data to another device — no Sheets required. Works between phone and computer instantly.</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button class="btn-blue" style="flex:1;font-size:13px" onclick="exportToClipboard()">&#128203; Copy Data</button>
+        <button class="btn-ghost" style="flex:1;font-size:13px" onclick="showImportBox()">&#8659; Paste &amp; Import</button>
+      </div>
+      <div id="import-paste-box" style="display:none;margin-top:8px">
+        <textarea id="import-paste-input" class="fi-full" rows="4" placeholder="Paste exported data here..." style="font-size:11px;font-family:monospace;resize:vertical"></textarea>
+        <button class="btn-blue full" style="margin-top:6px" onclick="importFromPaste()">IMPORT NOW</button>
+      </div>
+      <div id="export-confirm" style="display:none;background:rgba(91,168,204,0.1);border:1px solid rgba(91,168,204,0.3);border-radius:var(--r-sm);padding:10px;margin-top:8px;font-family:var(--fi);font-size:13px;color:var(--g0);text-align:center">
+        &#10003; Copied to clipboard — paste on the other device
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2916,6 +3039,10 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <button class="more-btn" onclick="nav('sops');toggleMore()">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       <span>SOPs</span>
+    </button>
+    <button class="more-btn" onclick="nav('settings');toggleMore()">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Settings</span>
     </button>
   </div>
 </div>
@@ -3523,15 +3650,19 @@ const PRIORITY_ORDER = {Critical:1, High:2, Medium:3, Low:4};
 function taskItemHTML(t) {
   const pl = (t.priorityLabel||'').toLowerCase();
   const isDone = t.status==='Done';
-  return `<div class="titem ${pl} ${isDone?'done':''}">
-    <span class="tpill ${pl}">${t.priorityLabel||''}</span>
-    <div class="titem-body">
-      <div class="titem-name">${t.task}</div>
-      <div class="titem-meta">
-        <span class="titem-bucket">${t.bucket||''}</span>
-        <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
-          ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
-        </select>
+  return `<div class="titem-wrap" data-tid="${t.id}">
+    <div class="titem-swipe-hint-l">&#10003; DONE</div>
+    <div class="titem-swipe-hint-r">&#128465; DELETE</div>
+    <div class="titem ${pl} ${isDone?'done':''}">
+      <span class="tpill ${pl}">${t.priorityLabel||''}</span>
+      <div class="titem-body">
+        <div class="titem-name">${t.task}</div>
+        <div class="titem-meta">
+          <span class="titem-bucket">${t.bucket||''}</span>
+          <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
+            ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
       </div>
     </div>
   </div>`;
@@ -3556,7 +3687,7 @@ function renderTasks() {
     ? list.map(t=>taskItemHTML(t)).join('')
     : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:24px 0;text-align:center;letter-spacing:1px">NO TASKS MATCH THIS FILTER</div>';
 }
-RENDERS.tasks = renderTasks;
+RENDERS.tasks = function() { renderTasks(); initTaskSwipes(); };
 
 function filterTasks(val, btn) {
   _tf = val;
@@ -4474,6 +4605,287 @@ function showInlineConfirm(modalId, message, onConfirm) {
     onConfirm();
   };
 }
+
+// ═══════════════════════════════════════════════════════════
+// TASK SWIPE GESTURES
+// ═══════════════════════════════════════════════════════════
+function initTaskSwipes() {
+  document.querySelectorAll('.titem-wrap').forEach(wrap => {
+    const inner = wrap.querySelector('.titem');
+    const hintL = wrap.querySelector('.titem-swipe-hint-l');
+    const hintR = wrap.querySelector('.titem-swipe-hint-r');
+    if (!inner) return;
+
+    let startX = 0, startY = 0, dx = 0, dragging = false, locked = false;
+    const THRESHOLD = 90;
+
+    inner.addEventListener('touchstart', e => {
+      if (e.touches.length > 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      dx = 0; dragging = false; locked = false;
+      inner.style.transition = 'none';
+    }, { passive: true });
+
+    inner.addEventListener('touchmove', e => {
+      if (locked) return;
+      const curX = e.touches[0].clientX;
+      const curY = e.touches[0].clientY;
+      const absDx = Math.abs(curX - startX);
+      const absDy = Math.abs(curY - startY);
+      // Lock to vertical scroll if primarily vertical
+      if (!dragging && absDy > absDx && absDy > 6) { locked = true; return; }
+      if (absDx > 8) { dragging = true; e.preventDefault(); }
+      if (!dragging) return;
+      dx = curX - startX;
+      inner.style.transform = `translateX(${dx}px)`;
+      // Show hints
+      const pct = Math.min(Math.abs(dx) / THRESHOLD, 1);
+      if (dx > 0) {
+        hintL.style.opacity = pct;
+        hintR.style.opacity = 0;
+      } else {
+        hintR.style.opacity = pct;
+        hintL.style.opacity = 0;
+      }
+    }, { passive: false });
+
+    inner.addEventListener('touchend', () => {
+      inner.style.transition = '';
+      hintL.style.opacity = 0;
+      hintR.style.opacity = 0;
+      if (!dragging) return;
+      const tid = wrap.dataset.tid;
+      if (dx > THRESHOLD) {
+        // Swipe right → mark Done
+        inner.style.transform = `translateX(110%)`;
+        inner.style.opacity = '0';
+        setTimeout(() => {
+          const t = (S.tasks||[]).find(t => t.id === tid);
+          if (t) { t.status = 'Done'; t.updatedAt = Date.now(); saveState(); }
+          RENDERS.tasks();
+          renderHome();
+          toast('Task marked Done', 'ok');
+        }, 220);
+      } else if (dx < -THRESHOLD) {
+        // Swipe left → delete
+        inner.style.transform = `translateX(-110%)`;
+        inner.style.opacity = '0';
+        setTimeout(() => {
+          S.tasks = (S.tasks||[]).filter(t => t.id !== tid);
+          saveState();
+          RENDERS.tasks();
+          renderHome();
+          toast('Task deleted', '');
+        }, 220);
+      } else {
+        // Snap back
+        inner.style.transform = '';
+      }
+      dragging = false;
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// SETTINGS SCREEN
+// ═══════════════════════════════════════════════════════════
+function renderSettings() {
+  // Storage info
+  try {
+    const raw = localStorage.getItem('tucci_v4') || '';
+    const kb = Math.round(raw.length / 1024);
+    const pct = Math.round(raw.length / (5 * 1024 * 1024) * 100);
+    const el = document.getElementById('settings-storage');
+    if (el) el.textContent = `${kb} KB (${pct}% of 5MB)`;
+  } catch(e) {}
+  const bEl = document.getElementById('settings-bookings');
+  const tEl = document.getElementById('settings-tasks');
+  const sEl = document.getElementById('settings-saved');
+  if (bEl) bEl.textContent = (S.bookings||[]).length;
+  if (tEl) tEl.textContent = (S.tasks||[]).length;
+  if (sEl) sEl.textContent = S._savedAt
+    ? new Date(S._savedAt).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+    : '—';
+}
+RENDERS.settings = renderSettings;
+
+function exportBackup() {
+  try {
+    const data = {
+      _app: 'tucci-elite-ops',
+      _version: 4,
+      _exportedAt: Date.now(),
+      _exportedAtStr: new Date().toLocaleString(),
+      state: S
+    };
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tucci-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('Backup downloaded', 'ok');
+  } catch(e) {
+    toast('Export failed: ' + e.message, 'err');
+  }
+}
+
+function toggleRestorePaste() {
+  const el = document.getElementById('restore-paste-area');
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function importFromFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      _doImport(e.target.result);
+    } catch(err) {
+      toast('Import failed: ' + err.message, 'err');
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function importFromPasteText() {
+  const raw = (document.getElementById('restore-paste-input')||{}).value || '';
+  if (!raw.trim()) { toast('Nothing to import', 'warn'); return; }
+  // Try both raw JSON and base64
+  try {
+    _doImport(raw.trim());
+  } catch(e) {
+    try {
+      const decoded = decodeURIComponent(escape(atob(raw.trim())));
+      _doImport(decoded);
+    } catch(e2) {
+      toast('Invalid data — not a valid backup', 'err');
+    }
+  }
+}
+
+function _doImport(raw) {
+  const data = JSON.parse(raw);
+  // Support both export formats: {state:...} and raw state
+  const incoming = data.state || data;
+  if (!incoming || typeof incoming !== 'object') throw new Error('Invalid backup structure');
+
+  // Last-write-wins merge
+  let merged = 0;
+
+  if (incoming.tasks && incoming.tasks.length) {
+    const byId = {};
+    (S.tasks||[]).forEach(t => byId[t.id] = t);
+    incoming.tasks.forEach(t => {
+      const local = byId[t.id];
+      if (!local || (t.updatedAt||0) >= (local.updatedAt||0)) { byId[t.id] = t; if(local) merged++; }
+    });
+    S.tasks = Object.values(byId);
+  }
+  if (incoming.bookings && incoming.bookings.length) {
+    const byId = {};
+    (S.bookings||[]).forEach(b => byId[b.id] = b);
+    incoming.bookings.forEach(b => {
+      const local = byId[b.id];
+      if (!local || (b.updatedAt||0) >= (local.updatedAt||0)) { byId[b.id] = b; if(local) merged++; }
+    });
+    S.bookings = Object.values(byId);
+  }
+  if (incoming.pricing) {
+    if (incoming.pricing.services) {
+      const byId = {};
+      (S.pricing.services||[]).forEach(s => byId[s.id] = s);
+      incoming.pricing.services.forEach(s => { byId[s.id] = s; });
+      S.pricing.services = Object.values(byId);
+    }
+    if (incoming.pricing.packages)     S.pricing.packages     = incoming.pricing.packages;
+    if (incoming.pricing.collegePasses) S.pricing.collegePasses = incoming.pricing.collegePasses;
+    if (incoming.pricing.addons)        S.pricing.addons        = incoming.pricing.addons;
+    if (incoming.pricing.costData)      S.pricing.costData      = incoming.pricing.costData;
+  }
+  if (incoming.budget)       S.budget       = incoming.budget;
+  if (incoming.staffDir)     S.staffDir     = incoming.staffDir;
+  if (incoming.clients)      S.clients      = incoming.clients;
+  if (incoming.files)        S.files        = incoming.files;
+  if (incoming.checklists)   S.checklists   = incoming.checklists;
+
+  saveState();
+  Object.values(RENDERS).forEach(fn => fn && fn());
+  const src = data._exportedAtStr ? ` (from ${data._exportedAtStr})` : '';
+  toast(`Imported${src} · ${merged} records merged`, 'ok');
+  document.getElementById('restore-paste-area').style.display = 'none';
+  const inp = document.getElementById('restore-paste-input');
+  if (inp) inp.value = '';
+}
+
+function copyStateToClipboard() {
+  try {
+    const data = {
+      _app: 'tucci-elite-ops',
+      _version: 4,
+      _exportedAt: Date.now(),
+      _exportedAtStr: new Date().toLocaleString(),
+      state: S
+    };
+    const json = JSON.stringify(data);
+    const b64 = btoa(unescape(encodeURIComponent(json)));
+    navigator.clipboard.writeText(b64).then(() => {
+      const el = document.getElementById('copy-state-confirm');
+      if (el) { el.style.display = 'block'; setTimeout(() => el.style.display='none', 4000); }
+    }).catch(() => {
+      // Fallback: show in textarea
+      const el = document.getElementById('restore-paste-area');
+      const inp = document.getElementById('restore-paste-input');
+      if (el) el.style.display = 'block';
+      if (inp) { inp.value = b64; inp.select(); }
+      toast('Clipboard blocked — copy the text manually', 'warn');
+    });
+  } catch(e) {
+    toast('Copy failed: ' + e.message, 'err');
+  }
+}
+
+function confirmClearData() {
+  showDangerConfirm('settings-clear-confirm-area', 'Clear all data? This cannot be undone.', function() {
+    const theme = localStorage.getItem('tucci_theme') || 'dark';
+    const staff = localStorage.getItem('tucci_staff');
+    const endpoint = localStorage.getItem('tucci_sheets_endpoint');
+    localStorage.clear();
+    if (theme) localStorage.setItem('tucci_theme', theme);
+    if (staff) localStorage.setItem('tucci_staff', staff);
+    if (endpoint) localStorage.setItem('tucci_sheets_endpoint', endpoint);
+    location.reload();
+  });
+}
+
+// Inline confirm for settings (no modal — inline in page)
+function showDangerConfirm(areaId, message, onConfirm) {
+  // For settings clear, we use the danger zone area directly
+  const dangerBtn = document.querySelector('#sc-settings .btn-ghost.full');
+  if (!dangerBtn) return;
+  const card = dangerBtn.closest('.card');
+  if (!card) return;
+  const orig = card.innerHTML;
+  card.innerHTML = `
+    <div style="text-align:center;padding:8px 0">
+      <div style="font-family:var(--fc);font-size:15px;font-weight:700;color:var(--amber);margin-bottom:6px">${message}</div>
+      <div style="font-family:var(--fi);font-size:13px;color:var(--g1);margin-bottom:14px">Export a backup first if you want to keep your data.</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ghost" style="flex:1" id="_clr-cancel">Cancel</button>
+        <button class="btn-blue" style="flex:1;background:#E8394A;border-color:#E8394A" id="_clr-confirm">Yes, Clear</button>
+      </div>
+    </div>`;
+  document.getElementById('_clr-cancel').onclick = () => { card.innerHTML = orig; };
+  document.getElementById('_clr-confirm').onclick = onConfirm;
+}
+
 
 function calcDiscount(){
   const val=parseFloat(document.getElementById('disc-val').value)||0;
@@ -5838,6 +6250,109 @@ function clearSyncSettings() {
   localStorage.removeItem('tucci_sheets_endpoint');
   document.getElementById('ss-endpoint').value = '';
   toast('Endpoint cleared', '');
+}
+
+// ── DEVICE-TO-DEVICE SYNC ──────────────────────────────────────────────────
+function exportToClipboard() {
+  try {
+    const exportData = {
+      _v: 4,
+      _exported: Date.now(),
+      _device: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop',
+      state: S
+    };
+    const json = JSON.stringify(exportData);
+    const compressed = btoa(unescape(encodeURIComponent(json)));
+    navigator.clipboard.writeText(compressed).then(() => {
+      const conf = document.getElementById('export-confirm');
+      conf.style.display = 'block';
+      setTimeout(() => { conf.style.display = 'none'; }, 4000);
+    }).catch(() => {
+      // Fallback: show in textarea
+      document.getElementById('import-paste-box').style.display = 'block';
+      document.getElementById('import-paste-input').value = compressed;
+      document.getElementById('import-paste-input').select();
+      toast('Clipboard blocked — copy the text manually', 'warn');
+    });
+  } catch(e) {
+    toast('Export failed: ' + e.message, 'err');
+  }
+}
+
+function showImportBox() {
+  const box = document.getElementById('import-paste-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (box.style.display === 'block') {
+    document.getElementById('import-paste-input').value = '';
+    document.getElementById('import-paste-input').focus();
+  }
+}
+
+function importFromPaste() {
+  const raw = document.getElementById('import-paste-input').value.trim();
+  if (!raw) { toast('Nothing to import', 'warn'); return; }
+  try {
+    const json = decodeURIComponent(escape(atob(raw)));
+    const data = JSON.parse(json);
+    if (!data.state || !data._v) throw new Error('Invalid export data');
+    const incoming = data.state;
+    const fromDevice = data._device || 'unknown';
+    const exportedAt = data._exported ? new Date(data._exported).toLocaleString() : 'unknown';
+
+    // Last-write-wins merge (same logic as Sheets sync)
+    const PRIORITY_MAP = {1:'Critical', 2:'High', 3:'Medium', 4:'Low'};
+    let updated = 0;
+
+    // Tasks
+    if (incoming.tasks && incoming.tasks.length) {
+      const byId = {};
+      (S.tasks||[]).forEach(t => byId[t.id] = t);
+      incoming.tasks.forEach(t => {
+        const local = byId[t.id];
+        if (!local || (t.updatedAt||0) > (local.updatedAt||0)) { byId[t.id] = t; if(local) updated++; }
+      });
+      S.tasks = Object.values(byId);
+    }
+
+    // Bookings
+    if (incoming.bookings && incoming.bookings.length) {
+      const byId = {};
+      (S.bookings||[]).forEach(b => byId[b.id] = b);
+      incoming.bookings.forEach(b => {
+        const local = byId[b.id];
+        if (!local || (b.updatedAt||0) > (local.updatedAt||0)) { byId[b.id] = b; if(local) updated++; }
+      });
+      S.bookings = Object.values(byId);
+    }
+
+    // Pricing — full replace if incoming has more services or newer cost data
+    if (incoming.pricing && incoming.pricing.services) {
+      const byId = {};
+      (S.pricing.services||[]).forEach(s => byId[s.id] = s);
+      incoming.pricing.services.forEach(s => {
+        if (!byId[s.id] || s.baseRate > 0) byId[s.id] = s;
+      });
+      S.pricing.services = Object.values(byId);
+      if (incoming.pricing.packages) S.pricing.packages = incoming.pricing.packages;
+      if (incoming.pricing.collegePasses) S.pricing.collegePasses = incoming.pricing.collegePasses;
+      if (incoming.pricing.addons) S.pricing.addons = incoming.pricing.addons;
+    }
+
+    // Budget
+    if (incoming.budget) S.budget = incoming.budget;
+
+    // Staff directory & clients
+    if (incoming.staffDir && incoming.staffDir.length) S.staffDir = incoming.staffDir;
+    if (incoming.clients && incoming.clients.length) S.clients = incoming.clients;
+
+    saveState();
+    closeModal('sync-settings-modal');
+    Object.values(RENDERS).forEach(fn => fn && fn());
+    toast(`Imported from ${fromDevice} (${exportedAt}) · ${updated} record${updated!==1?'s':''} merged`, 'ok');
+  } catch(e) {
+    toast('Import failed — invalid data', 'err');
+    console.error(e);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════
