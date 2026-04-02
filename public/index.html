@@ -26,27 +26,27 @@
   --navy:    #000000;
   --navy2:   #0D0D0D;
   --navy3:   #1A1A1A;
-  --panel:   #111111;
-  --panel2:  #1C1C1C;
+  --panel:   #0F0F0F;
+  --panel2:  #181818;
   --royal:   #2E86B5;  /* Tucci sky blue */
   --royal2:  #5BA8CC;  /* Tucci sky blue accent */
   --royal-g: rgba(91,168,204,0.22);
   --royal-gd:rgba(91,168,204,0.09);
   --white:   #FFFFFF;
   --off:     #F0F0F0;
-  --g0:      #CECECE;
-  --g1:      #AAAAAA;
-  --g2:      #666666;
+  --g0:      #DDDDDD;
+  --g1:      #BABABA;
+  --g2:      #888888;
   --g3:      #222222;
 
   /* Status colors — high contrast on black */
-  --red:     #FF3B4E;
-  --red-g:   rgba(255,59,78,0.15);
+  --red:     #F5C518;  /* repurposed → Tucci Gold for alerts */
+  --red-g:   rgba(245,197,24,0.15);
   --amber:   #FFB020;
   --amber-g: rgba(255,176,32,0.15);
   --green:   #00E676;
   --green-g: rgba(0,230,118,0.12);
-  --purple:  #A78BFA;
+  --purple:  #5BA8CC;  /* repurposed → Tucci Ice Blue */
 
   /* Typography */
   --fc: 'Barlow Condensed', sans-serif;
@@ -60,6 +60,8 @@
   --st: env(safe-area-inset-top, 0px);
   --r:  12px;
   --r-sm: 8px;
+  --line: rgba(255,255,255,0.12);
+  --line2: rgba(255,255,255,0.07);
 }
 
 /* logo filters removed — using actual brand colors */
@@ -92,8 +94,9 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   display:flex; align-items:center; justify-content:space-between;
   padding:10px 18px 10px;
   padding-top: calc(10px + var(--st));
-  background:var(--navy); border-bottom:1px solid rgba(255,255,255,0.12);
+  background:var(--navy); border-bottom:1px solid rgba(91,168,204,0.3);
   flex-shrink:0; z-index:60; position:relative;
+  box-shadow:0 1px 0 rgba(91,168,204,0.15);
 }
 #topbar::after {
   content:''; position:absolute; bottom:-1px; left:0; right:0; height:1px;
@@ -154,7 +157,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 #navbar {
   position:absolute; bottom:0; left:0; right:0;
   height:calc(var(--nb) + var(--sb)); padding-bottom:var(--sb);
-  background:#000000; border-top:1px solid rgba(255,255,255,0.15);
+  background:rgba(0,0,0,0.97); border-top:1px solid rgba(91,168,204,0.25);
   display:flex; align-items:center; z-index:60;
   backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
 }
@@ -185,7 +188,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
    SHARED — section labels, cards
 ══════════════════════════════════════════ */
 .sec-lbl {
-  font-family:var(--fc); font-size:14px; font-weight:700; letter-spacing:2px;
+  font-family:var(--fc); font-size:11px; font-weight:700; letter-spacing:2.5px;
   text-transform:uppercase; color:#C0C0C0;
   margin-bottom:10px; margin-top:22px;
   display:flex; align-items:center; justify-content:space-between;
@@ -201,7 +204,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .badge.green { background:var(--green-g); color:var(--green); border-color:rgba(16,185,129,0.2); }
 
 .card {
-  background:var(--panel); border:1px solid rgba(255,255,255,0.15);
+  background:var(--panel); border:1px solid rgba(91,168,204,0.15);
   border-radius:var(--r); padding:14px 16px; margin-bottom:8px;
 }
 
@@ -210,12 +213,14 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 ══════════════════════════════════════════ */
 .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:18px; }
 .stat {
-  background:#111111; border:1px solid rgba(255,255,255,0.16);
+  background:#111111; border:1px solid rgba(91,168,204,0.2);
   border-radius:var(--r); padding:14px 16px;
+  position:relative; overflow:hidden;
 }
+.stat::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--royal2),transparent); }
 .stat-lbl {
-  font-family:var(--fi); font-style:italic; font-size:13px; font-weight:600; letter-spacing:0.5px;
-  text-transform:none; color:var(--g1); margin-bottom:6px;
+  font-family:var(--fm); font-size:11px; font-weight:500; letter-spacing:1px;
+  text-transform:uppercase; color:var(--g1); margin-bottom:8px;
 }
 .stat-val {
   font-family:var(--fc); font-size:40px; font-weight:800;
@@ -231,8 +236,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
    LAUNCH BANNER
 ══════════════════════════════════════════ */
 .launch-banner {
-  background:#0D0D0D;
-  border:1px solid rgba(255,255,255,0.1);
+  background:var(--panel);
+  border:1px solid rgba(91,168,204,0.2);
   border-left:3px solid var(--royal2); border-radius:var(--r);
   padding:16px 18px; margin-bottom:18px;
   display:flex; align-items:center; justify-content:space-between;
@@ -242,7 +247,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   color:var(--royal2); line-height:1; letter-spacing:-2px;
   text-shadow:0 0 30px rgba(27,79,216,0.4);
 }
-.lb-label { font-family:var(--fi); font-style:italic; font-size:13px; letter-spacing:0px; color:var(--g0); margin-bottom:4px; }
+.lb-label { font-family:var(--fb); font-size:13px; font-weight:500; color:#DDDDDD; margin-bottom:4px; }
 .lb-right { text-align:right; }
 .lb-date { font-family:var(--fc); font-size:26px; font-weight:800; letter-spacing:2px; }
 .lb-sub  { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); margin-top:4px; }
@@ -251,8 +256,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
    TASK ITEMS — JARVIS style
 ══════════════════════════════════════════ */
 .titem {
-  background:#111111; border:1px solid rgba(255,255,255,0.16);
-  border-radius:var(--r-sm); padding:12px 14px; margin-bottom:5px;
+  background:#111111; border:1px solid rgba(255,255,255,0.14);
+  border-radius:var(--r-sm); padding:13px 14px; margin-bottom:5px;
   display:flex; align-items:flex-start; gap:12px;
   position:relative; overflow:hidden; transition:border-color .12s;
 }
@@ -266,27 +271,6 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .titem.low::before      { background:var(--g1); }
 .titem.done { opacity:.3; }
 .titem:hover { border-color:rgba(255,255,255,0.14); }
-
-/* Swipe gestures */
-.titem-wrap {
-  position:relative; overflow:hidden; margin-bottom:5px;
-  border-radius:var(--r-sm);
-}
-.titem-swipe-hint-l, .titem-swipe-hint-r {
-  position:absolute; top:0; bottom:0; width:80px;
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--fc); font-size:12px; font-weight:700;
-  letter-spacing:.5px; opacity:0; transition:opacity .15s; pointer-events:none;
-}
-.titem-swipe-hint-l { left:0; background:rgba(245,197,24,0.18); color:var(--gold); border-radius:var(--r-sm) 0 0 var(--r-sm); }
-.titem-swipe-hint-r { right:0; background:rgba(232,57,74,0.18); color:#E8394A; border-radius:0 var(--r-sm) var(--r-sm) 0; }
-.titem-wrap .titem {
-  margin-bottom:0; position:relative; z-index:1;
-  transition:transform .18s cubic-bezier(.25,.8,.25,1), opacity .18s;
-  touch-action:pan-y;
-  cursor:grab;
-}
-.titem-wrap .titem:active { cursor:grabbing; }
 
 /* Priority pill */
 .tpill {
@@ -304,8 +288,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 /* Task body */
 .titem-body { flex:1; min-width:0; }
 .titem-name {
-  font-family:var(--fc); font-size:18px; font-weight:800;
-  color:#FFFFFF; line-height:1.25; margin-bottom:4px;
+  font-family:var(--fc); font-size:19px; font-weight:800;
+  color:#FFFFFF; line-height:1.25; margin-bottom:5px;
   letter-spacing:.2px;
 }
 .titem.done .titem-name { text-decoration:line-through; color:var(--g1); }
@@ -314,8 +298,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .titem-bucket {
   font-family:var(--fi); font-style:italic; font-size:13px; letter-spacing:0px;
-  color:var(--g1); background:rgba(255,255,255,0.09);
-  padding:2px 7px; border-radius:4px; border:1px solid rgba(255,255,255,0.12);
+  color:var(--g0); background:rgba(255,255,255,0.08);
+  padding:3px 8px; border-radius:5px; border:1px solid rgba(255,255,255,0.14);
 }
 
 /* Status selector — iOS style */
@@ -338,11 +322,11 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .chip {
   font-family:var(--fc); font-size:13px; font-weight:700; letter-spacing:1px;
   text-transform:uppercase; padding:6px 14px; border-radius:20px;
-  border:1px solid rgba(255,255,255,0.1); background:none;
+  border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.03);
   color:var(--g0); white-space:nowrap; flex-shrink:0; transition:all .12s;
 }
-.chip:hover { border-color:rgba(255,255,255,0.2); color:var(--white); }
-.chip.active { background:rgba(46,99,240,0.18); border-color:#2E63F0; color:#4A7AFF; font-weight:800; }
+.chip:hover { border-color:rgba(255,255,255,0.28); color:var(--white); }
+.chip.active { background:rgba(91,168,204,0.18); border-color:var(--royal2); color:var(--royal2); font-weight:800; }
 .chip.active.red { background:#F5C518; border-color:#F5C518; color:#000000; }
 .chip.active.amber { background:var(--amber-g); border-color:var(--amber); color:var(--amber); }
 
@@ -381,7 +365,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .btn-blue:hover { background:var(--royal2); }
 .btn-blue.full { width:100%; padding:14px; margin-top:8px; border-radius:var(--r); font-size:15px; }
 .btn-ghost {
-  background:none; border:1px solid rgba(255,255,255,0.15); color:var(--g0);
+  background:none; border:1px solid rgba(255,255,255,0.2); color:#DDDDDD;
   border-radius:var(--r-sm);
   font-family:var(--fi); font-style:italic; font-size:14px; font-weight:600; letter-spacing:0px;
   text-transform:none; padding:10px 14px; cursor:pointer; transition:all .15s;
@@ -409,8 +393,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .mini-cal { margin-bottom:14px; }
 .mc-hd-row { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:4px; }
 .mc-hd {
-  font-family:var(--fi); font-style:italic; font-size:13px; font-weight:600; letter-spacing:0px;
-  text-align:center; color:var(--g1);
+  font-family:var(--fb); font-size:12px; font-weight:600;
+  text-align:center; color:var(--g0);
 }
 .mini-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
 .mc-day {
@@ -458,7 +442,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .time-grid { display:flex; flex-direction:column; gap:2px; }
 .tg-row { display:grid; grid-template-columns:46px 1fr; gap:8px; align-items:flex-start; min-height:38px; }
 .tg-time {
-  font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1);
+  font-family:var(--fm); font-size:11px; font-weight:500; color:var(--g0);
   padding-top:11px; text-align:right; flex-shrink:0;
 }
 .tg-slot {
@@ -471,8 +455,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
 /* Booking block */
 .bk-block {
-  background:#111111; border:1px solid rgba(255,255,255,0.12);
-  border-radius:var(--r-sm); padding:8px 12px; margin-bottom:3px;
+  background:#111111; border:1px solid rgba(255,255,255,0.13);
+  border-radius:var(--r-sm); padding:9px 13px; margin-bottom:3px;
   cursor:pointer; transition:border-color .12s;
   border-left:4px solid var(--royal2);
 }
@@ -482,11 +466,11 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .bk-block.facility  { border-left-color:var(--green); }
 .bk-block.flagged   { background:rgba(245,158,11,0.05); border-top-color:rgba(245,158,11,0.3); }
 .bk-name {
-  font-family:var(--fc); font-size:17px; font-weight:700;
-  color:var(--white); letter-spacing:.3px;
+  font-family:var(--fc); font-size:18px; font-weight:800;
+  color:#FFFFFF; letter-spacing:.3px;
 }
 .bk-meta {
-  font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1);
+  font-family:var(--fb); font-size:13px; font-weight:500; color:var(--g0);
   margin-top:2px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;
 }
 .bk-price { color:var(--royal2); font-weight:600; }
@@ -496,7 +480,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .bk-status.confirmed { background:var(--green-g); color:var(--green); }
 .bk-status.pending   { background:var(--amber-g); color:var(--amber); }
-.bk-status.tentative { background:rgba(139,92,246,0.14); color:var(--purple); }
+.bk-status.tentative { background:rgba(91,168,204,0.14); color:var(--royal2); }
 
 /* Add event btn */
 .add-ev-btn {
@@ -511,7 +495,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 /* ══════════════════════════════════════════
    PRICING SCREEN
 ══════════════════════════════════════════ */
-.price-cat { background:#111111; border:1px solid rgba(255,255,255,0.15); border-radius:var(--r); overflow:hidden; margin-bottom:8px; }
+.price-cat { background:#111111; border:1px solid rgba(91,168,204,0.18); border-radius:var(--r); overflow:hidden; margin-bottom:8px; }
 .price-cat-hd {
   display:flex; align-items:center; justify-content:space-between;
   padding:13px 16px; cursor:pointer; transition:background .1s;
@@ -526,7 +510,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   border-top:1px solid rgba(255,255,255,0.12);
 }
 .pi-name { font-family:var(--fc); font-size:15px; font-weight:700; color:var(--white); }
-.pi-desc { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); margin-top:3px; }
+.pi-desc { font-family:var(--fb); font-size:13px; font-weight:500; color:var(--g0); margin-top:3px; }
 .pi-rate-wrap { display:flex; align-items:center; gap:6px; }
 .pi-input {
   background:var(--panel2); border:1px solid rgba(27,79,216,0.3);
@@ -557,23 +541,13 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .pkg-price-input:focus { border-bottom:1px solid var(--royal2); }
 .pkg-hrs { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); margin-top:3px; }
 
-/* Pricing tabs */
-.ptab {
-  font-family:var(--fc); font-size:12px; font-weight:700; letter-spacing:.5px;
-  padding:6px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.12);
-  background:var(--panel2); color:var(--g1); cursor:pointer; white-space:nowrap;
-  transition:all .15s;
-}
-.ptab.active { background:var(--royal); color:var(--white); border-color:var(--royal2); }
-.ptab:hover:not(.active) { background:var(--navy3); color:var(--g0); }
-
 /* Discount calculator */
 .disc-result {
   background:#1A1A1A; border:1px solid rgba(255,255,255,0.12);
   border-radius:var(--r-sm); padding:12px 14px;
   display:grid; grid-template-columns:1fr 1fr; gap:10px;
 }
-.disc-label { font-family:var(--fi); font-style:italic; font-size:13px; letter-spacing:0px; text-transform:none; color:var(--g1); margin-bottom:4px; }
+.disc-label { font-family:var(--fb); font-size:13px; font-weight:500; color:var(--g0); margin-bottom:4px; }
 .disc-value { font-family:var(--fc); font-size:22px; font-weight:800; color:var(--white); }
 .disc-value.blue { color:var(--royal2); }
 .disc-value.amber { color:var(--amber); }
@@ -590,7 +564,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .btot-val { font-family:var(--fc); font-size:28px; font-weight:800; line-height:1; }
 .btot-val.blue { color:var(--royal2); }
 .btot-val.amber { color:var(--amber); }
-.bcat { background:#111111; border:1px solid rgba(255,255,255,0.15); border-radius:var(--r); overflow:hidden; margin-bottom:8px; }
+.bcat { background:#111111; border:1px solid rgba(91,168,204,0.18); border-radius:var(--r); overflow:hidden; margin-bottom:8px; }
 .bcat-hd { display:flex; align-items:center; justify-content:space-between; padding:13px 16px; cursor:pointer; }
 .bcat-hd:hover { background:var(--panel2); }
 .bcat-name { font-family:var(--fc); font-size:16px; font-weight:800; letter-spacing:.5px; color:var(--white); }
@@ -602,7 +576,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .bcat-items { display:none; border-top:1px solid rgba(255,255,255,0.09); padding:4px 0; }
 .bitem { display:flex; align-items:center; gap:8px; padding:7px 16px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px; }
 .bitem:last-child { border-bottom:none; }
-.bitem-name { flex:1; font-family:var(--fb); font-weight:600; color:var(--g0); }
+.bitem-name { flex:1; font-family:var(--fb); font-size:14px; font-weight:600; color:#DDDDDD; }
 .bitem-owner { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); }
 .binp {font-weight:500; 
   background:#1A1A1A; border:1px solid rgba(255,255,255,0.12);
@@ -635,7 +609,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .cbox.done { background:var(--royal2); border-color:var(--royal2); }
 .cbox.done::after { content:''; width:8px; height:5px; border-left:2px solid white; border-bottom:2px solid white; transform:rotate(-45deg) translateY(-1px); }
-.cl-text { font-family:var(--fi); font-style:italic; font-size:15px; font-weight:600; color:var(--g0); }
+.cl-text { font-family:var(--fb); font-size:14px; font-weight:500; color:#DDDDDD; }
 .cl-text.done { text-decoration:line-through; color:var(--g2); }
 .cl-reset {
   width:100%; background:none; border:none;
@@ -657,26 +631,6 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
 }
 .overlay.open { display:flex; }
-.modal-overlay { display:none; position:fixed; inset:0; background:rgba(5,10,20,0.92); z-index:300; align-items:center; justify-content:center; }
-.modal-overlay.open { display:flex; }
-.modal-box {
-  background:var(--panel); border:1px solid rgba(255,255,255,0.15);
-  border-radius:var(--r); width:95%; max-height:90vh; overflow-y:auto;
-  box-shadow:0 20px 60px rgba(0,0,0,0.7);
-}
-.modal-hdr {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px;
-  background:linear-gradient(150deg,#0B2A3D,#1A5F8A);
-  border-radius:var(--r) var(--r) 0 0;
-  position:sticky; top:0; z-index:1;
-}
-.modal-x {
-  background:none; border:none; color:rgba(255,255,255,0.6);
-  font-size:18px; cursor:pointer; padding:4px 6px; line-height:1;
-  border-radius:4px; transition:all .15s;
-}
-.modal-x:hover { color:white; background:rgba(255,255,255,0.1); }
 .modal {
   background:var(--panel); border:1px solid rgba(255,255,255,0.1);
   border-top:1px solid rgba(27,79,216,0.3);
@@ -697,8 +651,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .modal-close:hover { color:var(--white); }
 .fgrp { margin-bottom:13px; }
 .flbl {
-  font-family:var(--fi); font-style:italic; font-size:14px; font-weight:600; letter-spacing:0px;
-  text-transform:none; color:var(--g1); margin-bottom:7px; display:block;
+  font-family:var(--fb); font-size:13px; font-weight:600;
+  color:var(--g0); margin-bottom:7px; display:block;
 }
 .fi-full, .fsel-full, .fta {
   width:100%; background:#1A1A1A; border:1px solid rgba(255,255,255,0.1);
@@ -736,9 +690,9 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
    TOAST
 ══════════════════════════════════════════ */
 .toast {
-  position:fixed; bottom:calc(var(--nb) + var(--sb) + 10px);
+  position:fixed; bottom:calc(var(--nb) + var(--sb) + 12px);
   left:50%; transform:translateX(-50%) translateY(80px);
-  background:var(--panel); border:1px solid rgba(255,255,255,0.12);
+  background:#1A1A1A; border:1px solid rgba(255,255,255,0.2);
   border-radius:20px; padding:9px 18px;
   font-family:var(--fc); font-size:14px; font-weight:700; letter-spacing:.5px;
   color:var(--white); z-index:500; transition:transform .25s cubic-bezier(.2,.9,.2,1);
@@ -762,9 +716,9 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   background:var(--panel); border:1px solid rgba(255,255,255,0.12);
   border-radius:var(--r-sm); padding:12px 14px;
 }
-.rev-label {font-weight:500; 
-  font-family:var(--fm); font-size:13px; letter-spacing:1.5px;
-  text-transform:uppercase; color:var(--g1); margin-bottom:4px;
+.rev-label {
+  font-family:var(--fm); font-size:11px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--g0); margin-bottom:4px;
 }
 .rev-val {
   font-family:var(--fc); font-size:22px; font-weight:800;
@@ -772,9 +726,9 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .rev-val.blue { color:var(--royal2); }
 .home-hero {
-  background:#0D0D0D;
-  border:1px solid rgba(46,99,240,0.3);
-  border-top:2px solid #5BA8CC; border-radius:var(--r);
+  background:var(--panel);
+  border:1px solid rgba(91,168,204,0.2);
+  border-top:2px solid var(--royal2); border-radius:var(--r);
   padding:18px 18px 14px; margin-bottom:4px;
 }
 .home-greeting {
@@ -782,8 +736,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   letter-spacing:1px; color:var(--white); line-height:1;
 }
 .home-sub {
-  font-family:var(--fi); font-style:italic; font-size:13px; letter-spacing:0px;
-  color:var(--g1); margin-top:3px; margin-bottom:16px;
+  font-family:var(--fb); font-size:13px; font-weight:500;
+  color:var(--g0); margin-top:3px; margin-bottom:16px;
 }
 .home-countdown-row {
   display:flex; align-items:center; gap:0; margin-bottom:14px;
@@ -811,7 +765,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 /* Quick actions */
 .home-actions { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:4px; }
 .home-action {
-  background:#111111; border:1px solid rgba(255,255,255,0.18);
+  background:#111111; border:1px solid rgba(255,255,255,0.16);
   border-radius:var(--r-sm); padding:12px 6px;
   display:flex; flex-direction:column; align-items:center; gap:6px;
   cursor:pointer; transition:all .15s; color:var(--g0);
@@ -819,7 +773,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .home-action:hover { border-color:var(--royal2); color:var(--royal2); }
 .home-action span {
   font-family:var(--fc); font-size:13px; font-weight:700;
-  letter-spacing:.5px; text-align:center; line-height:1.2;
+  letter-spacing:.3px; text-align:center; line-height:1.2; color:#DDDDDD;
 }
 .home-action:active { opacity:.6 !important; transform:scale(.95) !important; }
 
@@ -832,7 +786,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   font-family:var(--fi); font-style:italic; font-size:13px; letter-spacing:0px;
   text-transform:none; color:var(--royal2); margin-bottom:10px;
 }
-.briefing-body { font-family:var(--fi); font-style:italic; font-size:15px; color:var(--g0); line-height:1.65; }
+.briefing-body { font-family:var(--fb); font-size:14px; font-weight:500; color:#DDDDDD; line-height:1.65; }
 .briefing-item {
   display:flex; align-items:flex-start; gap:8px;
   padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.08);
@@ -850,7 +804,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
 /* Upcoming week */
 .week-bk {
-  background:#111111; border:1px solid rgba(255,255,255,0.15);
+  background:#111111; border:1px solid rgba(91,168,204,0.18);
   border-radius:var(--r-sm); padding:10px 14px; margin-bottom:5px;
   display:flex; align-items:center; gap:12px;
 }
@@ -861,16 +815,16 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .week-bk-body { flex:1; }
 .week-bk-name { font-family:var(--fc); font-size:15px; font-weight:700; color:var(--white); }
-.week-bk-meta { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); margin-top:3px; }
+.week-bk-meta { font-family:var(--fb); font-size:13px; font-weight:500; color:var(--g0); margin-top:3px; }
 
 /* ══════════════════════════════════════════
    MORE BUTTON & DRAWER
 ══════════════════════════════════════════ */
 .more-btn {
   display:flex; flex-direction:column; align-items:center; gap:5px;
-  padding:10px 6px; background:var(--panel2);
-  border:1px solid rgba(255,255,255,0.12); border-radius:var(--r-sm);
-  color:var(--g0); cursor:pointer; transition:all .12s;
+  padding:12px 6px; background:var(--panel);
+  border:1px solid rgba(255,255,255,0.14); border-radius:var(--r-sm);
+  color:#DDDDDD; cursor:pointer; transition:all .12s;
 }
 .more-btn:hover { border-color:var(--royal2); color:var(--royal2); }
 .more-btn span { font-family:var(--fc); font-size:13px; font-weight:700; letter-spacing:.5px; }
@@ -881,7 +835,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 ══════════════════════════════════════════ */
 .folder-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:4px; }
 .folder-card {
-  background:#111111; border:1px solid rgba(255,255,255,0.16);
+  background:#111111; border:1px solid rgba(91,168,204,0.18);
   border-radius:var(--r); padding:14px 16px; cursor:pointer;
   transition:border-color .12s; display:flex; align-items:center; gap:12px;
 }
@@ -896,7 +850,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 .folder-count { font-family:var(--fi); font-style:italic; font-size:13px; color:var(--g1); margin-top:3px; }
 
 .file-row {
-  background:#111111; border:1px solid rgba(255,255,255,0.16);
+  background:#111111; border:1px solid rgba(91,168,204,0.15);
   border-radius:var(--r-sm); padding:12px 14px; margin-bottom:5px;
   display:flex; align-items:center; gap:12px; cursor:pointer;
   transition:border-color .12s;
@@ -964,7 +918,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 }
 .ai-msg.ai {
   align-self:flex-start; background:#111111;
-  border:1px solid rgba(255,255,255,0.12);
+  border:1px solid rgba(91,168,204,0.15);
   border-radius:4px var(--r) var(--r) var(--r);
   color:var(--off);
 }
@@ -1084,7 +1038,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 /* ══════════════════════════════════════════
    SCROLLBAR
 ══════════════════════════════════════════ */
-::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar { width:2px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--g2); border-radius:2px; }
 
@@ -1342,7 +1296,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   --amber-g:  rgba(138,92,0,0.08);
   --green:    #005C32;
   --green-g:  rgba(0,92,50,0.08);
-  --purple:   #4F1D91;
+  --purple:   #5BA8CC;
   --tucci-red: #1A5F8A;
   --tucci-blue: #5BA8CC;
 }
@@ -1416,7 +1370,6 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 #app.light .home-countdown-row { border-top:1px solid rgba(255,255,255,0.15) !important; }
 #app.light .home-progress-bar  { background:rgba(255,255,255,0.15) !important; }
 #app.light #home-prog-fill, #app.light .home-progress-fill { background:#5BA8CC !important; }
-#app.light #lb-days  { color:#5BA8CC !important; }
 #app.light #h-pct    { color:#5BA8CC !important; }
 #app.light #h-crit-num { color:#F5C518 !important; }
 
@@ -2226,6 +2179,384 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
 } /* end @media desktop */
 
+
+/* ══ GRADIENT ENHANCEMENTS ════════════════════════════════════════ */
+
+/* Modal headers — gradient */
+.modal-hdr, .modal-title {
+  background:linear-gradient(150deg,#050510 0%,#001828 100%) !important;
+}
+
+/* Home hero — deeper gradient */
+.home-hero {
+  background:linear-gradient(160deg,#0C0C14 0%,#001220 100%) !important;
+  border-top:2px solid var(--royal2) !important;
+}
+
+/* Stat cards — gradient bg */
+.stat {
+  background:linear-gradient(145deg,#0F0F14 0%,#0A1520 100%) !important;
+}
+
+/* Countdown numbers — BIG and bold */
+#h-crit-num { font-size:44px !important; }
+
+/* Launch banner — gradient */
+.launch-banner {
+  background:linear-gradient(145deg,#0A0A14 0%,#001820 100%) !important;
+}
+/* Buttons — gradient */
+.btn-blue {
+  background:linear-gradient(135deg,var(--royal) 0%,var(--royal2) 100%) !important;
+  box-shadow:0 2px 12px rgba(91,168,204,0.25) !important;
+}
+
+/* More drawer — gradient bg */
+#more-drawer {
+  background:linear-gradient(180deg,#101018 0%,#080810 100%) !important;
+  border-top:1px solid rgba(91,168,204,0.2) !important;
+}
+
+/* Booking blocks — gradient */
+.bk-block {
+  background:linear-gradient(135deg,#0F0F14 0%,#0A1218 100%) !important;
+}
+
+/* Week booking cards */
+.week-bk {
+  background:linear-gradient(135deg,#0D0D12 0%,#091218 100%) !important;
+}
+
+/* Card gradient */
+.card {
+  background:linear-gradient(145deg,#101014 0%,#0C0E14 100%) !important;
+}
+
+/* Section label — left accent */
+.sec-lbl {
+  border-left:3px solid var(--royal2) !important;
+  padding-left:8px !important;
+  border-bottom:none !important;
+}
+
+/* Navbar active — stronger */
+.nb.active { color:var(--royal2) !important; }
+.nb.active::after {
+  width:40px !important; height:3px !important;
+  box-shadow:0 0 12px rgba(91,168,204,0.8) !important;
+  background:linear-gradient(90deg,var(--royal),var(--royal2)) !important;
+}
+
+/* Critical task pulse */
+.tpill.critical {
+  animation:critPulse 2s ease-in-out infinite !important;
+}
+@keyframes critPulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(245,197,24,0.4)}
+  50%{box-shadow:0 0 0 6px rgba(245,197,24,0)}
+}
+
+/* Calendar day with bookings — tinted */
+.mc-day.has-bk {
+  background:rgba(91,168,204,0.12) !important;
+  border-radius:6px !important;
+}
+.mc-day.has-bk::after {
+  bottom:3px !important;
+  width:5px !important; height:5px !important;
+  background:var(--royal2) !important;
+  box-shadow:0 0 4px var(--royal2) !important;
+}
+
+/* Empty state */
+.empty-state {
+  text-align:center;
+  padding:32px 16px;
+  font-family:var(--fc);
+  font-size:14px;
+  font-weight:600;
+  color:var(--g2);
+  letter-spacing:.5px;
+}
+.empty-state-icon { font-size:32px; margin-bottom:10px; opacity:.4; }
+.empty-state-title { font-size:17px; font-weight:700; color:var(--g0); margin-bottom:6px; }
+
+/* Topbar gradient underline */
+#topbar::after {
+  background:linear-gradient(90deg,transparent,var(--royal2),transparent) !important;
+  opacity:.8 !important;
+}
+
+/* Pricing/budget category headers — gradient */
+.price-cat-hd, .bcat-hd {
+  background:linear-gradient(135deg,#0F0F14 0%,#0A1218 100%) !important;
+}
+
+/* AI hero gradient */
+.ai-hero-icon {
+  background:linear-gradient(135deg,rgba(46,134,181,0.2),rgba(91,168,204,0.1)) !important;
+}
+
+/* Client/settings nav items */
+.nav-pill {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--fc); font-size:13px; font-weight:700; letter-spacing:.5px;
+  padding:7px 14px; border-radius:20px; border:1px solid var(--line,rgba(255,255,255,0.12));
+  background:rgba(255,255,255,0.04); color:var(--g0); cursor:pointer; transition:all .12s;
+}
+.nav-pill:hover, .nav-pill.active {
+  background:rgba(91,168,204,0.15); border-color:var(--royal2); color:var(--royal2);
+}
+
+/* Settings rows */
+.setting-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.setting-row:last-child { border-bottom:none; }
+.setting-label { font-family:var(--fc); font-size:16px; font-weight:700; color:#DDDDDD; }
+.setting-sub { font-family:var(--fb); font-size:13px; font-weight:500; color:var(--g1); margin-top:3px; }
+
+/* Hiring chip */
+.hire-chip {
+  font-family:var(--fc); font-size:11px; font-weight:700; letter-spacing:.3px;
+  padding:3px 9px; border-radius:5px; white-space:nowrap; cursor:pointer;
+}
+.hire-chip.applied { background:rgba(255,176,32,0.15); color:var(--amber); border:1px solid rgba(255,176,32,0.3); }
+.hire-chip.interview { background:rgba(255,176,32,0.15); color:var(--amber); border:1px solid rgba(255,176,32,0.3); }
+.hire-chip.hired { background:rgba(0,230,118,0.12); color:var(--green); border:1px solid rgba(0,230,118,0.25); }
+.hire-chip.staff { background:rgba(91,168,204,0.15); color:var(--royal2); border:1px solid rgba(91,168,204,0.3); }
+
+
+/* ── GRADIENT SYSTEM ── */
+:root {
+  --grad-card: linear-gradient(160deg,#161618,#0E0E11);
+  --grad-hero: linear-gradient(135deg,#0D1117 0%,#091520 60%,#0A1A2A 100%);
+  --grad-blue: linear-gradient(135deg,#1A5F8A,#00C8FF);
+  --grad-gold: linear-gradient(135deg,#B8860B,#F5C518);
+  --grad-bar:  linear-gradient(90deg,#1A5F8A,#00C8FF);
+  --grad-modal:linear-gradient(150deg,#060610,#041020);
+}
+
+/* ── GRADIENT CARDS — override flat #111111 ── */
+.card, .stat, .titem, .bk-block, .price-cat, .bcat,
+.folder-card, .file-row, .client-card, .week-bk,
+.briefing-card, .rev-card, .more-btn, .home-action,
+.ai-msg.ai, .cl-block {
+  background: var(--grad-card) !important;
+}
+
+/* ── HOME HERO — deep gradient ── */
+.home-hero {
+  background: var(--grad-hero) !important;
+  border: 1px solid rgba(91,168,204,0.25) !important;
+  border-top: 2px solid #5BA8CC !important;
+  box-shadow: 0 4px 32px rgba(0,150,200,0.08) !important;
+}
+
+/* ── TOPBAR — subtle dark gradient ── */
+#topbar {
+  background: linear-gradient(180deg,#050508,#000000) !important;
+}
+
+/* ── NAVBAR — gradient with blue glow ── */
+#navbar {
+  background: linear-gradient(0deg,#000000,#04060A) !important;
+}
+
+/* ── MORE DRAWER ── */
+#more-drawer {
+  background: linear-gradient(160deg,#0A0A0E,#050508) !important;
+  border-top: 1px solid rgba(91,168,204,0.25) !important;
+}
+
+/* ── MODALS ── */
+.modal, .modal-box {
+  background: linear-gradient(160deg,#080810,#05050A) !important;
+}
+
+/* ── MODAL HEADERS ── */
+.modal-hdr, .modal-title {
+  background: var(--grad-modal) !important;
+  border-bottom: 1px solid rgba(91,168,204,0.2) !important;
+}
+
+/* ── BTN-BLUE — gradient ── */
+.btn-blue {
+  background: var(--grad-blue) !important;
+  color: #000 !important;
+  font-weight: 800 !important;
+}
+.btn-blue:hover { filter: brightness(1.15) !important; }
+
+
+#h-crit-num { color: #F5C518 !important; text-shadow: 0 0 20px rgba(245,197,24,0.4) !important; }
+
+/* ── PROGRESS BAR — gradient ── */
+.home-progress-fill {
+  background: var(--grad-bar) !important;
+  box-shadow: 0 0 8px rgba(91,168,204,0.4) !important;
+}
+
+/* ── CRITICAL TASK — pulse ── */
+.titem.critical { border-color: rgba(245,197,24,0.3) !important; }
+.tpill.critical {
+  background: var(--grad-gold) !important;
+  color: #000 !important;
+  animation: critPulse 2.5s ease-in-out infinite !important;
+  box-shadow: 0 0 0 0 rgba(245,197,24,0.5) !important;
+}
+@keyframes critPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(245,197,24,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(245,197,24,0); }
+}
+
+/* ── SECTION LABELS — left accent ── */
+.sec-lbl {
+  position: relative !important;
+  padding-left: 10px !important;
+  border-left: 2px solid #5BA8CC !important;
+  border-bottom: none !important;
+}
+
+/* ── CALENDAR day with bookings — blue tint ── */
+.mc-day.has-bk {
+  background: rgba(91,168,204,0.12) !important;
+  color: #fff !important;
+}
+.mc-day.has-bk::after { background: #5BA8CC !important; }
+.mc-day.selected { background: var(--grad-blue) !important; color: #000 !important; }
+
+/* ── NAVBAR ACTIVE — stronger ── */
+.nb.active { color: #5BA8CC !important; }
+.nb.active::after {
+  content: '';
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 32px; height: 3px;
+  background: var(--grad-blue);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 0 12px rgba(91,168,204,0.7);
+}
+
+/* ── STAT CARD — top gradient strip (override::before) ── */
+.stat::before {
+  content: '' !important;
+  position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important;
+  height: 2px !important;
+  background: var(--grad-blue) !important;
+}
+
+/* ── STATUS BADGES — gradient ── */
+.bk-status.confirmed { background: linear-gradient(135deg,rgba(0,180,100,.2),rgba(0,230,118,.15)) !important; }
+
+/* ── TASK SWIPE HINTS ── */
+.titem-wrap { position: relative; overflow: hidden; margin-bottom: 6px; border-radius: var(--r-sm); }
+.swipe-done-hint, .swipe-trash-hint {
+  position: absolute; top: 0; bottom: 0; width: 80px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fc); font-size: 12px; font-weight: 800;
+  letter-spacing: .5px; opacity: 0; pointer-events: none; transition: opacity .1s;
+}
+.swipe-done-hint  { left: 0;  background: linear-gradient(90deg,rgba(245,197,24,.25),transparent); color: #F5C518; }
+.swipe-trash-hint { right: 0; background: linear-gradient(270deg,rgba(245,197,24,.2),transparent); color: var(--gold); }
+
+/* ── EMPTY STATES ── */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 20px; text-align: center; gap: 10px;
+}
+.empty-state-icon { font-size: 36px; opacity: .4; }
+.empty-state-title { font-family: var(--fc); font-size: 18px; font-weight: 800; color: var(--g0); letter-spacing: .5px; }
+.empty-state-sub   { font-family: var(--fb); font-size: 13px; font-weight: 500; color: var(--g2); line-height: 1.5; }
+
+/* ── SETTINGS SCREEN ── */
+.setting-section { margin-bottom: 20px; }
+.setting-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.07); gap: 12px; }
+.setting-label { font-family: var(--fb); font-size: 14px; font-weight: 600; color: var(--g0); }
+.setting-sub   { font-family: var(--fb); font-size: 12px; font-weight: 500; color: var(--g2); margin-top: 2px; }
+.setting-action { background: var(--grad-card); border: 1px solid rgba(255,255,255,.14); border-radius: var(--r-sm); color: #5BA8CC; font-family: var(--fc); font-size: 13px; font-weight: 700; letter-spacing: .5px; padding: 8px 14px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.setting-action:hover { border-color: #5BA8CC; }
+.setting-action.red-action { color: var(--gold); border-color: rgba(245,197,24,.25); }
+.setting-action.red-action:hover { border-color: var(--gold); background: rgba(245,197,24,.08); }
+.date-input { background: var(--grad-card); border: 1px solid rgba(91,168,204,.3); border-radius: var(--r-sm); color: #5BA8CC; font-family: var(--fc); font-size: 15px; font-weight: 700; padding: 8px 12px; outline: none; letter-spacing: 1px; -webkit-appearance: none; color-scheme: dark; }
+.date-input:focus { border-color: #5BA8CC; box-shadow: 0 0 0 2px rgba(91,168,204,.15); }
+
+/* ── CLIENT CARDS ── */
+.client-card { display: flex; align-items: flex-start; gap: 12px; padding: 13px 14px; border-radius: var(--r-sm); border: 1px solid rgba(91,168,204,.15); cursor: pointer; transition: border-color .12s; }
+.client-card:hover { border-color: rgba(91,168,204,.3); }
+.client-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--fc); font-size: 16px; font-weight: 800; color: #000; flex-shrink: 0; }
+.client-name { font-family: var(--fc); font-size: 17px; font-weight: 800; color: #fff; letter-spacing: .2px; }
+.client-info { font-family: var(--fb); font-size: 13px; font-weight: 500; color: var(--g0); margin-top: 2px; }
+.client-tags { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
+
+/* ── STAFF PIPELINE STATUS ── */
+.staff-status { font-family: var(--fc); font-size: 11px; font-weight: 700; letter-spacing: .3px; padding: 2px 8px; border-radius: 4px; }
+.ss-applied    { background: rgba(91,168,204,.15); color: var(--royal2); border: 1px solid rgba(91,168,250,.3); }
+.ss-interview  { background: rgba(255,176,32,.15); color: #FFB020; border: 1px solid rgba(255,176,32,.3); }
+.ss-hired      { background: rgba(0,230,118,.12); color: #00E676; border: 1px solid rgba(0,230,118,.25); }
+.ss-active     { background: rgba(91,168,204,.15); color: #5BA8CC; border: 1px solid rgba(91,168,204,.3); }
+
+
+/* ── LOGIN PIN BUTTONS ─────────────────────────── */
+.login-pin-btn {
+  width:70px; height:70px; border-radius:50%;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+  font-family:var(--fc); font-size:26px; font-weight:700; color:#FFFFFF;
+  cursor:pointer; transition:all .1s; display:flex; align-items:center; justify-content:center;
+}
+.login-pin-btn:active { background:rgba(91,168,204,0.2); border-color:var(--royal2); transform:scale(.92); }
+.pin-dot { width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.2); transition:all .2s; }
+.pin-dot.filled { background:var(--royal2); box-shadow:0 0 8px rgba(91,168,204,0.5); }
+.pin-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; max-width:250px; margin:0 auto; }
+.login-pin-display { display:flex; gap:12px; justify-content:center; margin-bottom:20px; }
+
+/* countdown — uniform size */
+#lb-days { color:var(--royal2); }
+
+/* ══ TUCCI GRADIENT SYSTEM ═════════════════════════════════════════ */
+
+/* Screens — very subtle gradient background */
+.screen { background:linear-gradient(180deg,#000000 0%,#020810 100%) !important; }
+
+/* Navbar gradient */
+#navbar { background:linear-gradient(180deg,#050510 0%,#000000 100%) !important; }
+
+/* More drawer */
+#more-drawer { background:linear-gradient(180deg,#0A0A14 0%,#050508 100%) !important; }
+
+/* Pricing/budget section headers */
+.price-cat-hd { background:linear-gradient(135deg,#0C0C14 0%,#081018 100%) !important; }
+.bcat-hd      { background:linear-gradient(135deg,#0C0C14 0%,#081018 100%) !important; }
+
+/* SOP checklist blocks */
+.cl-block { background:linear-gradient(145deg,#0C0C14 0%,#081018 100%) !important; border:1px solid rgba(91,168,204,0.15) !important; }
+.cl-hd    { background:linear-gradient(135deg,#0F0F18 0%,#0A1020 100%) !important; }
+
+/* File/folder cards */
+.folder-card { background:linear-gradient(145deg,#0D0D14 0%,#09101A 100%) !important; }
+.file-row    { background:linear-gradient(135deg,#0D0D12 0%,#091018 100%) !important; }
+
+/* Client cards */
+.client-card { background:linear-gradient(135deg,#0D0D12 0%,#091018 100%) !important; }
+
+/* AI message bubbles */
+.ai-msg.ai { background:linear-gradient(135deg,#0D0D14 0%,#091020 100%) !important; }
+
+/* Revenue snapshot cards */
+.rev-card { background:linear-gradient(145deg,#0D0D12 0%,#091018 100%) !important; }
+
+/* Brief card */
+.briefing-card { background:linear-gradient(145deg,#0C0C12 0%,#081018 100%) !important; }
+
+/* Topbar gradient */
+#topbar { background:linear-gradient(180deg,#030308 0%,#000000 100%) !important; }
+
+/* Modal box */
+.modal-box { background:linear-gradient(160deg,#0A0A12 0%,#050810 100%) !important; }
+.modal     { background:linear-gradient(160deg,#0A0A12 0%,#050810 100%) !important; }
+
+/* Login screen */
+#login-screen { background:linear-gradient(160deg,#000000 0%,#020810 100%) !important; }
 </style>
 </head>
 <body>
@@ -2412,11 +2743,6 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     SOPs
   </button>
 
-  <button class="sidebar-item" data-sidebar="settings" onclick="nav('settings')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    Settings
-  </button>
-
   <div class="sidebar-spacer"></div>
 </div>
 <!-- ████ DESKTOP MAIN ████ -->
@@ -2455,7 +2781,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <div class="home-progress-bar"><div id="home-prog-fill" class="home-progress-fill"></div></div>
     <div style="display:flex;justify-content:space-between;margin-top:5px">
       <span style="font-family:var(--fm);font-size:9px;color:var(--g1);letter-spacing:1px">LAUNCH PROGRESS</span>
-      <span style="font-family:var(--fm);font-size:9px;color:var(--royal2);letter-spacing:1px">APR 15, 2026</span>
+      <span style="font-family:var(--fm);font-size:9px;color:var(--royal2);letter-spacing:1px;cursor:pointer" onclick="nav('settings');toggleMore&&toggleMore()" id="home-launch-lbl">APR 15, 2026</span>
     </div>
   </div>
 
@@ -2498,7 +2824,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   <div id="h-week"></div>
 
   <!-- CRITICAL TASKS -->
-  <div class="sec-lbl">Critical Tasks <span class="badge red" id="h-crit-ct">0</span></div>
+  <div class="sec-lbl">Critical Tasks <span class="badge" id="h-crit-ct" style="background:rgba(245,197,24,0.15);color:var(--gold);border-color:rgba(245,197,24,0.3)">0</span></div>
   <div id="h-critical"></div>
 
 </div>
@@ -2583,128 +2909,64 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
 <!-- ████ PRICING ████ -->
 <div id="sc-pricing" class="screen">
-
-  <!-- Flagged bookings bar -->
   <div id="flagged-bar" style="display:none" class="flagged-bar">
     <div class="flagged-lbl">&#9873; BOOKINGS FLAGGED FOR PRICE REVIEW</div>
     <div id="flagged-list"></div>
   </div>
-
-  <!-- Tab bar -->
-  <div style="display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;flex-wrap:wrap">
-    <button class="ptab active" id="ptab-ratecard" onclick="switchPTab('ratecard')">Rate Card</button>
-    <button class="ptab" id="ptab-memberships" onclick="switchPTab('memberships')">Memberships</button>
-    <button class="ptab" id="ptab-sc" onclick="switchPTab('sc')">S&amp;C</button>
-    <button class="ptab" id="ptab-parties" onclick="switchPTab('parties')">Parties</button>
-    <button class="ptab" id="ptab-packages" onclick="switchPTab('packages')">Packages</button>
-    <button class="ptab" id="ptab-addons" onclick="switchPTab('addons')">Add-Ons</button>
-    <button class="ptab" id="ptab-tools" onclick="switchPTab('tools')">Tools</button>
-  </div>
-
-  <!-- RATE CARD TAB: Cage, Field, Lessons -->
-  <div id="ptab-pane-ratecard">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openSvcEditor(null,null)">+ Service</button>
+  <div class="sec-lbl">Rate Card</div>
+  <div id="pricing-cats"></div>
+  <div class="sec-lbl">Hour Packages</div>
+  <div class="pkg-grid" id="pkg-grid"></div>
+  <div class="sec-lbl">College Passes</div>
+  <div class="pkg-grid" id="cp-grid" style="grid-template-columns:1fr 1fr"></div>
+  <div class="sec-lbl">Add-Ons</div>
+  <div class="price-cat" style="margin-bottom:12px"><div class="price-items" id="addon-list" style="display:block"></div></div>
+  <div class="sec-lbl">Large Rental Discount Calculator</div>
+  <div class="card" style="margin-bottom:12px">
+    <div class="frow" style="margin-bottom:10px">
+      <div class="fgrp" style="margin:0">
+        <label class="flbl">Total Deal Value</label>
+        <input class="fi-full" id="disc-val" type="number" placeholder="50000" oninput="calcDiscount()">
+      </div>
+      <div class="fgrp" style="margin:0">
+        <label class="flbl">Season</label>
+        <select class="fsel-full" id="disc-season" onchange="calcDiscount()">
+          <option value="busy">Busy (Dec–Mar)</option>
+          <option value="shoulder">Shoulder (Apr, Nov)</option>
+        </select>
+      </div>
     </div>
-    <div id="pricing-cats"></div>
+    <div id="disc-result" class="disc-result" style="display:none"></div>
+    <div id="disc-empty" style="font-family:var(--fm);font-size:10px;color:var(--g1);padding:8px 0">Enter value above — minimum $10K for discount</div>
   </div>
-
-  <!-- MEMBERSHIPS TAB -->
-  <div id="ptab-pane-memberships" style="display:none">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openSvcEditor(null,'Gym Memberships')">+ Membership</button>
+  <div class="sec-lbl">Peak Hours</div>
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div>
+        <div style="font-family:var(--fc);font-size:16px;font-weight:700;letter-spacing:.5px">Peak Pricing</div>
+        <div style="font-family:var(--fm);font-size:9px;color:var(--g1);margin-top:2px">Higher rates during prime-time hours</div>
+      </div>
+      <button id="peak-toggle" onclick="togglePeak()" style="font-family:var(--fc);font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;background:var(--panel2);border:1px solid rgba(255,255,255,0.1);color:var(--g0);cursor:pointer;transition:all .15s">OFF</button>
     </div>
-    <div id="mem-pane"></div>
-  </div>
-
-  <!-- S&C TAB -->
-  <div id="ptab-pane-sc" style="display:none">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openSvcEditor(null,'S&C Memberships (12U)')">+ Program</button>
-    </div>
-    <div id="sc-pane"></div>
-  </div>
-
-  <!-- PARTIES TAB -->
-  <div id="ptab-pane-parties" style="display:none">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openSvcEditor(null,'Birthday Parties')">+ Package</button>
-    </div>
-    <div id="party-pane"></div>
-  </div>
-
-  <!-- PACKAGES TAB -->
-  <div id="ptab-pane-packages" style="display:none">
-    <div class="sec-lbl">Hour Packages</div>
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openPkgEditor(null)">+ Package</button>
-    </div>
-    <div id="pkg-list"></div>
-    <div class="sec-lbl" style="margin-top:16px">College / Seasonal Passes</div>
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openCPEditor(null)">+ Pass</button>
-    </div>
-    <div id="cp-list"></div>
-  </div>
-
-  <!-- ADD-ONS TAB -->
-  <div id="ptab-pane-addons" style="display:none">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
-      <button class="btn-blue" style="font-size:12px;padding:5px 12px" onclick="openAddonEditor(null)">+ Add-On</button>
-    </div>
-    <div id="addon-pane"></div>
-  </div>
-
-  <!-- TOOLS TAB -->
-  <div id="ptab-pane-tools" style="display:none">
-    <div class="sec-lbl">Large Rental Discount Calculator</div>
-    <div class="card" style="margin-bottom:12px">
-      <div class="frow" style="margin-bottom:10px">
+    <div id="peak-cfg" style="display:none">
+      <div class="frow">
         <div class="fgrp" style="margin:0">
-          <label class="flbl">Total Deal Value</label>
-          <input class="fi-full" id="disc-val" type="number" placeholder="50000" oninput="calcDiscount()">
+          <label class="flbl">Start</label>
+          <select class="fsel-full" id="peak-start" onchange="savePeak()">
+            <option value="15">3:00 PM</option><option value="16">4:00 PM</option>
+            <option value="17" selected>5:00 PM</option><option value="18">6:00 PM</option>
+          </select>
         </div>
         <div class="fgrp" style="margin:0">
-          <label class="flbl">Season</label>
-          <select class="fsel-full" id="disc-season" onchange="calcDiscount()">
-            <option value="busy">Busy (Dec–Mar)</option>
-            <option value="shoulder">Shoulder (Apr, Nov)</option>
+          <label class="flbl">End</label>
+          <select class="fsel-full" id="peak-end" onchange="savePeak()">
+            <option value="20">8:00 PM</option><option value="21" selected>9:00 PM</option>
+            <option value="22">10:00 PM</option>
           </select>
         </div>
       </div>
-      <div id="disc-result" class="disc-result" style="display:none"></div>
-      <div id="disc-empty" style="font-family:var(--fm);font-size:10px;color:var(--g1);padding:8px 0">Enter value above — minimum $10K for discount</div>
-    </div>
-    <div class="sec-lbl">Peak Hours</div>
-    <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div>
-          <div style="font-family:var(--fc);font-size:16px;font-weight:700;letter-spacing:.5px">Peak Pricing</div>
-          <div style="font-family:var(--fm);font-size:9px;color:var(--g1);margin-top:2px">Higher rates during prime-time hours</div>
-        </div>
-        <button id="peak-toggle" onclick="togglePeak()" style="font-family:var(--fc);font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;background:var(--panel2);border:1px solid rgba(255,255,255,0.1);color:var(--g0);cursor:pointer;transition:all .15s">OFF</button>
-      </div>
-      <div id="peak-cfg" style="display:none">
-        <div class="frow">
-          <div class="fgrp" style="margin:0">
-            <label class="flbl">Start</label>
-            <select class="fsel-full" id="peak-start" onchange="savePeak()">
-              <option value="15">3:00 PM</option><option value="16">4:00 PM</option>
-              <option value="17" selected>5:00 PM</option><option value="18">6:00 PM</option>
-            </select>
-          </div>
-          <div class="fgrp" style="margin:0">
-            <label class="flbl">End</label>
-            <select class="fsel-full" id="peak-end" onchange="savePeak()">
-              <option value="20">8:00 PM</option><option value="21" selected>9:00 PM</option>
-              <option value="22">10:00 PM</option>
-            </select>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-
 </div>
 
 <!-- ████ BUDGET ████ -->
@@ -2719,8 +2981,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   <div id="cl-container"></div>
 </div>
 
-</div><!-- /desktop-main -->
-</div><!-- /content -->
+
 
 <!-- ████ DOCS & FILES ████ -->
 <div id="sc-docs" class="screen">
@@ -2809,66 +3070,215 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   </div>
 </div>
 
+
+<!-- ████ CLIENT DIRECTORY ████ -->
+<div id="sc-clients" class="screen">
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <input class="fi" id="client-search" placeholder="Search clients..." style="flex:1;font-size:14px"
+      oninput="renderClients()">
+    <button class="btn-blue" onclick="openClientModal(null)" style="padding:10px 14px;font-size:13px;white-space:nowrap">+ Add</button>
+  </div>
+  <div class="filter-bar" id="client-filter-bar">
+    <button class="chip active" onclick="filterClients('all',this)">All</button>
+    <button class="chip" onclick="filterClients('Lead',this)">Leads</button>
+    <button class="chip" onclick="filterClients('Active',this)">Active</button>
+    <button class="chip" onclick="filterClients('Member',this)">Members</button>
+    <button class="chip" onclick="filterClients('Inactive',this)">Inactive</button>
+  </div>
+  <div id="client-list"></div>
+</div>
+
+<!-- CLIENT EDITOR MODAL -->
+<div class="modal-overlay" id="client-modal" onclick="if(event.target===this)closeModal('client-modal')">
+  <div class="modal-box" style="max-width:400px;width:95%">
+    <div class="modal-hdr">
+      <span id="cm-title" style="font-family:var(--fc);font-size:18px;font-weight:800;color:#fff;letter-spacing:.5px">New Client</span>
+      <button class="modal-x" onclick="closeModal('client-modal')">✕</button>
+    </div>
+    <div style="padding:16px">
+      <div class="fgrp"><label class="flbl">Name</label><input class="fi-full" id="cm-name" placeholder="Full name or team"></div>
+      <div class="fgrp"><label class="flbl">Phone</label><input class="fi-full" id="cm-phone" placeholder="(203) 555-0000" type="tel"></div>
+      <div class="fgrp"><label class="flbl">Email</label><input class="fi-full" id="cm-email" placeholder="email@example.com" type="email"></div>
+      <div class="fgrp">
+        <label class="flbl">Status</label>
+        <select class="fsel-full" id="cm-status">
+          <option value="Lead">Lead</option>
+          <option value="Active">Active</option>
+          <option value="Member">Member</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="fgrp"><label class="flbl">Sport / Program</label><input class="fi-full" id="cm-sport" placeholder="Baseball, Softball, Lessons..."></div>
+      <div class="fgrp"><label class="flbl">Notes</label><textarea class="fta" id="cm-notes" placeholder="Any notes..." style="min-height:60px"></textarea></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn-ghost" id="cm-delete-btn" style="flex:1;color:var(--red);border-color:rgba(255,59,78,0.3)" onclick="deleteClient()">Delete</button>
+        <button class="btn-blue" style="flex:2" onclick="saveClient()">SAVE CLIENT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ████ SETTINGS ████ -->
 <div id="sc-settings" class="screen">
-
-  <div class="sec-lbl">Data Backup</div>
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px">Export Full Backup</div>
-    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Downloads a complete JSON backup of all your data — bookings, tasks, pricing, budget, staff, everything.</div>
-    <button class="btn-blue full" onclick="exportBackup()">&#8659; Download Backup</button>
-  </div>
-
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px">Import / Restore</div>
-    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Restore from a backup file or paste exported data from another device.</div>
-    <div style="display:flex;gap:8px;margin-bottom:8px">
-      <button class="btn-blue" style="flex:1" onclick="document.getElementById('restore-file-input').click()">&#128194; From File</button>
-      <button class="btn-ghost" style="flex:1" onclick="toggleRestorePaste()">&#128203; Paste Data</button>
-    </div>
-    <input type="file" id="restore-file-input" accept=".json" style="display:none" onchange="importFromFile(this)">
-    <div id="restore-paste-area" style="display:none">
-      <textarea id="restore-paste-input" class="fi-full" rows="4" placeholder="Paste backup JSON or exported clipboard data here..." style="font-size:12px;font-family:monospace;resize:vertical;margin-bottom:8px"></textarea>
-      <button class="btn-blue full" onclick="importFromPasteText()">Import Now</button>
+  <div class="sec-lbl">Facility</div>
+  <div class="card">
+    <div class="setting-row">
+      <div>
+        <div class="setting-label">Launch Date</div>
+        <div class="setting-sub">Currently: <span id="current-launch-date">Apr 15, 2026</span></div>
+      </div>
+      <input type="date" id="launch-date-input" class="fi" style="width:150px;font-size:13px;background:var(--panel2);border:1px solid rgba(91,168,204,0.3);color:var(--royal2);padding:8px 10px;border-radius:var(--r-sm)"
+        onchange="saveLaunchDate(this.value)">
     </div>
   </div>
 
-  <div class="sec-lbl" style="margin-top:16px">Device Sync</div>
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px">Push to Another Device</div>
-    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Copies your full state to clipboard. Open the app on another device, go to Settings, and paste to sync.</div>
-    <button class="btn-blue full" onclick="copyStateToClipboard()">&#128203; Copy State to Clipboard</button>
-    <div id="copy-state-confirm" style="display:none;margin-top:8px;text-align:center;font-family:var(--fi);font-size:13px;color:var(--gold)">&#10003; Copied — paste on the other device</div>
-  </div>
-
-  <div class="sec-lbl" style="margin-top:16px">App Info</div>
-  <div class="card" style="margin-bottom:12px">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08)">
-      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Storage Used</span>
-      <span id="settings-storage" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+  <div class="sec-lbl" style="margin-top:20px">Data & Backup</div>
+  <div class="card">
+    <div class="setting-row">
+      <div>
+        <div class="setting-label">Export All Data</div>
+        <div class="setting-sub">Download full JSON backup</div>
+      </div>
+      <button class="btn-blue" onclick="exportAllData()" style="padding:8px 16px;font-size:13px">Export</button>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08)">
-      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Bookings</span>
-      <span id="settings-bookings" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+    <div class="setting-row">
+      <div>
+        <div class="setting-label">Import / Restore</div>
+        <div class="setting-sub">Load from backup file</div>
+      </div>
+      <button class="btn-ghost" onclick="document.getElementById('import-file-input').click()" style="padding:8px 14px;font-size:13px">Import</button>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08)">
-      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Tasks</span>
-      <span id="settings-tasks" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0">
-      <span style="font-family:var(--fm);font-size:13px;color:var(--g1)">Last Saved</span>
-      <span id="settings-saved" style="font-family:var(--fc);font-size:13px;font-weight:700">—</span>
+    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="importAllData(this)">
+    <div class="setting-row">
+      <div>
+        <div class="setting-label" style="color:var(--gold)">Wipe All Data</div>
+        <div class="setting-sub">Resets app to factory defaults</div>
+      </div>
+      <button class="btn-ghost" style="border-color:rgba(255,59,78,0.3);color:var(--red);padding:8px 14px;font-size:13px" onclick="confirmWipeData()">Wipe</button>
     </div>
   </div>
 
-  <div class="sec-lbl" style="margin-top:16px">Danger Zone</div>
-  <div class="card" style="margin-bottom:24px;border-color:rgba(232,57,74,0.3)">
-    <div style="font-family:var(--fc);font-size:15px;font-weight:700;margin-bottom:4px;color:var(--amber)">Clear All Data</div>
-    <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Wipes all bookings, tasks, pricing edits, and budget data. Resets to defaults. Cannot be undone — export a backup first.</div>
-    <button class="btn-ghost full" style="border-color:rgba(232,57,74,0.4);color:#E8394A" onclick="confirmClearData()">Clear All Data</button>
+  <div class="sec-lbl" style="margin-top:20px">Display</div>
+  <div class="card">
+    <div class="setting-row">
+      <div>
+        <div class="setting-label">Theme</div>
+        <div class="setting-sub">Dark or Light mode</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="nav-pill" id="theme-dark-pill" onclick="setTheme('dark')">🌑 Dark</button>
+        <button class="nav-pill" id="theme-light-pill" onclick="setTheme('light')">☀️ Light</button>
+      </div>
+    </div>
   </div>
 
+  <div class="sec-lbl" style="margin-top:20px">App Info</div>
+  <div class="card">
+    <div class="setting-row">
+      <div class="setting-label">Tucci Elite Ops</div>
+      <span style="font-family:var(--fm);font-size:12px;color:var(--g2)">v4.1</span>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Storage Used</div>
+      <span id="storage-used" style="font-family:var(--fm);font-size:12px;color:var(--g0)">—</span>
+    </div>
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+<!-- ████ CLIENTS ████ -->
+<div id="sc-clients" class="screen">
+  <div class="filter-bar" id="client-filter-bar">
+    <button class="chip active" onclick="filterClients('all',this)">All</button>
+    <button class="chip" onclick="filterClients('Lead',this)">Leads</button>
+    <button class="chip" onclick="filterClients('Active',this)">Active</button>
+    <button class="chip" onclick="filterClients('Member',this)">Members</button>
+    <button class="chip" onclick="filterClients('Inactive',this)">Inactive</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:14px">
+    <input class="fi" id="client-search" style="flex:1" placeholder="Search clients..." oninput="renderClients()">
+    <button class="btn-blue" onclick="openClientModal()">+ ADD</button>
+  </div>
+  <div id="client-list"></div>
+</div>
+
+
+
+<!-- ████ SETTINGS ████ -->
+<div id="sc-settings" class="screen">
+  <div class="sec-lbl">Launch Date</div>
+  <div class="card" style="padding:16px">
+    <div style="margin-bottom:10px;font-family:var(--fb);font-size:13px;font-weight:500;color:var(--g0)">Change when the countdown resets to zero</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <input type="date" class="date-input" id="launch-date-input" onchange="saveLaunchDate(this.value)">
+      <span id="launch-days-preview" style="font-family:var(--fc);font-size:22px;font-weight:800;color:#5BA8CC"></span>
+    </div>
+  </div>
+
+  <div class="sec-lbl" style="margin-top:20px">Data & Backup</div>
+  <div class="card" style="padding:0">
+    <div class="setting-row" style="padding:13px 16px">
+      <div>
+        <div class="setting-label">Export All Data</div>
+        <div class="setting-sub">Download full JSON backup</div>
+      </div>
+      <button class="setting-action" onclick="exportAllData()">Export</button>
+    </div>
+    <div class="setting-row" style="padding:13px 16px">
+      <div>
+        <div class="setting-label">Import / Restore</div>
+        <div class="setting-sub">Load a previous backup file</div>
+      </div>
+      <button class="setting-action" onclick="document.getElementById('import-data-file').click()">Import</button>
+      <input type="file" id="import-data-file" accept=".json" style="display:none" onchange="importAllData(this)">
+    </div>
+    <div class="setting-row" style="padding:13px 16px;border-bottom:none">
+      <div>
+        <div class="setting-label">Storage Used</div>
+        <div class="setting-sub" id="settings-storage-used">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-lbl" style="margin-top:20px">Account</div>
+  <div class="card" style="padding:0">
+    <div class="setting-row" style="padding:13px 16px">
+      <div>
+        <div class="setting-label">Theme</div>
+        <div class="setting-sub">Dark / Light mode</div>
+      </div>
+      <button class="setting-action" onclick="toggleTheme()">Toggle</button>
+    </div>
+    <div class="setting-row" style="padding:13px 16px;border-bottom:none">
+      <div>
+        <div class="setting-label">Sign Out</div>
+        <div class="setting-sub">Return to login screen</div>
+      </div>
+      <button class="setting-action" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="sec-lbl" style="margin-top:20px">Danger Zone</div>
+  <div class="card" style="padding:0">
+    <div class="setting-row" style="padding:13px 16px;border-bottom:none">
+      <div>
+        <div class="setting-label" style="color:#FF3B4E">Wipe All Data</div>
+        <div class="setting-sub">Cannot be undone — export first</div>
+      </div>
+      <button class="setting-action red-action" onclick="wipeAllData()">Wipe</button>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /desktop-main -->
 
 <!-- TEMPLATE EDITOR OVERLAY -->
 <div class="overlay" id="template-editor" onclick="if(event.target===this)closeModal('template-editor')">
@@ -2922,22 +3332,6 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     </div>
 
     <button class="btn-blue full" onclick="saveSyncSettings()">SAVE &amp; SYNC NOW</button>
-
-    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)">
-      <div style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px">Device-to-Device Sync</div>
-      <div style="font-family:var(--fi);font-style:italic;font-size:13px;color:var(--g1);margin-bottom:12px">Push your data to another device — no Sheets required. Works between phone and computer instantly.</div>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
-        <button class="btn-blue" style="flex:1;font-size:13px" onclick="exportToClipboard()">&#128203; Copy Data</button>
-        <button class="btn-ghost" style="flex:1;font-size:13px" onclick="showImportBox()">&#8659; Paste &amp; Import</button>
-      </div>
-      <div id="import-paste-box" style="display:none;margin-top:8px">
-        <textarea id="import-paste-input" class="fi-full" rows="4" placeholder="Paste exported data here..." style="font-size:11px;font-family:monospace;resize:vertical"></textarea>
-        <button class="btn-blue full" style="margin-top:6px" onclick="importFromPaste()">IMPORT NOW</button>
-      </div>
-      <div id="export-confirm" style="display:none;background:rgba(91,168,204,0.1);border:1px solid rgba(91,168,204,0.3);border-radius:var(--r-sm);padding:10px;margin-top:8px;font-family:var(--fi);font-size:13px;color:var(--g0);text-align:center">
-        &#10003; Copied to clipboard — paste on the other device
-      </div>
-    </div>
   </div>
 </div>
 
@@ -3040,6 +3434,10 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       <span>SOPs</span>
     </button>
+    <button class="more-btn" onclick="nav('clients');toggleMore()">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Clients</span>
+    </button>
     <button class="more-btn" onclick="nav('settings');toggleMore()">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span>Settings</span>
@@ -3062,7 +3460,32 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <div class="fgrp">
       <label class="flbl">Service</label>
       <select class="fsel-full" id="bm-type" onchange="updateBmPrice()">
-        <option value="">Loading...</option>
+        <optgroup label="CAGE RENTALS">
+          <option value="cage-full-hr">Full Cage — Hourly ($75)</option>
+          <option value="cage-full-30">Full Cage — 30 Min ($40)</option>
+          <option value="cage-half-hr">Half Cage — Hourly ($50)</option>
+          <option value="cage-half-30">Half Cage — 30 Min ($30)</option>
+          <option value="cage-outdoor-hr">Outside Cage ($50/hr)</option>
+          <option value="cage-offpeak">Off-Peak Cage (50% off)</option>
+        </optgroup>
+        <optgroup label="FIELD & FACILITY">
+          <option value="field-1">Field 1 ($250/hr)</option>
+          <option value="field-2">Field 2 ($300/hr)</option>
+          <option value="turf-full">Full Turf ($500/hr)</option>
+          <option value="facility-full">Full Facility ($600/hr)</option>
+          <option value="facility-winter">Winter Block (custom)</option>
+        </optgroup>
+        <optgroup label="LESSONS">
+          <option value="lesson-t1">Lesson Tier 1 — Elite ($200/hr)</option>
+          <option value="lesson-t2">Lesson Tier 2 ($175/hr)</option>
+          <option value="lesson-t3">Lesson Tier 3 ($150/hr)</option>
+          <option value="lesson-group">Small Group per athlete ($75)</option>
+        </optgroup>
+        <optgroup label="MEMBERSHIPS">
+          <option value="mem-monthly">Monthly Membership ($199/mo)</option>
+          <option value="mem-family">Family Membership ($299/mo)</option>
+          <option value="mem-team">Team Membership ($599/mo)</option>
+        </optgroup>
       </select>
     </div>
     <div class="frow">
@@ -3241,44 +3664,16 @@ const DEFAULT_PRICING = {
     {id:'lesson-t2',      name:'Lesson — Tier 2',     category:'Lessons',       baseRate:175,peakRate:175,unit:'/hr',   minDuration:1,   desc:'Experienced instructor'},
     {id:'lesson-t3',      name:'Lesson — Tier 3',     category:'Lessons',       baseRate:150,peakRate:150,unit:'/hr',   minDuration:1,   desc:'Standard instructor'},
     {id:'lesson-group',   name:'Small Group (per athlete)',category:'Lessons',   baseRate:75, peakRate:75, unit:'/athlete/hr',minDuration:1,desc:'Price is per athlete'},
-    {id:'mem-monthly',    name:'Monthly Membership',  category:'Memberships',   baseRate:0,peakRate:0,unit:'/mo',   minDuration:1,   desc:'Unlimited open cage'},
-    {id:'mem-family',     name:'Family Membership',   category:'Memberships',   baseRate:0,peakRate:0,unit:'/mo',   minDuration:1,   desc:'Up to 4 family members'},
-    {id:'mem-team',       name:'Team Membership',     category:'Memberships',   baseRate:0,peakRate:0,unit:'/mo',   minDuration:1,   desc:'Full team, 10+ players'},
-
-    // ── GYM MEMBERSHIPS ─────────────────────────────────────
-    {id:'gym-mem-basic',  name:'Gym — Basic',         category:'Gym Memberships', baseRate:0,  peakRate:0,  unit:'/mo', minDuration:1, desc:'Unlimited gym access, no coach. Month-to-month.'},
-    {id:'gym-mem-standard',name:'Gym — Standard',     category:'Gym Memberships', baseRate:0,  peakRate:0,  unit:'/mo', minDuration:1, desc:'Unlimited gym + 2 open turf sessions/mo. Month-to-month.'},
-    {id:'gym-mem-premium', name:'Gym — Premium',      category:'Gym Memberships', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'Unlimited gym + unlimited open turf + 1 complimentary S&C session/mo.'},
-    {id:'gym-mem-family',  name:'Gym — Family',       category:'Gym Memberships', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'Up to 4 family members. Unlimited gym access. Month-to-month.'},
-
-    // ── S&C MEMBERSHIPS — Ages 12 & Under ────────────────────
-    {id:'sc-12u-starter',  name:'S&C 12U — Starter',  category:'S&C Memberships (12U)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'4 group S&C sessions/mo with coach. Ages 12 & under. Focus: movement, athleticism, body awareness.'},
-    {id:'sc-12u-core',     name:'S&C 12U — Core',     category:'S&C Memberships (12U)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'8 group S&C sessions/mo with coach + 4 open gym visits. Ages 12 & under.'},
-    {id:'sc-12u-elite',    name:'S&C 12U — Elite',    category:'S&C Memberships (12U)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'Unlimited group S&C sessions + unlimited open gym. Ages 12 & under. Priority scheduling.'},
-
-    // ── S&C PACKAGES — Ages 12 & Under (no membership commitment) ──
-    {id:'sc-12u-pkg4',     name:'S&C 12U — 4-Session Pack',  category:'S&C Memberships (12U)', baseRate:0, peakRate:0, unit:'/pack', minDuration:1, desc:'4 group S&C sessions. No commitment. Ages 12 & under. Expires in 60 days.'},
-    {id:'sc-12u-pkg8',     name:'S&C 12U — 8-Session Pack',  category:'S&C Memberships (12U)', baseRate:0, peakRate:0, unit:'/pack', minDuration:1, desc:'8 group S&C sessions. No commitment. Ages 12 & under. Expires in 90 days.'},
-
-    // ── PERFORMANCE + S&C MEMBERSHIPS — Ages 13+ ─────────────
-    // Tiers combine coached skill development hours + S&C + open access
-    {id:'perf-13u-bronze', name:'Performance 13+ — Bronze', category:'Performance Memberships (13+)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'2 hrs coached skill dev/mo + 2 S&C sessions/mo + 4 open cage/turf visits. Ages 13+. Coach required during skill sessions.'},
-    {id:'perf-13u-silver', name:'Performance 13+ — Silver', category:'Performance Memberships (13+)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'4 hrs coached skill dev/mo + 4 S&C sessions/mo + 8 open cage/turf visits. Ages 13+. Open turf unsupervised OK.'},
-    {id:'perf-13u-gold',   name:'Performance 13+ — Gold',   category:'Performance Memberships (13+)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'6 hrs coached skill dev/mo + 8 S&C sessions/mo + unlimited open cage/turf. Ages 13+. Full unsupervised access during open hours.'},
-    {id:'perf-13u-elite',  name:'Performance 13+ — Elite',  category:'Performance Memberships (13+)', baseRate:0, peakRate:0, unit:'/mo', minDuration:1, desc:'8 hrs coached skill dev/mo + unlimited S&C + unlimited open access (any hour). Ages 13+. Priority scheduling. Includes 1 HitTrax session/mo.'},
-
-    // ── BIRTHDAY PARTIES ─────────────────────────────────────
-    {id:'party-small',   name:'Party — Starter (Ages 5 & Under)', category:'Birthday Parties', baseRate:699,  peakRate:699,  unit:'/party', minDuration:2,   desc:'2 hrs total: 1.5 hrs activity + 30 min cake. Up to 14 kids ($20/additional, max 22). Pizza, drinks, goodie bags, cake, paper goods, 1 coach, HitTrax included. Birthday child gets free 30-min lesson. $150 non-refundable deposit.'},
-    {id:'party-mid',     name:'Party — Classic (Ages 6+)',          category:'Birthday Parties', baseRate:799,  peakRate:799,  unit:'/party', minDuration:2.5, desc:'2.5 hrs total: 2 hrs activity + 30 min cake. Up to 18 kids ($20/additional, max 28). Pizza, drinks, goodie bags, cake, paper goods, 1 coach, HitTrax included. Birthday child gets free 30-min lesson. $150 non-refundable deposit.'},
-    {id:'party-large',   name:'Party — Elite (Ages 6+)',            category:'Birthday Parties', baseRate:1299, peakRate:1299, unit:'/party', minDuration:2.5, desc:'2.5 hrs total: 2 hrs activity + 30 min cake. Up to 30 kids ($20/additional, max 45). Full turf/field access. Pizza, drinks, goodie bags, cake, paper goods, 2 coaches, HitTrax included. Birthday child gets free 30-min lesson. $150 non-refundable deposit.'},
-    {id:'party-addon-extra-coach', name:'Party Add-on: Extra Coach', category:'Birthday Parties', baseRate:75,   peakRate:75,   unit:'/hr',    minDuration:1,   desc:'Additional coach for larger or higher-energy groups.'},
+    {id:'mem-monthly',    name:'Monthly Membership',  category:'Memberships',   baseRate:199,peakRate:199,unit:'/mo',   minDuration:1,   desc:'Unlimited open cage'},
+    {id:'mem-family',     name:'Family Membership',   category:'Memberships',   baseRate:299,peakRate:299,unit:'/mo',   minDuration:1,   desc:'Up to 4 family members'},
+    {id:'mem-team',       name:'Team Membership',     category:'Memberships',   baseRate:599,peakRate:599,unit:'/mo',   minDuration:1,   desc:'Full team, 10+ players'},
   ]
 };
 
 // ═══════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════
-const LAUNCH = new Date('2026-04-15T12:00:00'); // noon local time avoids UTC-midnight timezone shift
+let LAUNCH = new Date('2026-04-15T12:00:00');
 const SK = 'tucci_v4';
 
 // ── STAFF CREDENTIALS ─────────────────────────────────────────────
@@ -3357,6 +3752,12 @@ function loadState() {
       if(!S.aiHistory) S.aiHistory=[];
       if(!S.savedTemplates) S.savedTemplates={};
       if(!S.savedMaterials) S.savedMaterials=[];
+      if(!S.clients) S.clients=[];
+      if(!S.doneTasks) S.doneTasks=[];
+      if(!S.trashedTasks) S.trashedTasks=[];
+      if(!S.staffDir) S.staffDir=[];
+      if(!S.launchDate) S.launchDate='2026-04-15';
+      if(!S.marketing) S.marketing={};
     } else {
       S = {
         tasks: JSON.parse(JSON.stringify(WORKBOOK_TASKS)),
@@ -3369,7 +3770,13 @@ function loadState() {
         savedTemplates: {},
         savedMaterials: [],
         currentTab: 'home',
-        sheetsConfig: {lastSync:null}
+        sheetsConfig: {lastSync:null},
+        clients: [],
+        doneTasks: [],
+        trashedTasks: [],
+        staffDir: [],
+        launchDate: '2026-04-15',
+        marketing: {}
       };
     }
   } catch(e) {
@@ -3380,6 +3787,7 @@ function loadState() {
       budget: JSON.parse(JSON.stringify(DEFAULT_BUDGET)),
       checklists: JSON.parse(JSON.stringify(DEFAULT_CHECKLISTS)),
       currentTab: 'home',
+      clients: [], doneTasks: [], trashedTasks: [], launchDate: '2026-04-15', marketing: {}
     };
   }
 }
@@ -3457,7 +3865,7 @@ const DEFAULT_CHECKLISTS = {
     state:{}
   },
   weekly:{
-    title:'Weekly Staff Meeting — Sat 5pm',color:'var(--red)',
+    title:'Weekly Staff Meeting — Sat 5pm',color:'var(--gold)',
     items:['Review next 7 days of bookings','Flag scheduling conflicts','Review incident log','Update task status with team','Coaching feedback discussion','Review budget actuals'],
     state:{}
   }
@@ -3517,6 +3925,17 @@ function initHeader() {
 // ═══════════════════════════════════════════════════════════
 // HOME PAGE — full briefing dashboard
 function renderHome() {
+  // Update dynamic launch date from state
+  if(S.launchDate) {
+    LAUNCH = new Date(S.launchDate + 'T12:00:00');
+    const ld = LAUNCH.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase();
+    const el = document.getElementById('home-launch-lbl');
+    if(el) el.textContent = ld;
+    const ci = document.getElementById('current-launch-date');
+    if(ci) ci.textContent = LAUNCH.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    const di = document.getElementById('launch-date-input');
+    if(di) di.value = S.launchDate;
+  }
   const tasks = S.tasks||[];
   const bks   = S.bookings||[];
   const now   = new Date();
@@ -3538,6 +3957,7 @@ function renderHome() {
     (S.sheetsConfig&&S.sheetsConfig.lastSync?' · SYNCED '+new Date(S.sheetsConfig.lastSync).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'');
 
   // Countdown
+  if(S.launchDate) LAUNCH = new Date(S.launchDate+'T12:00:00');
   const days = Math.max(0,Math.ceil((LAUNCH-now)/86400000));
   document.getElementById('lb-days').textContent = days;
   document.getElementById('h-pct').textContent = pct+'%';
@@ -3548,7 +3968,7 @@ function renderHome() {
   document.getElementById('h-bk-ct').textContent = todayBks.length;
   document.getElementById('h-bookings').innerHTML = todayBks.length
     ? todayBks.map(b=>bkRowHTML(b)).join('')
-    : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:10px 0;letter-spacing:1px">No bookings today — tap Book to add one</div>';
+    : '<div class="empty-state" style="padding:16px 0"><div class="empty-state-icon">📅</div><div class="empty-state-title">No bookings today</div><button class="btn-blue" onclick="nav(\'calendar\');openBookingModal()" style="margin-top:10px;padding:9px 20px;font-size:13px">+ Book Now</button></div>';
 
   // Upcoming week bookings
   const weekBks = getWeekBookings(now);
@@ -3566,7 +3986,7 @@ function renderHome() {
           <span class="bk-status ${b.status||'confirmed'}">${(b.status||'conf').toUpperCase()}</span>
         </div>`;
       }).join('')
-    : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:10px 0;letter-spacing:1px">No upcoming bookings this week</div>';
+    : '<div class="empty-state" style="padding:12px 0"><div class="empty-state-title">No bookings this week</div></div>';
 
 
   // Revenue snapshot from bookings
@@ -3590,7 +4010,7 @@ function renderHome() {
   // Critical tasks strip
   document.getElementById('h-crit-ct').textContent = crit.length;
   document.getElementById('h-critical').innerHTML = crit.slice(0,4).map(t=>taskItemHTML(t)).join('') ||
-    '<div style="font-family:var(--fm);font-size:10px;color:var(--green);padding:10px 0;letter-spacing:1px">All critical tasks complete ✓</div>';
+    '<div class="empty-state" style="padding:12px 0"><div style="font-size:20px;margin-bottom:6px">✅</div><div class="empty-state-title" style="color:var(--green)">All clear — no critical tasks</div></div>';
 }
 RENDERS.home = renderHome;
 
@@ -3629,10 +4049,19 @@ function renderBriefing(days, crit, todayBks, flagged, pct) {
 }
 
 function bkRowHTML(b) {
+  // Compute end time
+  const startH = b.startTime ? parseInt(b.startTime) : null;
+  let timeRange = b.startTime||'';
+  if(startH !== null && b.duration) {
+    const endH = startH + parseFloat(b.duration);
+    const endLabel = endH >= 13 ? (endH-12)+':00 PM' : endH === 12 ? '12:00 PM' : endH+':00 AM';
+    timeRange = b.startTime + ' – ' + endLabel;
+  }
   return `<div class="bk-block ${b.type||''} ${b.priceFlagged?'flagged':''}" onclick="openDetail('${b.id}')">
     <div class="bk-name">${b.customer||'Guest'}</div>
     <div class="bk-meta">
-      <span>${b.startTime} · ${b.asset||''}</span>
+      <span style="font-weight:600;color:#DDDDDD">${timeRange}</span>
+      <span>${b.asset||''}</span>
       <span class="bk-price">$${b.totalPrice||0}</span>
       <span class="bk-status ${b.status||'confirmed'}">${(b.status||'confirmed').toUpperCase()}</span>
       ${b.priceFlagged?'<span style="color:var(--amber)">&#9873; price changed</span>':''}
@@ -3640,29 +4069,18 @@ function bkRowHTML(b) {
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// TASKS — JARVIS style
-// ═══════════════════════════════════════════════════════════
-let _tf = 'all';
-
-const PRIORITY_ORDER = {Critical:1, High:2, Medium:3, Low:4};
-
 function taskItemHTML(t) {
   const pl = (t.priorityLabel||'').toLowerCase();
   const isDone = t.status==='Done';
-  return `<div class="titem-wrap" data-tid="${t.id}">
-    <div class="titem-swipe-hint-l">&#10003; DONE</div>
-    <div class="titem-swipe-hint-r">&#128465; DELETE</div>
-    <div class="titem ${pl} ${isDone?'done':''}">
-      <span class="tpill ${pl}">${t.priorityLabel||''}</span>
-      <div class="titem-body">
-        <div class="titem-name">${t.task}</div>
-        <div class="titem-meta">
-          <span class="titem-bucket">${t.bucket||''}</span>
-          <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
-            ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
-          </select>
-        </div>
+  return `<div class="titem-wrap"><div class="swipe-done-hint">✓ DONE</div><div class="swipe-trash-hint">✕ REMOVE</div><div class="titem ${pl} ${isDone?'done':''}" data-id="${t.id}">
+    <span class="tpill ${pl}">${t.priorityLabel||''}</span>
+    <div class="titem-body">
+      <div class="titem-name">${t.task}</div>
+      <div class="titem-meta">
+        <span class="titem-bucket">${t.bucket||''}</span>
+        <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
+          ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
+        </select>
       </div>
     </div>
   </div>`;
@@ -3670,22 +4088,38 @@ function taskItemHTML(t) {
 
 function renderTasks() {
   let list = [...(S.tasks||[])];
+  const allOpen = list.filter(t=>t.status!=='Done');
+  const allDone = list.filter(t=>t.status==='Done');
+  
+  // Update archive badge
+  const archBadge = document.getElementById('task-archive-badge');
+  if(archBadge) archBadge.textContent = allDone.length;
+
   if(_tf !== 'all') {
     list = list.filter(t=>
       t.priorityLabel===_tf ||
       t.status===_tf ||
       t.bucket===_tf
     );
+  } else {
+    // Default: show open tasks only (done go to archive)
+    list = list.filter(t=>t.status!=='Done');
   }
-  // Sort: priority first, then done at bottom
-  list.sort((a,b)=>{
-    if(a.status==='Done' && b.status!=='Done') return 1;
-    if(a.status!=='Done' && b.status==='Done') return -1;
-    return (PRIORITY_ORDER[a.priorityLabel]||9) - (PRIORITY_ORDER[b.priorityLabel]||9);
-  });
-  document.getElementById('task-list').innerHTML = list.length
-    ? list.map(t=>taskItemHTML(t)).join('')
-    : '<div style="font-family:var(--fm);font-size:10px;color:var(--g2);padding:24px 0;text-align:center;letter-spacing:1px">NO TASKS MATCH THIS FILTER</div>';
+
+  // Sort: priority order
+  const PO = {Critical:0,High:1,Medium:2,Low:3};
+  list.sort((a,b)=>(PO[a.priorityLabel]||9)-(PO[b.priorityLabel]||9));
+
+  const container = document.getElementById('task-list');
+  if(!container) return;
+  
+  if(list.length === 0 && _tf === 'all') {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><div class="empty-state-title">All caught up!</div><div>No open tasks — add one below</div></div>';
+  } else if(list.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-title">No tasks match this filter</div></div>';
+  } else {
+    container.innerHTML = list.map(t=>taskItemHTML(t)).join('');
+  }
 }
 RENDERS.tasks = function() { renderTasks(); initTaskSwipes(); };
 
@@ -3700,9 +4134,17 @@ function filterTasks(val, btn) {
   renderTasks();
 }
 
-function setTaskStatus(id, status) {
+function setTaskStatus(id, newStatus) {
   const t = (S.tasks||[]).find(t=>t.id===id);
-  if(t) { t.status=status; t.updatedAt=Date.now(); saveState(); renderHome(); }
+  if(!t) return;
+  t.status = newStatus;
+  if(newStatus === 'Done') {
+    t.doneAt = Date.now();
+  }
+  saveState();
+  renderTasks();
+  initTaskSwipes();
+  if(typeof RENDERS.home === 'function') RENDERS.home();
 }
 
 function addTask() {
@@ -3840,30 +4282,6 @@ function assetShortName(a){
 // ═══════════════════════════════════════════════════════════
 // BOOKING MODAL
 // ═══════════════════════════════════════════════════════════
-function populateServiceDropdown(selectedId) {
-  const sel = document.getElementById('bm-type');
-  if (!sel) return;
-  const svcs = (S.pricing && S.pricing.services) ? S.pricing.services : DEFAULT_PRICING.services;
-  // Group by category
-  const cats = [...new Set(svcs.map(s => s.category))];
-  const BOOKING_CATS = ['Cage Rentals','Field & Facility','Lessons','Memberships','Gym Memberships','S&C Memberships (12U)','Performance Memberships (13+)','Birthday Parties'];
-  const orderedCats = BOOKING_CATS.filter(c => cats.includes(c));
-  // Any extra cats not in our order list
-  cats.forEach(c => { if (!orderedCats.includes(c)) orderedCats.push(c); });
-  sel.innerHTML = orderedCats.map(cat => {
-    const items = svcs.filter(s => s.category === cat);
-    if (!items.length) return '';
-    return `<optgroup label="${cat.toUpperCase()}">${
-      items.map(s => {
-        const priceStr = s.baseRate > 0 ? ` ($${s.baseRate}${s.unit})` : '';
-        const sel = s.id === selectedId ? ' selected' : '';
-        return `<option value="${s.id}"${sel}>${s.name}${priceStr}</option>`;
-      }).join('')
-    }</optgroup>`;
-  }).join('');
-  if (selectedId) sel.value = selectedId;
-}
-
 function openBookingModal(editId) {
   _editBkId = editId||null;
   const isEdit=!!editId;
@@ -3878,7 +4296,7 @@ function openBookingModal(editId) {
     const b=(S.bookings||[]).find(b=>b.id===editId);
     if(b){
       document.getElementById('bm-customer').value=b.customer||'';
-      populateServiceDropdown(b.serviceId||b.type||'cage-full-hr');
+      document.getElementById('bm-type').value=b.serviceId||b.type||'cage-full-hr';
       document.getElementById('bm-asset').value=b.asset||'cage-1';
       document.getElementById('bm-date').value=b.date||'';
       document.getElementById('bm-start').value=b.startTime||'9:00 AM';
@@ -3898,8 +4316,14 @@ function openBookingModal(editId) {
     }
   } else {
     ['bm-customer','bm-notes','bm-deposit','bm-rate'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('bm-date').value=dateKey(_csel);
-    populateServiceDropdown('cage-full-hr');
+    // Pre-fill date: use selected calendar day, or today if coming from home
+    const defaultDate = _csel ? dateKey(_csel) : dateKey(new Date());
+    document.getElementById('bm-date').value = defaultDate;
+    // Pre-fill start time if provided
+    if(openBookingModal._preTime) {
+      document.getElementById('bm-start').value = openBookingModal._preTime;
+      openBookingModal._preTime = null;
+    }
   }
   updateBmPrice();
   document.getElementById('booking-modal').classList.add('open');
@@ -4066,7 +4490,7 @@ function deleteBookingDetail(){
       <div style="font-family:var(--fi);font-style:italic;font-size:15px;color:var(--g1);margin-bottom:20px">${bk.customer||'Guest'} · ${bk.date} · ${bk.startTime}</div>
       <div style="display:flex;gap:10px">
         <button class="btn-ghost" style="flex:1" onclick="_cancelDeleteBooking()">CANCEL</button>
-        <button class="btn-blue" style="flex:1;background:var(--red)" onclick="_confirmDeleteBooking()">DELETE</button>
+        <button class="btn-blue" style="flex:1;background:none;border:1px solid rgba(245,197,24,0.3);color:var(--gold)" onclick="_confirmDeleteBooking()">DELETE</button>
       </div>
     </div>`;
   // Store cancel HTML for restore
@@ -4092,27 +4516,12 @@ function clearFlag(id){
 // ═══════════════════════════════════════════════════════════
 // PRICING
 // ═══════════════════════════════════════════════════════════
-
-let _currentPTab = 'ratecard';
-
-function switchPTab(tab) {
-  _currentPTab = tab;
-  const tabs = ['ratecard','memberships','sc','parties','packages','addons','tools'];
-  tabs.forEach(t => {
-    const btn = document.getElementById('ptab-' + t);
-    const pane = document.getElementById('ptab-pane-' + t);
-    if (btn) btn.classList.toggle('active', t === tab);
-    if (pane) pane.style.display = t === tab ? '' : 'none';
-  });
-  renderPricingTab(tab);
-}
-
-function renderPricing() {
-  // Flagged bookings bar
-  const flagged = (S.bookings || []).filter(b => b.priceFlagged);
-  const fb = document.getElementById('flagged-bar');
-  fb.style.display = flagged.length ? 'block' : 'none';
-  document.getElementById('flagged-list').innerHTML = flagged.map(b => `
+function renderPricing(){
+  // Flagged
+  const flagged=(S.bookings||[]).filter(b=>b.priceFlagged);
+  const fb=document.getElementById('flagged-bar');
+  fb.style.display=flagged.length?'block':'none';
+  document.getElementById('flagged-list').innerHTML=flagged.map(b=>`
     <div class="flagged-item">
       <span>${b.customer} — ${b.date} · ${b.startTime}</span>
       <span style="display:flex;gap:6px;align-items:center">
@@ -4120,772 +4529,113 @@ function renderPricing() {
         <button class="btn-blue" style="padding:3px 10px;font-size:10px" onclick="clearFlag('${b.id}')">OK</button>
       </span>
     </div>`).join('');
-  renderPricingTab(_currentPTab);
-}
-RENDERS.pricing = renderPricing;
 
-function renderPricingTab(tab) {
-  if (tab === 'ratecard')    renderRateCard();
-  if (tab === 'memberships') renderMemPane();
-  if (tab === 'sc')          renderSCPane();
-  if (tab === 'parties')     renderPartyPane();
-  if (tab === 'packages')    renderPackagesPane();
-  if (tab === 'addons')      renderAddonsPane();
-  if (tab === 'tools') {
-    const peakOn = S.pricing.peakEnabled;
-    const pt = document.getElementById('peak-toggle');
-    if (pt) {
-      pt.textContent = peakOn ? 'ON' : 'OFF';
-      pt.style.background = peakOn ? 'var(--royal)' : 'var(--navy3)';
-      pt.style.color = peakOn ? 'var(--white)' : 'var(--g0)';
-      pt.style.borderColor = peakOn ? 'var(--royal2)' : 'rgba(255,255,255,0.1)';
-      document.getElementById('peak-cfg').style.display = peakOn ? 'block' : 'none';
-    }
-  }
-}
-
-// ── RATE CARD (Cage, Field, Lessons only) ───────────────────────────────
-const RATE_CARD_CATS = ['Cage Rentals','Field & Facility','Lessons'];
-
-function renderRateCard() {
-  const svcs = S.pricing.services || [];
-  const rcSvcs = svcs.filter(s => RATE_CARD_CATS.includes(s.category));
-  const cats = [...new Set(rcSvcs.map(s => s.category))];
-  document.getElementById('pricing-cats').innerHTML = cats.map((cat, ci) => {
-    const catSvcs = rcSvcs.filter(s => s.category === cat);
-    return `<div class="price-cat">
-      <div class="price-cat-hd" onclick="togglePCat('rc-${ci}')">
+  // Rate card by category
+  const svcs=S.pricing.services||[];
+  const cats=[...new Set(svcs.map(s=>s.category))];
+  document.getElementById('pricing-cats').innerHTML=cats.map((cat,ci)=>`
+    <div class="price-cat">
+      <div class="price-cat-hd" onclick="togglePCat(${ci})">
         <div>
           <div class="price-cat-name">${cat}</div>
-          <div class="price-cat-sub">${catSvcs.length} items</div>
+          <div class="price-cat-sub">${svcs.filter(s=>s.category===cat).length} services</div>
         </div>
         <span style="font-family:var(--fc);font-size:14px;color:var(--g1)">&#9660;</span>
       </div>
-      <div class="price-items" id="pcat-rc-${ci}">
-        ${catSvcs.map(svc => {
-          const gi = svcs.indexOf(svc);
-          return `<div class="price-item" onclick="openSvcEditor(${gi},null)" style="cursor:pointer">
-            <div>
-              <div class="pi-name">${svc.name}</div>
-              <div class="pi-desc">${svc.desc}</div>
-            </div>
+      <div class="price-items" id="pcat-${ci}">
+        ${svcs.filter(s=>s.category===cat).map(svc=>{
+          const gi=svcs.indexOf(svc);
+          return `<div class="price-item">
+            <div><div class="pi-name">${svc.name}</div><div class="pi-desc">${svc.desc}</div></div>
             <div class="pi-rate-wrap">
-              <span class="pi-input" style="display:inline-block;line-height:1;padding:5px 8px;cursor:pointer;${svc.baseRate===0?'color:var(--g1);font-size:14px':''}">${svc.baseRate>0?'$'+svc.baseRate:'TBD'}</span>
+              <input class="pi-input" value="${svc.baseRate}" onchange="updateSvcRate(${gi},this.value)">
               <span class="pi-unit">${svc.unit}</span>
-              <span style="font-size:11px;color:var(--g1);opacity:0.5">&#9998;</span>
             </div>
           </div>`;
         }).join('')}
       </div>
-    </div>`;
-  }).join('');
-}
+    </div>`).join('');
 
-// ── MEMBERSHIPS PANE ─────────────────────────────────────────────────────
-const MEM_CATS = ['Memberships','Gym Memberships'];
+  // Packages
+  const pkgs=S.pricing.packages||DEFAULT_PRICING.packages;
+  document.getElementById('pkg-grid').innerHTML=pkgs.map((pkg,pi)=>`
+    <div class="pkg-card">
+      <div class="pkg-name">${pkg.hours}HR PACKAGE</div>
+      <input class="pkg-price-input" value="${pkg.price}" onchange="updatePkg(${pi},'price',this.value)">
+      <div class="pkg-hrs">saves $${pkg.savings}</div>
+    </div>`).join('');
 
-function renderMemPane() {
-  const svcs = S.pricing.services || [];
-  const memSvcs = svcs.filter(s => MEM_CATS.includes(s.category));
-  const cats = [...new Set(memSvcs.map(s => s.category))];
-  document.getElementById('mem-pane').innerHTML = cats.map(cat => {
-    const cs = memSvcs.filter(s => s.category === cat);
-    return `<div class="sec-lbl">${cat}</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
-        ${cs.map(svc => {
-          const gi = svcs.indexOf(svc);
-          return renderProgramCard(svc, gi);
-        }).join('')}
-      </div>`;
-  }).join('');
-}
+  // College passes
+  const cps=S.pricing.collegePasses||DEFAULT_PRICING.collegePasses;
+  document.getElementById('cp-grid').innerHTML=cps.map((cp,ci)=>`
+    <div class="pkg-card">
+      <div class="pkg-name">${cp.name.toUpperCase()}</div>
+      <input class="pkg-price-input" value="${cp.price}" onchange="updateCP(${ci},'price',this.value)">
+      <div class="pkg-hrs">${cp.desc}</div>
+    </div>`).join('');
 
-// ── S&C PANE ─────────────────────────────────────────────────────────────
-const SC_CATS = ['S&C Memberships (12U)','Performance Memberships (13+)'];
-
-function renderSCPane() {
-  const svcs = S.pricing.services || [];
-  const scSvcs = svcs.filter(s => SC_CATS.includes(s.category));
-  const cats = [...new Set(scSvcs.map(s => s.category))];
-  document.getElementById('sc-pane').innerHTML = cats.map(cat => {
-    const cs = scSvcs.filter(s => s.category === cat);
-    return `<div class="sec-lbl">${cat}</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
-        ${cs.map(svc => {
-          const gi = svcs.indexOf(svc);
-          return renderProgramCard(svc, gi);
-        }).join('')}
-      </div>`;
-  }).join('');
-}
-
-// ── PARTIES PANE ─────────────────────────────────────────────────────────
-function renderPartyPane() {
-  const svcs = S.pricing.services || [];
-  const partySvcs = svcs.filter(s => s.category === 'Birthday Parties');
-  document.getElementById('party-pane').innerHTML =
-    '<div style="display:flex;flex-direction:column;gap:8px">' +
-    partySvcs.map(svc => {
-      const gi = svcs.indexOf(svc);
-      return renderProgramCard(svc, gi);
-    }).join('') + '</div>';
-}
-
-// ── PROGRAM CARD (shared renderer for memberships, S&C, parties) ─────────
-function renderProgramCard(svc, gi) {
-  const margin = svc.costData ? calcMarginForCard(svc) : null;
-  let marginHtml = '';
-  if (margin !== null) {
-    const color = margin.pct >= 50 ? 'var(--gold)' : margin.pct >= 30 ? 'var(--amber)' : '#E8394A';
-    marginHtml = `<div style="font-family:var(--fi);font-size:11px;color:${color};margin-top:4px">${margin.pct}% margin · $${margin.profit} profit per unit</div>`;
-  }
-  return `<div class="price-cat" onclick="openSvcEditor(${gi},null)" style="cursor:pointer;margin-bottom:0">
-    <div style="padding:13px 16px;display:flex;justify-content:space-between;align-items:flex-start">
-      <div style="flex:1;min-width:0;margin-right:12px">
-        <div class="pi-name">${svc.name}</div>
-        <div class="pi-desc" style="margin-top:4px">${svc.desc}</div>
-        ${marginHtml}
-      </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:${svc.baseRate>0?'var(--royal2)':'var(--g1)'}">${svc.baseRate>0?'$'+svc.baseRate:'TBD'}</div>
-        <div style="font-family:var(--fi);font-size:12px;color:var(--g1)">${svc.unit}</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function calcMarginForCard(svc) {
-  const cd = svc.costData || {};
-  const cost = (parseFloat(cd.labor)||0) + (parseFloat(cd.space)||0) + (parseFloat(cd.supplies)||0) + (parseFloat(cd.other)||0);
-  if (!cost || !svc.baseRate) return null;
-  const profit = svc.baseRate - cost;
-  const pct = Math.round((profit / svc.baseRate) * 100);
-  return { profit: profit.toFixed(0), pct };
-}
-
-// ── PACKAGES PANE ─────────────────────────────────────────────────────────
-function renderPackagesPane() {
-  const pkgs = S.pricing.packages || DEFAULT_PRICING.packages;
-  document.getElementById('pkg-list').innerHTML = pkgs.map((pkg, pi) => `
-    <div class="price-cat" onclick="openPkgEditor(${pi})" style="cursor:pointer;margin-bottom:8px">
-      <div style="padding:13px 16px;display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div class="pi-name">${pkg.name || pkg.hours + '-Hour Package'}</div>
-          <div class="pi-desc">${pkg.savings>0?'Saves $'+pkg.savings+' vs. hourly · ':''} ${pkg.hours} hrs</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:var(--royal2)">$${pkg.price}</div>
-        </div>
+  // Add-ons
+  const addons=S.pricing.addons||DEFAULT_PRICING.addons;
+  document.getElementById('addon-list').innerHTML=addons.map((a,ai)=>`
+    <div class="price-item">
+      <div><div class="pi-name">${a.name}</div><div class="pi-desc">${a.desc}</div></div>
+      <div class="pi-rate-wrap">
+        <input class="pi-input" value="${a.price}" onchange="updateAddon(${ai},this.value)">
+        <span class="pi-unit">${a.unit}</span>
       </div>
     </div>`).join('');
 
-  const cps = S.pricing.collegePasses || DEFAULT_PRICING.collegePasses;
-  document.getElementById('cp-list').innerHTML = cps.map((cp, ci) => `
-    <div class="price-cat" onclick="openCPEditor(${ci})" style="cursor:pointer;margin-bottom:8px">
-      <div style="padding:13px 16px;display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div class="pi-name">${cp.name}</div>
-          <div class="pi-desc">${cp.desc}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:var(--royal2)">$${cp.price}</div>
-        </div>
-      </div>
-    </div>`).join('');
+  // Peak toggle state
+  const peakOn=S.pricing.peakEnabled;
+  const pt=document.getElementById('peak-toggle');
+  pt.textContent=peakOn?'ON':'OFF';
+  pt.style.background=peakOn?'var(--royal)':'var(--navy3)';
+  pt.style.color=peakOn?'var(--white)':'var(--g0)';
+  pt.style.borderColor=peakOn?'var(--royal2)':'rgba(255,255,255,0.1)';
+  document.getElementById('peak-cfg').style.display=peakOn?'block':'none';
+}
+RENDERS.pricing = renderPricing;
+
+function togglePCat(ci){const el=document.getElementById('pcat-'+ci);el.style.display=el.style.display==='block'?'none':'block';}
+
+function updateSvcRate(gi,val){
+  if(!S.pricing.services[gi]) return;
+  const oldRate=S.pricing.services[gi].baseRate;
+  S.pricing.services[gi].baseRate=parseFloat(val)||0;
+  S.pricing.services[gi].peakRate=parseFloat(val)||0;
+  const svcId=S.pricing.services[gi].id;
+  let flagCount=0;
+  (S.bookings||[]).forEach(b=>{if(b.serviceId===svcId&&!b.priceFlagged){b.priceFlagged=true;flagCount++;}});
+  saveState();
+  if(flagCount>0) toast(`${flagCount} booking${flagCount>1?'s':''} flagged`,'ok');
+  renderPricing();
 }
 
-// ── ADD-ONS PANE ──────────────────────────────────────────────────────────
-function renderAddonsPane() {
-  const addons = S.pricing.addons || DEFAULT_PRICING.addons;
-  document.getElementById('addon-pane').innerHTML = addons.map((a, ai) => `
-    <div class="price-cat" onclick="openAddonEditor(${ai})" style="cursor:pointer;margin-bottom:8px">
-      <div style="padding:13px 16px;display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div class="pi-name">${a.name}</div>
-          <div class="pi-desc">${a.desc}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-family:var(--fc);font-size:22px;font-weight:800;color:var(--royal2)">$${a.price}</div>
-          <div style="font-family:var(--fi);font-size:12px;color:var(--g1)">${a.unit}</div>
-        </div>
-      </div>
-    </div>`).join('');
+function updatePkg(i,field,val){
+  if(!S.pricing.packages) S.pricing.packages=JSON.parse(JSON.stringify(DEFAULT_PRICING.packages));
+  S.pricing.packages[i][field]=parseFloat(val)||0;saveState();
 }
-
-function togglePCat(id){const el=document.getElementById('pcat-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
-
-// ── SERVICE EDITOR ────────────────────────────────────────────────────────
-let _editSvcIdx = null;
-
-function openSvcEditor(gi, defaultCat) {
-  _editSvcIdx = gi;
-  const svcs = S.pricing.services || [];
-  const svc = gi !== null ? svcs[gi] : null;
-  document.getElementById('svc-editor-title').textContent = svc ? 'Edit Service' : 'New Service';
-  document.getElementById('se-name').value    = svc ? svc.name : '';
-  document.getElementById('se-cat').value     = svc ? svc.category : (defaultCat || '');
-  document.getElementById('se-unit').value    = svc ? svc.unit : '/mo';
-  document.getElementById('se-desc').value    = svc ? svc.desc : '';
-  document.getElementById('se-price').value   = svc ? svc.baseRate : '';
-  const cd = svc && svc.costData ? svc.costData : {};
-  document.getElementById('se-cost-labor').value    = cd.labor || '';
-  document.getElementById('se-cost-space').value    = cd.space || '';
-  document.getElementById('se-cost-supplies').value = cd.supplies || '';
-  document.getElementById('se-cost-other').value    = cd.other || '';
-  document.getElementById('se-delete-btn').style.display = svc ? '' : 'none';
-  document.getElementById('svc-editor-modal').classList.add('open');
-  calcSvcMargin();
+function updateCP(i,field,val){
+  if(!S.pricing.collegePasses) S.pricing.collegePasses=JSON.parse(JSON.stringify(DEFAULT_PRICING.collegePasses));
+  S.pricing.collegePasses[i][field]=parseFloat(val)||0;saveState();
 }
-
-function closeSvcEditor() {
-  document.getElementById('svc-editor-modal').classList.remove('open');
+function updateAddon(i,val){
+  if(!S.pricing.addons) S.pricing.addons=JSON.parse(JSON.stringify(DEFAULT_PRICING.addons));
+  S.pricing.addons[i].price=parseFloat(val)||0;saveState();
+  // Update chip labels
+  const ids=['adc-hittrax','adc-probatter','adc-balls'];
+  const names=['HitTrax','ProBatter','Balls'];
+  const el=document.getElementById(ids[i]);
+  if(el) el.textContent=`+ ${names[i]} $${val}`;
 }
-
-function calcSvcMargin() {
-  const labor    = parseFloat(document.getElementById('se-cost-labor').value) || 0;
-  const space    = parseFloat(document.getElementById('se-cost-space').value) || 0;
-  const supplies = parseFloat(document.getElementById('se-cost-supplies').value) || 0;
-  const other    = parseFloat(document.getElementById('se-cost-other').value) || 0;
-  const totalCost = labor + space + supplies + other;
-  document.getElementById('se-total-cost').textContent = 'Total Cost: $' + totalCost.toFixed(2);
-
-  const price = parseFloat(document.getElementById('se-price').value) || 0;
-  const md = document.getElementById('se-margin-display');
-
-  if (totalCost > 0 && price > 0) {
-    const profit = price - totalCost;
-    const marginPct = Math.round((profit / price) * 100);
-    const markupPct = Math.round((profit / totalCost) * 100);
-    const color = marginPct >= 50 ? 'var(--gold)' : marginPct >= 30 ? 'var(--amber)' : '#E8394A';
-    document.getElementById('se-profit').textContent = '$' + profit.toFixed(2);
-    document.getElementById('se-profit').style.color = color;
-    const mEl = document.getElementById('se-margin-pct');
-    mEl.textContent = marginPct + '%';
-    mEl.style.color = color;
-    document.getElementById('se-markup-pct').textContent = markupPct + '%';
-    let note = marginPct >= 60 ? 'Strong margin.' : marginPct >= 40 ? 'Healthy margin.' : marginPct >= 20 ? 'Thin — review costs.' : 'Below cost or near break-even.';
-    document.getElementById('se-margin-note').textContent = note;
-    md.style.display = 'block';
-  } else {
-    md.style.display = 'none';
-  }
-}
-
-function suggestSvcPrice() {
-  const labor    = parseFloat(document.getElementById('se-cost-labor').value) || 0;
-  const space    = parseFloat(document.getElementById('se-cost-space').value) || 0;
-  const supplies = parseFloat(document.getElementById('se-cost-supplies').value) || 0;
-  const other    = parseFloat(document.getElementById('se-cost-other').value) || 0;
-  const totalCost = labor + space + supplies + other;
-  if (!totalCost) { toast('Enter costs first','warn'); return; }
-  // Target 50% margin = price = cost / 0.5
-  const suggested = Math.ceil((totalCost / 0.5) / 5) * 5; // round up to nearest $5
-  document.getElementById('se-price').value = suggested;
-  calcSvcMargin();
-  toast('Suggested at 50% margin target','ok');
-}
-
-function saveSvcEditor() {
-  const name  = document.getElementById('se-name').value.trim();
-  const cat   = document.getElementById('se-cat').value.trim();
-  const unit  = document.getElementById('se-unit').value.trim() || '/mo';
-  const desc  = document.getElementById('se-desc').value.trim();
-  const price = parseFloat(document.getElementById('se-price').value) || 0;
-  if (!name || !cat) { toast('Name and category required','warn'); return; }
-  const costData = {
-    labor:    parseFloat(document.getElementById('se-cost-labor').value) || 0,
-    space:    parseFloat(document.getElementById('se-cost-space').value) || 0,
-    supplies: parseFloat(document.getElementById('se-cost-supplies').value) || 0,
-    other:    parseFloat(document.getElementById('se-cost-other').value) || 0,
-  };
-  if (!S.pricing.services) S.pricing.services = JSON.parse(JSON.stringify(DEFAULT_PRICING.services));
-  if (_editSvcIdx !== null) {
-    const svc = S.pricing.services[_editSvcIdx];
-    const oldRate = svc.baseRate;
-    svc.name = name; svc.category = cat; svc.unit = unit;
-    svc.desc = desc; svc.baseRate = price; svc.peakRate = price;
-    svc.costData = costData;
-    // Flag bookings if rate changed
-    if (oldRate !== price) {
-      let fc = 0;
-      (S.bookings||[]).forEach(b=>{if(b.serviceId===svc.id&&!b.priceFlagged){b.priceFlagged=true;fc++;}});
-      if (fc) toast(fc + ' booking' + (fc>1?'s':'') + ' flagged','ok');
-    }
-  } else {
-    S.pricing.services.push({
-      id: 'svc-' + Date.now(), name, category: cat, unit, desc,
-      baseRate: price, peakRate: price, minDuration: 1, costData
-    });
-  }
-  saveState(); closeSvcEditor(); renderPricing();
-  toast('Saved','ok');
-}
-
-function deleteSvcFromEditor() {
-  if (_editSvcIdx === null) return;
-  showInlineConfirm('svc-editor-modal', 'Delete this service?', function() {
-    S.pricing.services.splice(_editSvcIdx, 1);
-    saveState(); closeSvcEditor(); renderPricing();
-    toast('Deleted','ok');
-  });
-}
-
-// ── PACKAGE EDITOR ────────────────────────────────────────────────────────
-let _editPkgIdx = null;
-
-function openPkgEditor(pi) {
-  _editPkgIdx = pi;
-  const pkgs = S.pricing.packages || DEFAULT_PRICING.packages;
-  const pkg = pi !== null ? pkgs[pi] : null;
-  document.getElementById('pkg-editor-title').textContent = pkg ? 'Edit Package' : 'New Package';
-  document.getElementById('pe-name').value    = pkg ? (pkg.name || pkg.hours + '-Hour Package') : '';
-  document.getElementById('pe-hours').value   = pkg ? pkg.hours : '';
-  document.getElementById('pe-price').value   = pkg ? pkg.price : '';
-  document.getElementById('pe-savings').value = pkg ? pkg.savings : '';
-  document.getElementById('pe-delete-btn').style.display = pkg ? '' : 'none';
-  document.getElementById('pkg-editor-modal').classList.add('open');
-}
-
-function closePkgEditor() { document.getElementById('pkg-editor-modal').classList.remove('open'); }
-
-function savePkgEditor() {
-  const name    = document.getElementById('pe-name').value.trim();
-  const hours   = parseFloat(document.getElementById('pe-hours').value) || 0;
-  const price   = parseFloat(document.getElementById('pe-price').value) || 0;
-  const savings = parseFloat(document.getElementById('pe-savings').value) || 0;
-  if (!name || !hours || !price) { toast('Fill in all fields','warn'); return; }
-  if (!S.pricing.packages) S.pricing.packages = JSON.parse(JSON.stringify(DEFAULT_PRICING.packages));
-  if (_editPkgIdx !== null) {
-    Object.assign(S.pricing.packages[_editPkgIdx], { name, hours, price, savings });
-  } else {
-    S.pricing.packages.push({ id: 'pkg-' + Date.now(), name, hours, price, savings });
-  }
-  saveState(); closePkgEditor(); renderPackagesPane();
-  toast('Saved','ok');
-}
-
-function deletePkgFromEditor() {
-  if (_editPkgIdx === null) return;
-  showInlineConfirm('pkg-editor-modal', 'Delete this package?', function() {
-    S.pricing.packages.splice(_editPkgIdx, 1);
-    saveState(); closePkgEditor(); renderPackagesPane();
-    toast('Deleted','ok');
-  });
-}
-
-// ── COLLEGE PASS EDITOR ───────────────────────────────────────────────────
-let _editCPIdx = null;
-
-function openCPEditor(ci) {
-  _editCPIdx = ci;
-  const cps = S.pricing.collegePasses || DEFAULT_PRICING.collegePasses;
-  const cp = ci !== null ? cps[ci] : null;
-  document.getElementById('cpe-name').value  = cp ? cp.name : '';
-  document.getElementById('cpe-price').value = cp ? cp.price : '';
-  document.getElementById('cpe-desc').value  = cp ? cp.desc : '';
-  document.getElementById('cpe-delete-btn').style.display = cp ? '' : 'none';
-  document.getElementById('cp-editor-modal').classList.add('open');
-}
-
-function closeCPEditor() { document.getElementById('cp-editor-modal').classList.remove('open'); }
-
-function saveCPEditor() {
-  const name  = document.getElementById('cpe-name').value.trim();
-  const price = parseFloat(document.getElementById('cpe-price').value) || 0;
-  const desc  = document.getElementById('cpe-desc').value.trim();
-  if (!name || !price) { toast('Fill in all fields','warn'); return; }
-  if (!S.pricing.collegePasses) S.pricing.collegePasses = JSON.parse(JSON.stringify(DEFAULT_PRICING.collegePasses));
-  if (_editCPIdx !== null) {
-    Object.assign(S.pricing.collegePasses[_editCPIdx], { name, price, desc });
-  } else {
-    S.pricing.collegePasses.push({ id: 'cp-' + Date.now(), name, price, desc });
-  }
-  saveState(); closeCPEditor(); renderPackagesPane();
-  toast('Saved','ok');
-}
-
-function deleteCPFromEditor() {
-  if (_editCPIdx === null) return;
-  showInlineConfirm('cp-editor-modal', 'Delete this pass?', function() {
-    S.pricing.collegePasses.splice(_editCPIdx, 1);
-    saveState(); closeCPEditor(); renderPackagesPane();
-    toast('Deleted','ok');
-  });
-}
-
-// ── ADDON EDITOR ──────────────────────────────────────────────────────────
-let _editAddonIdx = null;
-
-function openAddonEditor(ai) {
-  _editAddonIdx = ai;
-  const addons = S.pricing.addons || DEFAULT_PRICING.addons;
-  const a = ai !== null ? addons[ai] : null;
-  document.getElementById('ae-name').value  = a ? a.name : '';
-  document.getElementById('ae-price').value = a ? a.price : '';
-  document.getElementById('ae-unit').value  = a ? a.unit : '/session';
-  document.getElementById('ae-desc').value  = a ? a.desc : '';
-  document.getElementById('ae-delete-btn').style.display = a ? '' : 'none';
-  document.getElementById('addon-editor-modal').classList.add('open');
-}
-
-function closeAddonEditor() { document.getElementById('addon-editor-modal').classList.remove('open'); }
-
-function saveAddonEditor() {
-  const name  = document.getElementById('ae-name').value.trim();
-  const price = parseFloat(document.getElementById('ae-price').value) || 0;
-  const unit  = document.getElementById('ae-unit').value.trim() || '/session';
-  const desc  = document.getElementById('ae-desc').value.trim();
-  if (!name) { toast('Name required','warn'); return; }
-  if (!S.pricing.addons) S.pricing.addons = JSON.parse(JSON.stringify(DEFAULT_PRICING.addons));
-  if (_editAddonIdx !== null) {
-    Object.assign(S.pricing.addons[_editAddonIdx], { name, price, unit, desc });
-  } else {
-    S.pricing.addons.push({ id: 'addon-' + Date.now(), name, price, unit, desc });
-  }
-  saveState(); closeAddonEditor(); renderAddonsPane();
-  toast('Saved','ok');
-}
-
-function deleteAddonFromEditor() {
-  if (_editAddonIdx === null) return;
-  showInlineConfirm('addon-editor-modal', 'Delete this add-on?', function() {
-    S.pricing.addons.splice(_editAddonIdx, 1);
-    saveState(); closeAddonEditor(); renderAddonsPane();
-    toast('Deleted','ok');
-  });
-}
-
 function togglePeak(){
-  S.pricing.peakEnabled=!S.pricing.peakEnabled;saveState();renderPricingTab('tools');
+  S.pricing.peakEnabled=!S.pricing.peakEnabled;saveState();renderPricing();
 }
 function savePeak(){
   S.pricing.peakStart=parseInt(document.getElementById('peak-start').value)||17;
   S.pricing.peakEnd=parseInt(document.getElementById('peak-end').value)||21;
   saveState();
 }
-
-// Legacy stubs kept for booking compatibility
-function updateSvcRate(gi,val){
-  if(!S.pricing.services[gi]) return;
-  S.pricing.services[gi].baseRate=parseFloat(val)||0;
-  S.pricing.services[gi].peakRate=parseFloat(val)||0;
-  const svcId=S.pricing.services[gi].id;
-  let fc=0;
-  (S.bookings||[]).forEach(b=>{if(b.serviceId===svcId&&!b.priceFlagged){b.priceFlagged=true;fc++;}});
-  saveState();
-  if(fc>0) toast(fc+' booking'+(fc>1?'s':'')+' flagged','ok');
-  renderPricing();
-}
-function updatePkg(i,field,val){if(!S.pricing.packages)S.pricing.packages=JSON.parse(JSON.stringify(DEFAULT_PRICING.packages));S.pricing.packages[i][field]=parseFloat(val)||0;saveState();}
-function updateCP(i,field,val){if(!S.pricing.collegePasses)S.pricing.collegePasses=JSON.parse(JSON.stringify(DEFAULT_PRICING.collegePasses));S.pricing.collegePasses[i][field]=parseFloat(val)||0;saveState();}
-function updateAddon(i,val){if(!S.pricing.addons)S.pricing.addons=JSON.parse(JSON.stringify(DEFAULT_PRICING.addons));S.pricing.addons[i].price=parseFloat(val)||0;saveState();}
-
-// ── Inline confirm helper (iOS PWA safe — no browser confirm()) ──
-function showInlineConfirm(modalId, message, onConfirm) {
-  const modal = document.getElementById(modalId);
-  if (!modal) return;
-  const inner = modal.querySelector('.modal-box');
-  if (!inner) return;
-  const original = inner.innerHTML;
-  inner.innerHTML = `
-    <div style="padding:24px;text-align:center">
-      <div style="font-family:var(--fc);font-size:17px;font-weight:800;color:var(--amber);margin-bottom:12px">${message}</div>
-      <div style="font-family:var(--fi);font-size:13px;color:var(--g1);margin-bottom:20px">This cannot be undone.</div>
-      <div style="display:flex;gap:10px">
-        <button class="btn-ghost" style="flex:1">CANCEL</button>
-        <button class="btn-blue" style="flex:1;background:#E8394A;border-color:#E8394A" id="_icb-confirm">DELETE</button>
-      </div>
-    </div>`;
-  // Bind cancel properly
-  const cancelBtn = inner.querySelector('.btn-ghost');
-  cancelBtn.onclick = function() { inner.innerHTML = original; };
-  // Bind confirm
-  document.getElementById('_icb-confirm').onclick = function() {
-    inner.innerHTML = original;
-    onConfirm();
-  };
-}
-
-// ═══════════════════════════════════════════════════════════
-// TASK SWIPE GESTURES
-// ═══════════════════════════════════════════════════════════
-function initTaskSwipes() {
-  document.querySelectorAll('.titem-wrap').forEach(wrap => {
-    const inner = wrap.querySelector('.titem');
-    const hintL = wrap.querySelector('.titem-swipe-hint-l');
-    const hintR = wrap.querySelector('.titem-swipe-hint-r');
-    if (!inner) return;
-
-    let startX = 0, startY = 0, dx = 0, dragging = false, locked = false;
-    const THRESHOLD = 90;
-
-    inner.addEventListener('touchstart', e => {
-      if (e.touches.length > 1) return;
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      dx = 0; dragging = false; locked = false;
-      inner.style.transition = 'none';
-    }, { passive: true });
-
-    inner.addEventListener('touchmove', e => {
-      if (locked) return;
-      const curX = e.touches[0].clientX;
-      const curY = e.touches[0].clientY;
-      const absDx = Math.abs(curX - startX);
-      const absDy = Math.abs(curY - startY);
-      // Lock to vertical scroll if primarily vertical
-      if (!dragging && absDy > absDx && absDy > 6) { locked = true; return; }
-      if (absDx > 8) { dragging = true; e.preventDefault(); }
-      if (!dragging) return;
-      dx = curX - startX;
-      inner.style.transform = `translateX(${dx}px)`;
-      // Show hints
-      const pct = Math.min(Math.abs(dx) / THRESHOLD, 1);
-      if (dx > 0) {
-        hintL.style.opacity = pct;
-        hintR.style.opacity = 0;
-      } else {
-        hintR.style.opacity = pct;
-        hintL.style.opacity = 0;
-      }
-    }, { passive: false });
-
-    inner.addEventListener('touchend', () => {
-      inner.style.transition = '';
-      hintL.style.opacity = 0;
-      hintR.style.opacity = 0;
-      if (!dragging) return;
-      const tid = wrap.dataset.tid;
-      if (dx > THRESHOLD) {
-        // Swipe right → mark Done
-        inner.style.transform = `translateX(110%)`;
-        inner.style.opacity = '0';
-        setTimeout(() => {
-          const t = (S.tasks||[]).find(t => t.id === tid);
-          if (t) { t.status = 'Done'; t.updatedAt = Date.now(); saveState(); }
-          RENDERS.tasks();
-          renderHome();
-          toast('Task marked Done', 'ok');
-        }, 220);
-      } else if (dx < -THRESHOLD) {
-        // Swipe left → delete
-        inner.style.transform = `translateX(-110%)`;
-        inner.style.opacity = '0';
-        setTimeout(() => {
-          S.tasks = (S.tasks||[]).filter(t => t.id !== tid);
-          saveState();
-          RENDERS.tasks();
-          renderHome();
-          toast('Task deleted', '');
-        }, 220);
-      } else {
-        // Snap back
-        inner.style.transform = '';
-      }
-      dragging = false;
-    });
-  });
-}
-
-// ═══════════════════════════════════════════════════════════
-// SETTINGS SCREEN
-// ═══════════════════════════════════════════════════════════
-function renderSettings() {
-  // Storage info
-  try {
-    const raw = localStorage.getItem('tucci_v4') || '';
-    const kb = Math.round(raw.length / 1024);
-    const pct = Math.round(raw.length / (5 * 1024 * 1024) * 100);
-    const el = document.getElementById('settings-storage');
-    if (el) el.textContent = `${kb} KB (${pct}% of 5MB)`;
-  } catch(e) {}
-  const bEl = document.getElementById('settings-bookings');
-  const tEl = document.getElementById('settings-tasks');
-  const sEl = document.getElementById('settings-saved');
-  if (bEl) bEl.textContent = (S.bookings||[]).length;
-  if (tEl) tEl.textContent = (S.tasks||[]).length;
-  if (sEl) sEl.textContent = S._savedAt
-    ? new Date(S._savedAt).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
-    : '—';
-}
-RENDERS.settings = renderSettings;
-
-function exportBackup() {
-  try {
-    const data = {
-      _app: 'tucci-elite-ops',
-      _version: 4,
-      _exportedAt: Date.now(),
-      _exportedAtStr: new Date().toLocaleString(),
-      state: S
-    };
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tucci-backup-' + new Date().toISOString().slice(0,10) + '.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    toast('Backup downloaded', 'ok');
-  } catch(e) {
-    toast('Export failed: ' + e.message, 'err');
-  }
-}
-
-function toggleRestorePaste() {
-  const el = document.getElementById('restore-paste-area');
-  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-function importFromFile(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      _doImport(e.target.result);
-    } catch(err) {
-      toast('Import failed: ' + err.message, 'err');
-    }
-    input.value = '';
-  };
-  reader.readAsText(file);
-}
-
-function importFromPasteText() {
-  const raw = (document.getElementById('restore-paste-input')||{}).value || '';
-  if (!raw.trim()) { toast('Nothing to import', 'warn'); return; }
-  // Try both raw JSON and base64
-  try {
-    _doImport(raw.trim());
-  } catch(e) {
-    try {
-      const decoded = decodeURIComponent(escape(atob(raw.trim())));
-      _doImport(decoded);
-    } catch(e2) {
-      toast('Invalid data — not a valid backup', 'err');
-    }
-  }
-}
-
-function _doImport(raw) {
-  const data = JSON.parse(raw);
-  // Support both export formats: {state:...} and raw state
-  const incoming = data.state || data;
-  if (!incoming || typeof incoming !== 'object') throw new Error('Invalid backup structure');
-
-  // Last-write-wins merge
-  let merged = 0;
-
-  if (incoming.tasks && incoming.tasks.length) {
-    const byId = {};
-    (S.tasks||[]).forEach(t => byId[t.id] = t);
-    incoming.tasks.forEach(t => {
-      const local = byId[t.id];
-      if (!local || (t.updatedAt||0) >= (local.updatedAt||0)) { byId[t.id] = t; if(local) merged++; }
-    });
-    S.tasks = Object.values(byId);
-  }
-  if (incoming.bookings && incoming.bookings.length) {
-    const byId = {};
-    (S.bookings||[]).forEach(b => byId[b.id] = b);
-    incoming.bookings.forEach(b => {
-      const local = byId[b.id];
-      if (!local || (b.updatedAt||0) >= (local.updatedAt||0)) { byId[b.id] = b; if(local) merged++; }
-    });
-    S.bookings = Object.values(byId);
-  }
-  if (incoming.pricing) {
-    if (incoming.pricing.services) {
-      const byId = {};
-      (S.pricing.services||[]).forEach(s => byId[s.id] = s);
-      incoming.pricing.services.forEach(s => { byId[s.id] = s; });
-      S.pricing.services = Object.values(byId);
-    }
-    if (incoming.pricing.packages)     S.pricing.packages     = incoming.pricing.packages;
-    if (incoming.pricing.collegePasses) S.pricing.collegePasses = incoming.pricing.collegePasses;
-    if (incoming.pricing.addons)        S.pricing.addons        = incoming.pricing.addons;
-    if (incoming.pricing.costData)      S.pricing.costData      = incoming.pricing.costData;
-  }
-  if (incoming.budget)       S.budget       = incoming.budget;
-  if (incoming.staffDir)     S.staffDir     = incoming.staffDir;
-  if (incoming.clients)      S.clients      = incoming.clients;
-  if (incoming.files)        S.files        = incoming.files;
-  if (incoming.checklists)   S.checklists   = incoming.checklists;
-
-  saveState();
-  Object.values(RENDERS).forEach(fn => fn && fn());
-  const src = data._exportedAtStr ? ` (from ${data._exportedAtStr})` : '';
-  toast(`Imported${src} · ${merged} records merged`, 'ok');
-  document.getElementById('restore-paste-area').style.display = 'none';
-  const inp = document.getElementById('restore-paste-input');
-  if (inp) inp.value = '';
-}
-
-function copyStateToClipboard() {
-  try {
-    const data = {
-      _app: 'tucci-elite-ops',
-      _version: 4,
-      _exportedAt: Date.now(),
-      _exportedAtStr: new Date().toLocaleString(),
-      state: S
-    };
-    const json = JSON.stringify(data);
-    const b64 = btoa(unescape(encodeURIComponent(json)));
-    navigator.clipboard.writeText(b64).then(() => {
-      const el = document.getElementById('copy-state-confirm');
-      if (el) { el.style.display = 'block'; setTimeout(() => el.style.display='none', 4000); }
-    }).catch(() => {
-      // Fallback: show in textarea
-      const el = document.getElementById('restore-paste-area');
-      const inp = document.getElementById('restore-paste-input');
-      if (el) el.style.display = 'block';
-      if (inp) { inp.value = b64; inp.select(); }
-      toast('Clipboard blocked — copy the text manually', 'warn');
-    });
-  } catch(e) {
-    toast('Copy failed: ' + e.message, 'err');
-  }
-}
-
-function confirmClearData() {
-  showDangerConfirm('settings-clear-confirm-area', 'Clear all data? This cannot be undone.', function() {
-    const theme = localStorage.getItem('tucci_theme') || 'dark';
-    const staff = localStorage.getItem('tucci_staff');
-    const endpoint = localStorage.getItem('tucci_sheets_endpoint');
-    localStorage.clear();
-    if (theme) localStorage.setItem('tucci_theme', theme);
-    if (staff) localStorage.setItem('tucci_staff', staff);
-    if (endpoint) localStorage.setItem('tucci_sheets_endpoint', endpoint);
-    location.reload();
-  });
-}
-
-// Inline confirm for settings (no modal — inline in page)
-function showDangerConfirm(areaId, message, onConfirm) {
-  // For settings clear, we use the danger zone area directly
-  const dangerBtn = document.querySelector('#sc-settings .btn-ghost.full');
-  if (!dangerBtn) return;
-  const card = dangerBtn.closest('.card');
-  if (!card) return;
-  const orig = card.innerHTML;
-  card.innerHTML = `
-    <div style="text-align:center;padding:8px 0">
-      <div style="font-family:var(--fc);font-size:15px;font-weight:700;color:var(--amber);margin-bottom:6px">${message}</div>
-      <div style="font-family:var(--fi);font-size:13px;color:var(--g1);margin-bottom:14px">Export a backup first if you want to keep your data.</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn-ghost" style="flex:1" id="_clr-cancel">Cancel</button>
-        <button class="btn-blue" style="flex:1;background:#E8394A;border-color:#E8394A" id="_clr-confirm">Yes, Clear</button>
-      </div>
-    </div>`;
-  document.getElementById('_clr-cancel').onclick = () => { card.innerHTML = orig; };
-  document.getElementById('_clr-confirm').onclick = onConfirm;
-}
-
 
 function calcDiscount(){
   const val=parseFloat(document.getElementById('disc-val').value)||0;
@@ -5005,7 +4755,7 @@ function toggleCheck(key,i){
   S.checklists[key].state[i]=!S.checklists[key].state[i];
   saveState();renderSOPs();
 }
-function resetCL(key){if(S.checklists&&S.checklists[key]){S.checklists[key].state={};saveState();renderSOPs();}}
+function resetCL(key){if(!confirm('Reset this checklist? All checks will be cleared.')) return; if(S.checklists&&S.checklists[key]){S.checklists[key].stats={};S.checklists[key].checks={};saveState();RENDERS.sops&&RENDERS.sops();}}
 
 // ═══════════════════════════════════════════════════════════
 // MORE DRAWER
@@ -5797,197 +5547,7 @@ function downloadTemplate() {
   if(!win) { toast('Allow popups to download','err'); return; }
   win.document.write(`<!DOCTYPE html><html><head>
     <style>*{margin:0;padding:0;box-sizing:border-box}body{background:#fff}</style>
-  </head><body>${innerHTML}
-<!-- ████ SERVICE EDITOR MODAL ████ -->
-<div id="svc-editor-modal" class="modal-overlay" onclick="if(event.target===this)closeSvcEditor()">
-  <div class="modal-box" style="max-width:480px;width:95%">
-    <div class="modal-hdr">
-      <span id="svc-editor-title" style="font-family:var(--fc);font-size:17px;font-weight:800;letter-spacing:.5px">Edit Service</span>
-      <button class="modal-x" onclick="closeSvcEditor()">&#10005;</button>
-    </div>
-    <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Name</label>
-        <input class="fi-full" id="se-name" placeholder="e.g. Gold Membership">
-      </div>
-      <div class="frow">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Category</label>
-          <input class="fi-full" id="se-cat" placeholder="e.g. Memberships">
-        </div>
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Unit</label>
-          <input class="fi-full" id="se-unit" placeholder="/mo">
-        </div>
-      </div>
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Description / What's Included</label>
-        <textarea class="fi-full" id="se-desc" rows="3" style="resize:vertical;font-family:var(--fm);font-size:14px;line-height:1.5"></textarea>
-      </div>
-
-      <!-- Cost builder -->
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:var(--r);padding:14px">
-        <div style="font-family:var(--fc);font-size:13px;font-weight:700;letter-spacing:.5px;color:var(--g0);margin-bottom:10px">COST FORMULA</div>
-        <div class="frow">
-          <div class="fgrp" style="margin:0;flex:1">
-            <label class="flbl">Coach / Labor Cost</label>
-            <input class="fi-full" id="se-cost-labor" type="number" placeholder="0" oninput="calcSvcMargin()">
-          </div>
-          <div class="fgrp" style="margin:0;flex:1">
-            <label class="flbl">Space / Facility Cost</label>
-            <input class="fi-full" id="se-cost-space" type="number" placeholder="0" oninput="calcSvcMargin()">
-          </div>
-        </div>
-        <div class="frow">
-          <div class="fgrp" style="margin:0;flex:1">
-            <label class="flbl">Supplies / Materials</label>
-            <input class="fi-full" id="se-cost-supplies" type="number" placeholder="0" oninput="calcSvcMargin()">
-          </div>
-          <div class="fgrp" style="margin:0;flex:1">
-            <label class="flbl">Other Costs</label>
-            <input class="fi-full" id="se-cost-other" type="number" placeholder="0" oninput="calcSvcMargin()">
-          </div>
-        </div>
-        <div id="se-total-cost" style="font-family:var(--fc);font-size:13px;color:var(--g1);margin-top:6px">Total Cost: $0</div>
-      </div>
-
-      <!-- Price + margin -->
-      <div style="background:rgba(27,95,138,0.12);border:1px solid rgba(27,95,138,0.3);border-radius:var(--r);padding:14px">
-        <div style="font-family:var(--fc);font-size:13px;font-weight:700;letter-spacing:.5px;color:var(--g0);margin-bottom:10px">PRICING</div>
-        <div class="frow" style="align-items:flex-end">
-          <div class="fgrp" style="margin:0;flex:1">
-            <label class="flbl">Your Price</label>
-            <input class="fi-full" id="se-price" type="number" placeholder="Leave blank to suggest" oninput="calcSvcMargin()">
-          </div>
-          <button class="btn-blue" style="font-size:11px;padding:8px 12px;margin-bottom:0;white-space:nowrap" onclick="suggestSvcPrice()">Suggest Price</button>
-        </div>
-        <div id="se-margin-display" style="margin-top:10px;display:none">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
-            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
-              <div style="font-family:var(--fi);font-size:11px;color:var(--g1)">Profit</div>
-              <div id="se-profit" style="font-family:var(--fc);font-size:18px;font-weight:800;color:var(--gold)">$0</div>
-            </div>
-            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
-              <div style="font-family:var(--fi);font-size:11px;color:var(--g1)">Margin</div>
-              <div id="se-margin-pct" style="font-family:var(--fc);font-size:18px;font-weight:800">0%</div>
-            </div>
-            <div style="text-align:center;background:rgba(0,0,0,0.2);border-radius:6px;padding:8px">
-              <div style="font-family:var(--fi);font-size:11px;color:var(--g1)">Markup</div>
-              <div id="se-markup-pct" style="font-family:var(--fc);font-size:18px;font-weight:800;color:var(--g0)">0%</div>
-            </div>
-          </div>
-          <div id="se-margin-note" style="font-family:var(--fi);font-size:12px;color:var(--g1);margin-top:8px;text-align:center"></div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:8px;margin-top:4px">
-        <button id="se-delete-btn" class="btn-ghost" style="flex:1;color:var(--amber)" onclick="deleteSvcFromEditor()">Delete</button>
-        <button class="btn-blue" style="flex:2" onclick="saveSvcEditor()">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ████ PACKAGE EDITOR MODAL ████ -->
-<div id="pkg-editor-modal" class="modal-overlay" onclick="if(event.target===this)closePkgEditor()">
-  <div class="modal-box" style="max-width:400px;width:95%">
-    <div class="modal-hdr">
-      <span id="pkg-editor-title" style="font-family:var(--fc);font-size:17px;font-weight:800;letter-spacing:.5px">Edit Package</span>
-      <button class="modal-x" onclick="closePkgEditor()">&#10005;</button>
-    </div>
-    <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-      <div class="frow">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Name</label>
-          <input class="fi-full" id="pe-name" placeholder="e.g. 10-Hour Package">
-        </div>
-        <div class="fgrp" style="margin:0;width:80px">
-          <label class="flbl">Hours</label>
-          <input class="fi-full" id="pe-hours" type="number" placeholder="10">
-        </div>
-      </div>
-      <div class="frow">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Price</label>
-          <input class="fi-full" id="pe-price" type="number" placeholder="625">
-        </div>
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Savings vs. Hourly</label>
-          <input class="fi-full" id="pe-savings" type="number" placeholder="125">
-        </div>
-      </div>
-      <div id="pe-margin-row" style="font-family:var(--fi);font-size:13px;color:var(--g1);display:none"></div>
-      <div style="display:flex;gap:8px">
-        <button id="pe-delete-btn" class="btn-ghost" style="flex:1;color:var(--amber)" onclick="deletePkgFromEditor()">Delete</button>
-        <button class="btn-blue" style="flex:2" onclick="savePkgEditor()">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ████ COLLEGE PASS EDITOR MODAL ████ -->
-<div id="cp-editor-modal" class="modal-overlay" onclick="if(event.target===this)closeCPEditor()">
-  <div class="modal-box" style="max-width:400px;width:95%">
-    <div class="modal-hdr">
-      <span style="font-family:var(--fc);font-size:17px;font-weight:800;letter-spacing:.5px">Edit Pass</span>
-      <button class="modal-x" onclick="closeCPEditor()">&#10005;</button>
-    </div>
-    <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Name</label>
-        <input class="fi-full" id="cpe-name" placeholder="e.g. Winter Pass">
-      </div>
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Price</label>
-        <input class="fi-full" id="cpe-price" type="number" placeholder="500">
-      </div>
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Description</label>
-        <input class="fi-full" id="cpe-desc" placeholder="Full winter season">
-      </div>
-      <div style="display:flex;gap:8px">
-        <button id="cpe-delete-btn" class="btn-ghost" style="flex:1;color:var(--amber)" onclick="deleteCPFromEditor()">Delete</button>
-        <button class="btn-blue" style="flex:2" onclick="saveCPEditor()">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ████ ADDON EDITOR MODAL ████ -->
-<div id="addon-editor-modal" class="modal-overlay" onclick="if(event.target===this)closeAddonEditor()">
-  <div class="modal-box" style="max-width:400px;width:95%">
-    <div class="modal-hdr">
-      <span style="font-family:var(--fc);font-size:17px;font-weight:800;letter-spacing:.5px">Edit Add-On</span>
-      <button class="modal-x" onclick="closeAddonEditor()">&#10005;</button>
-    </div>
-    <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Name</label>
-        <input class="fi-full" id="ae-name" placeholder="e.g. HitTrax">
-      </div>
-      <div class="frow">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Price</label>
-          <input class="fi-full" id="ae-price" type="number" placeholder="25">
-        </div>
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Unit</label>
-          <input class="fi-full" id="ae-unit" placeholder="/session">
-        </div>
-      </div>
-      <div class="fgrp" style="margin:0">
-        <label class="flbl">Description</label>
-        <input class="fi-full" id="ae-desc" placeholder="Short description">
-      </div>
-      <div style="display:flex;gap:8px">
-        <button id="ae-delete-btn" class="btn-ghost" style="flex:1;color:var(--amber)" onclick="deleteAddonFromEditor()">Delete</button>
-        <button class="btn-blue" style="flex:2" onclick="saveAddonEditor()">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-</body></html>`);
+  </head><body>${innerHTML}</body></html>`);
   win.document.close();
   setTimeout(()=>win.print(),600);
 }
@@ -6252,109 +5812,6 @@ function clearSyncSettings() {
   toast('Endpoint cleared', '');
 }
 
-// ── DEVICE-TO-DEVICE SYNC ──────────────────────────────────────────────────
-function exportToClipboard() {
-  try {
-    const exportData = {
-      _v: 4,
-      _exported: Date.now(),
-      _device: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop',
-      state: S
-    };
-    const json = JSON.stringify(exportData);
-    const compressed = btoa(unescape(encodeURIComponent(json)));
-    navigator.clipboard.writeText(compressed).then(() => {
-      const conf = document.getElementById('export-confirm');
-      conf.style.display = 'block';
-      setTimeout(() => { conf.style.display = 'none'; }, 4000);
-    }).catch(() => {
-      // Fallback: show in textarea
-      document.getElementById('import-paste-box').style.display = 'block';
-      document.getElementById('import-paste-input').value = compressed;
-      document.getElementById('import-paste-input').select();
-      toast('Clipboard blocked — copy the text manually', 'warn');
-    });
-  } catch(e) {
-    toast('Export failed: ' + e.message, 'err');
-  }
-}
-
-function showImportBox() {
-  const box = document.getElementById('import-paste-box');
-  box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  if (box.style.display === 'block') {
-    document.getElementById('import-paste-input').value = '';
-    document.getElementById('import-paste-input').focus();
-  }
-}
-
-function importFromPaste() {
-  const raw = document.getElementById('import-paste-input').value.trim();
-  if (!raw) { toast('Nothing to import', 'warn'); return; }
-  try {
-    const json = decodeURIComponent(escape(atob(raw)));
-    const data = JSON.parse(json);
-    if (!data.state || !data._v) throw new Error('Invalid export data');
-    const incoming = data.state;
-    const fromDevice = data._device || 'unknown';
-    const exportedAt = data._exported ? new Date(data._exported).toLocaleString() : 'unknown';
-
-    // Last-write-wins merge (same logic as Sheets sync)
-    const PRIORITY_MAP = {1:'Critical', 2:'High', 3:'Medium', 4:'Low'};
-    let updated = 0;
-
-    // Tasks
-    if (incoming.tasks && incoming.tasks.length) {
-      const byId = {};
-      (S.tasks||[]).forEach(t => byId[t.id] = t);
-      incoming.tasks.forEach(t => {
-        const local = byId[t.id];
-        if (!local || (t.updatedAt||0) > (local.updatedAt||0)) { byId[t.id] = t; if(local) updated++; }
-      });
-      S.tasks = Object.values(byId);
-    }
-
-    // Bookings
-    if (incoming.bookings && incoming.bookings.length) {
-      const byId = {};
-      (S.bookings||[]).forEach(b => byId[b.id] = b);
-      incoming.bookings.forEach(b => {
-        const local = byId[b.id];
-        if (!local || (b.updatedAt||0) > (local.updatedAt||0)) { byId[b.id] = b; if(local) updated++; }
-      });
-      S.bookings = Object.values(byId);
-    }
-
-    // Pricing — full replace if incoming has more services or newer cost data
-    if (incoming.pricing && incoming.pricing.services) {
-      const byId = {};
-      (S.pricing.services||[]).forEach(s => byId[s.id] = s);
-      incoming.pricing.services.forEach(s => {
-        if (!byId[s.id] || s.baseRate > 0) byId[s.id] = s;
-      });
-      S.pricing.services = Object.values(byId);
-      if (incoming.pricing.packages) S.pricing.packages = incoming.pricing.packages;
-      if (incoming.pricing.collegePasses) S.pricing.collegePasses = incoming.pricing.collegePasses;
-      if (incoming.pricing.addons) S.pricing.addons = incoming.pricing.addons;
-    }
-
-    // Budget
-    if (incoming.budget) S.budget = incoming.budget;
-
-    // Staff directory & clients
-    if (incoming.staffDir && incoming.staffDir.length) S.staffDir = incoming.staffDir;
-    if (incoming.clients && incoming.clients.length) S.clients = incoming.clients;
-
-    saveState();
-    closeModal('sync-settings-modal');
-    Object.values(RENDERS).forEach(fn => fn && fn());
-    toast(`Imported from ${fromDevice} (${exportedAt}) · ${updated} record${updated!==1?'s':''} merged`, 'ok');
-  } catch(e) {
-    toast('Import failed — invalid data', 'err');
-    console.error(e);
-  }
-}
-
 // ═══════════════════════════════════════════════════════════
 // TOAST
 // ═══════════════════════════════════════════════════════════
@@ -6450,6 +5907,250 @@ function hideLogin(user) {
   loadState();
   initHeader();
   if(RENDERS.home) RENDERS.home();
+
+
+// ══════════════════════════════════════════════════════════════════
+// TASK SWIPES — swipe right = done, swipe left = trash
+// ══════════════════════════════════════════════════════════════════
+function initTaskSwipes() {
+  document.querySelectorAll('.titem').forEach(el => {
+    if(el._swipeInit) return;
+    el._swipeInit = true;
+    let startX = 0, startY = 0, dx = 0;
+    const THRESHOLD = 80;
+
+    el.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      dx = 0;
+    }, {passive:true});
+
+    el.addEventListener('touchmove', e => {
+      dx = e.touches[0].clientX - startX;
+      const dy = Math.abs(e.touches[0].clientY - startY);
+      if(Math.abs(dx) > dy && Math.abs(dx) > 10) {
+        e.preventDefault();
+        const clamped = Math.max(-120, Math.min(120, dx));
+        el.style.transform = `translateX(${clamped}px)`;
+        el.style.transition = 'none';
+        if(clamped > 40) el.style.background = 'rgba(245,197,24,0.15)';
+        else if(clamped < -40) el.style.background = 'rgba(255,59,78,0.12)';
+        else el.style.background = '';
+      }
+    }, {passive:false});
+
+    el.addEventListener('touchend', () => {
+      el.style.transition = 'transform .2s,background .2s';
+      el.style.transform = '';
+      el.style.background = '';
+      const id = el.dataset.id;
+      if(!id) return;
+      if(dx > THRESHOLD) {
+        // Swipe right — mark done
+        const t = (S.tasks||[]).find(t=>t.id===id);
+        if(t && t.status !== 'Done') {
+          t.status = 'Done'; t.doneAt = Date.now();
+          saveState();
+          toast('Task done ✓', 'ok');
+          setTimeout(()=>{ renderTasks(); initTaskSwipes(); if(RENDERS.home) RENDERS.home(); }, 300);
+        }
+      } else if(dx < -THRESHOLD) {
+        // Swipe left — trash
+        if(confirm('Move this task to trash?')) {
+          const idx = (S.tasks||[]).findIndex(t=>t.id===id);
+          if(idx >= 0) {
+            const [trashed] = S.tasks.splice(idx, 1);
+            if(!S.trashedTasks) S.trashedTasks = [];
+            S.trashedTasks.push({...trashed, trashedAt: Date.now()});
+            saveState();
+            toast('Task removed');
+            renderTasks(); initTaskSwipes();
+          }
+        }
+      }
+    });
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════
+// CLIENT DIRECTORY
+// ══════════════════════════════════════════════════════════════════
+let _clientFilter = 'all';
+let _editingClientId = null;
+
+function filterClients(status, btn) {
+  _clientFilter = status;
+  document.querySelectorAll('#client-filter-bar .chip').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderClients();
+}
+
+function renderClients() {
+  const search = (document.getElementById('client-search')||{}).value||'';
+  let list = [...(S.clients||[])];
+  if(_clientFilter !== 'all') list = list.filter(cl=>cl.status===_clientFilter);
+  if(search) {
+    const q = search.toLowerCase();
+    list = list.filter(cl=>(cl.name||'').toLowerCase().includes(q)||(cl.phone||'').includes(q)||(cl.email||'').toLowerCase().includes(q));
+  }
+  list.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  const container = document.getElementById('client-list');
+  if(!container) return;
+  if(!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👤</div><div class="empty-state-title">No clients yet</div><div>Add your first client or lead above</div></div>';
+    return;
+  }
+  const avatarColors = ['#2E86B5','#5BA8CC','#1A5F8A','#F5C518','#FFB020','#2E86B5'];
+  container.innerHTML = list.map(cl=>{
+    const initials = (cl.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const col = avatarColors[cl.name.charCodeAt(0)%avatarColors.length];
+    const statusClass = {Lead:'sp-lead',Active:'sp-active',Member:'sp-member',Inactive:'sp-inactive'}[cl.status]||'sp-inactive';
+    return `<div class="client-card" onclick="openClientModal('${cl.id}')">
+      <div class="client-avatar" style="background:${col}">${initials}</div>
+      <div style="flex:1;min-width:0">
+        <div class="client-name">${cl.name||'Unnamed'}</div>
+        <div class="client-meta">${cl.phone||''}${cl.phone&&cl.sport?' · ':''}${cl.sport||''}</div>
+        ${cl.notes?`<div style="font-family:var(--fb);font-size:12px;color:var(--g2);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cl.notes}</div>`:''}
+      </div>
+      <span class="status-pill ${statusClass}">${cl.status||'Lead'}</span>
+    </div>`;
+  }).join('');
+}
+RENDERS.clients = renderClients;
+
+function openClientModal(id) {
+  _editingClientId = id;
+  const cl = id ? (S.clients||[]).find(c=>c.id===id) : null;
+  document.getElementById('cm-title').textContent = cl ? 'Edit Client' : 'New Client';
+  document.getElementById('cm-name').value  = cl?.name||'';
+  document.getElementById('cm-phone').value = cl?.phone||'';
+  document.getElementById('cm-email').value = cl?.email||'';
+  document.getElementById('cm-status').value= cl?.status||'Lead';
+  document.getElementById('cm-sport').value = cl?.sport||'';
+  document.getElementById('cm-notes').value = cl?.notes||'';
+  document.getElementById('cm-delete-btn').style.display = cl ? 'block' : 'none';
+  document.getElementById('client-modal').classList.add('open');
+}
+
+function saveClient() {
+  const name = document.getElementById('cm-name').value.trim();
+  if(!name) { toast('Name required','err'); return; }
+  if(!S.clients) S.clients=[];
+  if(_editingClientId) {
+    const cl = S.clients.find(c=>c.id===_editingClientId);
+    if(cl) {
+      cl.name=name; cl.phone=document.getElementById('cm-phone').value.trim();
+      cl.email=document.getElementById('cm-email').value.trim();
+      cl.status=document.getElementById('cm-status').value;
+      cl.sport=document.getElementById('cm-sport').value.trim();
+      cl.notes=document.getElementById('cm-notes').value.trim();
+      cl.updatedAt=Date.now();
+    }
+  } else {
+    S.clients.push({
+      id:'c'+Date.now(), name, 
+      phone:document.getElementById('cm-phone').value.trim(),
+      email:document.getElementById('cm-email').value.trim(),
+      status:document.getElementById('cm-status').value,
+      sport:document.getElementById('cm-sport').value.trim(),
+      notes:document.getElementById('cm-notes').value.trim(),
+      createdAt:Date.now()
+    });
+  }
+  saveState(); closeModal('client-modal'); renderClients();
+  toast(_editingClientId?'Client updated':'Client added','ok');
+}
+
+function deleteClient() {
+  if(!_editingClientId) return;
+  if(!confirm('Delete this client?')) return;
+  S.clients = (S.clients||[]).filter(c=>c.id!==_editingClientId);
+  saveState(); closeModal('client-modal'); renderClients();
+  toast('Client deleted');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// SETTINGS SCREEN
+// ══════════════════════════════════════════════════════════════════
+function renderSettings() {
+  // Update theme pills
+  const theme = document.getElementById('app')?.classList.contains('light') ? 'light' : 'dark';
+  document.getElementById('theme-dark-pill')?.classList.toggle('active', theme==='dark');
+  document.getElementById('theme-light-pill')?.classList.toggle('active', theme==='light');
+  // Launch date
+  if(S.launchDate) {
+    const el = document.getElementById('launch-date-input');
+    if(el) el.value = S.launchDate;
+    const lbl = document.getElementById('current-launch-date');
+    if(lbl) lbl.textContent = new Date(S.launchDate+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  }
+  // Storage
+  try {
+    const sz = JSON.stringify(S).length;
+    const kb = (sz/1024).toFixed(1);
+    const el = document.getElementById('storage-used');
+    if(el) el.textContent = kb + ' KB / 5000 KB';
+  } catch(e){}
+}
+RENDERS.settings = renderSettings;
+
+function saveLaunchDate(val) {
+  if(!val) return;
+  S.launchDate = val;
+  LAUNCH = new Date(val+'T12:00:00');
+  saveState();
+  if(RENDERS.home) RENDERS.home();
+  renderSettings();
+  toast('Launch date updated','ok');
+}
+
+function setTheme(theme) {
+  applyTheme(theme);
+  S.theme = theme;
+  saveState();
+  renderSettings();
+  toast(theme==='light'?'Light mode on':'Dark mode on','ok');
+}
+
+function exportAllData() {
+  try {
+    const data = JSON.stringify(S, null, 2);
+    const blob = new Blob([data], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tucci-backup-' + new Date().toISOString().split('T')[0] + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('Backup exported','ok');
+  } catch(e) { toast('Export failed','err'); }
+}
+
+function importAllData(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if(!data.tasks && !data.bookings) throw new Error('Invalid backup file');
+      if(!confirm('This will replace ALL current data. Continue?')) return;
+      S = {...data};
+      saveState();
+      nav(S.currentTab||'home');
+      toast('Data restored successfully','ok');
+    } catch(err) { toast('Import failed — invalid file','err'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function confirmWipeData() {
+  if(!confirm('This will DELETE all your data and reset the app. Are you absolutely sure?')) return;
+  if(!confirm('FINAL WARNING: All bookings, tasks, clients, and files will be lost permanently.')) return;
+  localStorage.removeItem('tucci_v4');
+  location.reload();
+}
   if(S.currentTab && S.currentTab !== 'home') nav(S.currentTab);
 }
 
@@ -6588,18 +6289,33 @@ function openStaffModal() {
 
 function renderStaffList() {
   const staff = getStaff();
-  document.getElementById('staff-list').innerHTML = staff.map((u,i) => `
-    <div class="staff-item">
+  const HIRE_LABELS = {staff:'Staff',applied:'Applied',interview:'Interview',hired:'Hired'};
+  const NEXT_HIRE   = {applied:'interview',interview:'hired',hired:'staff',staff:'applied'};
+  document.getElementById('staff-list').innerHTML = staff.map((u,i) => {
+    const hs = u.hireStatus || (u.role === 'coach' ? 'staff' : 'staff');
+    return `<div class="staff-item" style="flex-wrap:wrap;gap:6px">
       <div class="login-user-avatar" style="width:32px;height:32px;font-size:14px">${u.name[0]}</div>
-      <div style="flex:1">
+      <div style="flex:1;min-width:100px">
         <div style="font-family:var(--fc);font-size:15px;font-weight:700">${u.name}</div>
-        <div class="staff-role-badge ${u.role}">${u.role}</div>
+        <div class="staff-role-badge ${u.role}" style="display:inline-block;margin-top:3px">${u.role}</div>
       </div>
+      <button class="hire-chip ${hs}" onclick="cycleHireStatus(${i})" title="Click to advance">${HIRE_LABELS[hs]||'Staff'}</button>
       <input class="staff-pin-input" type="password" value="${u.pin}" maxlength="4"
         onchange="updateStaffPin(${i}, this.value)" placeholder="PIN"
         onfocus="this.type='text'" onblur="this.type='password'">
-      ${u.id !== 'dave' ? `<button onclick="removeStaff(${i})" style="background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px;line-height:1;margin-left:4px">×</button>` : '<div style="width:26px"></div>'}
-    </div>`).join('');
+      ${u.id !== 'dave' ? `<button onclick="removeStaff(${i})" style="background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px;line-height:1">×</button>` : '<div style="width:26px"></div>'}
+    </div>`;
+  }).join('');
+}
+
+function cycleHireStatus(idx) {
+  const staff = getStaff();
+  const NEXT = {staff:'applied',applied:'interview',interview:'hired',hired:'staff'};
+  const cur = staff[idx].hireStatus || 'staff';
+  staff[idx].hireStatus = NEXT[cur] || 'staff';
+  saveStaff(staff);
+  renderStaffList();
+  toast('Status → ' + staff[idx].hireStatus, 'ok');
 }
 
 function updateStaffPin(idx, val) {
@@ -6657,8 +6373,323 @@ function init(){
 
 // nav() handles more drawer close directly (no override needed)
 
+
+// ── TASK SWIPES ──────────────────────────────────────────────────
+function initTaskSwipes() {
+  document.querySelectorAll('.titem[data-id]').forEach(el => {
+    if (el._swipeInit) return;
+    el._swipeInit = true;
+    let startX = 0, startY = 0, dx = 0, dragging = false;
+    const wrap = el.closest('.titem-wrap');
+    const doneHint  = wrap ? wrap.querySelector('.swipe-done-hint')  : null;
+    const trashHint = wrap ? wrap.querySelector('.swipe-trash-hint') : null;
+
+    el.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      dx = 0; dragging = false;
+      el.style.transition = '';
+    }, {passive: true});
+
+    el.addEventListener('touchmove', e => {
+      const cx = e.touches[0].clientX;
+      const cy = e.touches[0].clientY;
+      dx = cx - startX;
+      if (!dragging && Math.abs(dx) > Math.abs(cy - startY) && Math.abs(dx) > 10) {
+        dragging = true;
+      }
+      if (dragging) {
+        e.preventDefault();
+        el.style.transform = `translateX(${dx}px)`;
+        el.style.opacity = String(Math.max(0.4, 1 - Math.abs(dx) / 180));
+        if (doneHint)  doneHint.style.opacity  = dx > 0 ? String(Math.min(1, dx / 60)) : '0';
+        if (trashHint) trashHint.style.opacity = dx < 0 ? String(Math.min(1, -dx / 60)) : '0';
+      }
+    }, {passive: false});
+
+    el.addEventListener('touchend', () => {
+      if (!dragging) return;
+      const id = el.dataset.id;
+      if (dx > 80) {
+        el.style.transition = 'transform .22s ease, opacity .22s';
+        el.style.transform = 'translateX(110vw)';
+        el.style.opacity = '0';
+        setTimeout(() => { setTaskStatus(id, 'Done'); }, 220);
+      } else if (dx < -80) {
+        el.style.transition = 'transform .22s ease, opacity .22s';
+        el.style.transform = 'translateX(-110vw)';
+        el.style.opacity = '0';
+        setTimeout(() => { trashTask(id); }, 220);
+      } else {
+        el.style.transition = 'transform .2s, opacity .2s';
+        el.style.transform = '';
+        el.style.opacity = '';
+        if (doneHint)  doneHint.style.opacity  = '0';
+        if (trashHint) trashHint.style.opacity = '0';
+        setTimeout(() => { el.style.transition = ''; }, 200);
+      }
+    });
+  });
+}
+
+function trashTask(id) {
+  const idx = (S.tasks || []).findIndex(t => t.id === id);
+  if (idx < 0) return;
+  const [task] = S.tasks.splice(idx, 1);
+  if (!S.trashedTasks) S.trashedTasks = [];
+  S.trashedTasks.push({...task, trashedAt: Date.now()});
+  saveState();
+  renderTasks();
+  if (RENDERS.home) RENDERS.home();
+  toast('Task removed');
+}
+
+// ── LAUNCH DATE ───────────────────────────────────────────────────
+function saveLaunchDate(val) {
+  if (!val) return;
+  S.launchDate = val;
+  saveState();
+  const now = new Date();
+  const ld = new Date(val + 'T12:00:00');
+  const days = Math.max(0, Math.ceil((ld - now) / 86400000));
+  const el = document.getElementById('launch-days-preview');
+  if (el) el.textContent = days + ' days';
+  if (RENDERS.home) RENDERS.home();
+  toast('Launch date updated', 'ok');
+}
+
+function renderSettings() {
+  const inp = document.getElementById('launch-date-input');
+  if (inp) {
+    inp.value = S.launchDate || '2026-04-15';
+    const now = new Date();
+    const ld = new Date((S.launchDate || '2026-04-15') + 'T12:00:00');
+    const days = Math.max(0, Math.ceil((ld - now) / 86400000));
+    const el = document.getElementById('launch-days-preview');
+    if (el) el.textContent = days + ' days';
+  }
+  // storage
+  try {
+    const used = JSON.stringify(localStorage.getItem('tucci_v4') || '').length;
+    const kb = (used / 1024).toFixed(1);
+    const el = document.getElementById('settings-storage-used');
+    if (el) el.textContent = kb + ' KB used';
+  } catch(e) {}
+}
+
+function exportAllData() {
+  const data = JSON.stringify(S, null, 2);
+  const blob = new Blob([data], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tucci-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Backup downloaded', 'ok');
+}
+
+function importAllData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      Object.assign(S, data);
+      saveState();
+      if (RENDERS[S.currentTab || 'home']) RENDERS[S.currentTab || 'home']();
+      toast('Data restored', 'ok');
+    } catch(err) {
+      toast('Invalid backup file', 'err');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function wipeAllData() {
+  if (!confirm('Wipe ALL data? This cannot be undone.')) return;
+  localStorage.removeItem('tucci_v4');
+  location.reload();
+}
+
+function toggleTheme() {
+  const app = document.getElementById('app');
+  const isLight = app.classList.toggle('light');
+  S.theme = isLight ? 'light' : 'dark';
+  saveState();
+  toast(isLight ? 'Light mode' : 'Dark mode');
+}
+
+// ── CLIENT DIRECTORY ──────────────────────────────────────────────
+let _clientFilter = 'all';
+
+function filterClients(f, el) {
+  _clientFilter = f;
+  document.querySelectorAll('#client-filter-bar .chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderClients();
+}
+
+function renderClients() {
+  const search = (document.getElementById('client-search') || {}).value || '';
+  let list = (S.clients || []).filter(cl => {
+    const matchFilter = _clientFilter === 'all' || cl.status === _clientFilter;
+    const matchSearch = !search || (cl.name || '').toLowerCase().includes(search.toLowerCase()) ||
+                        (cl.phone || '').includes(search) || (cl.email || '').toLowerCase().includes(search.toLowerCase());
+    return matchFilter && matchSearch;
+  });
+  const el = document.getElementById('client-list');
+  if (!el) return;
+  if (!list.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">👥</div><div class="empty-state-title">No clients yet</div><div class="empty-state-sub">Add your first client or lead to get started</div></div>`;
+    return;
+  }
+  const colors = ['#5BA8CC','#F5C518','#FFB020','#2E86B5','#1A5F8A','#FFFFFF'];
+  el.innerHTML = list.map((cl, i) => {
+    const initials = (cl.name || '?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    const color = colors[i % colors.length];
+    const statusClass = {Lead:'sp-lead',Active:'sp-active',Member:'sp-member',Inactive:'sp-inactive'}[cl.status] || 'sp-inactive';
+    return `<div class="client-card" onclick="openClientModal('${cl.id}')">
+      <div class="client-avatar" style="background:${color}">${initials}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+          <div class="client-name">${cl.name || 'Unknown'}</div>
+          <span class="status-pill ${statusClass}">${cl.status || 'Lead'}</span>
+        </div>
+        <div class="client-info">${[cl.sport, cl.age ? cl.age+'y' : '', cl.phone].filter(Boolean).join(' · ')}</div>
+        ${cl.notes ? `<div class="client-info" style="margin-top:3px;color:var(--g2)">${cl.notes.slice(0,60)}${cl.notes.length>60?'…':''}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openClientModal(id) {
+  const cl = id ? (S.clients || []).find(c => c.id === id) : null;
+  const overlay = document.getElementById('client-editor-overlay');
+  if (!overlay) return;
+  document.getElementById('ce-name').value  = cl ? cl.name  || '' : '';
+  document.getElementById('ce-phone').value = cl ? cl.phone || '' : '';
+  document.getElementById('ce-email').value = cl ? cl.email || '' : '';
+  document.getElementById('ce-sport').value = cl ? cl.sport || '' : '';
+  document.getElementById('ce-age').value   = cl ? cl.age   || '' : '';
+  document.getElementById('ce-status').value= cl ? cl.status|| 'Lead' : 'Lead';
+  document.getElementById('ce-notes').value = cl ? cl.notes || '' : '';
+  overlay.dataset.editId = id || '';
+  overlay.classList.add('open');
+}
+
+function saveClient() {
+  const overlay = document.getElementById('client-editor-overlay');
+  const name = document.getElementById('ce-name').value.trim();
+  if (!name) { toast('Name required', 'err'); return; }
+  const editId = overlay.dataset.editId;
+  const data = {
+    id: editId || 'cl_' + Date.now(),
+    name,
+    phone: document.getElementById('ce-phone').value.trim(),
+    email: document.getElementById('ce-email').value.trim(),
+    sport: document.getElementById('ce-sport').value.trim(),
+    age:   document.getElementById('ce-age').value.trim(),
+    status:document.getElementById('ce-status').value,
+    notes: document.getElementById('ce-notes').value.trim(),
+    createdAt: editId ? ((S.clients||[]).find(c=>c.id===editId)||{}).createdAt : Date.now()
+  };
+  if (!S.clients) S.clients = [];
+  if (editId) {
+    const idx = S.clients.findIndex(c => c.id === editId);
+    if (idx >= 0) S.clients[idx] = data; else S.clients.push(data);
+  } else {
+    S.clients.push(data);
+  }
+  saveState();
+  overlay.classList.remove('open');
+  renderClients();
+  toast(editId ? 'Client updated' : 'Client added', 'ok');
+}
+
+function deleteClient() {
+  const overlay = document.getElementById('client-editor-overlay');
+  const editId = overlay.dataset.editId;
+  if (!editId) return;
+  if (!confirm('Remove this client?')) return;
+  S.clients = (S.clients || []).filter(c => c.id !== editId);
+  saveState();
+  overlay.classList.remove('open');
+  renderClients();
+  toast('Client removed');
+}
+
+// ── CALENDAR: blue tint for days with bookings ────────────────────
+// (Patch into renderCalendar's mini-cal day generation)
+
+// ── CHECKLIST RESET CONFIRMATION ──────────────────────────────────
+function resetChecklist(key) {
+  if (!confirm('Reset this checklist? All items will be unchecked.')) return;
+  if (!S.checklists) return;
+  Object.keys(S.checklists[key] || {}).forEach(itemKey => {
+    if (typeof S.checklists[key][itemKey] === 'object') S.checklists[key][itemKey].done = false;
+    else S.checklists[key][itemKey] = false;
+  });
+  saveState();
+  if (RENDERS.sops) RENDERS.sops();
+  toast('Checklist reset', 'ok');
+}
+
+
+init();
+
+
+function removeStaff(idx) {
+  const staff = getStaff();
+  const name = staff[idx].name;
+  staff.splice(idx,1);
+  saveStaff(staff);
+  renderStaffList();
+  toast(name + ' removed','ok');
+}
+
+function addStaffMember() {
+  const name = document.getElementById('new-staff-name').value.trim();
+  const role = document.getElementById('new-staff-role').value;
+  const pin  = String(document.getElementById('new-staff-pin').value).replace(/\D/g,'').slice(0,4);
+  if(!name) { toast('Enter a name','err'); return; }
+  if(pin.length !== 4) { toast('PIN must be exactly 4 digits','err'); return; }
+  const staff = getStaff();
+  if(staff.some(u => u.pin === pin)) { toast('That PIN is already taken','err'); return; }
+  const id = name.toLowerCase().replace(/\s+/g,'-') + '-' + Date.now();
+  staff.push({ id, name, role, pin });
+  saveStaff(staff);
+  renderStaffList();
+  document.getElementById('new-staff-name').value = '';
+  document.getElementById('new-staff-pin').value = '';
+  toast(name + ' added','ok');
+}
+
+function init(){
+  // Apply saved theme immediately (before anything renders)
+  const savedTheme = 'dark';
+  applyTheme(savedTheme);
+
+  // Hide app and login screen — welcome screen shows first
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').classList.add('hidden');
+
+  // If user has an active session, skip login on re-entry but still show welcome
+  // Welcome screen is always shown on fresh load — tap Enter to proceed
+  // (sessionStorage clears on tab close, so returning users see welcome again)
+}
+
+// nav() handles more drawer close directly (no override needed)
+
+function quickBookTime(timeStr) {
+  openBookingModal._preTime = timeStr;
+  nav('calendar');
+  openBookingModal();
+}
+
 init();
 </script>
-
 </body>
 </html>
