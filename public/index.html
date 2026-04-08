@@ -89,10 +89,6 @@ html, body { height:100%; overflow:hidden; background:#050A10; color:#FFFFFF; fo
 /* ══════════════════════════════════════════
    HOME SECTION CONTROLS
 ══════════════════════════════════════════ */
-
-/* Sidebar hidden on mobile — shown only at desktop breakpoint */
-#desktop-sidebar { display:none; }
-
 .hs-x {
   display:none; background:none; border:none; color:var(--g2); font-size:14px;
   cursor:pointer; padding:2px 6px; margin-left:auto; flex-shrink:0;
@@ -178,9 +174,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   overflow-y:auto; -webkit-overflow-scrolling:touch;
   background:#050A10; overscroll-behavior:contain;
   max-width:430px; margin:0 auto;
-  animation:slideUp .18s cubic-bezier(.2,.9,.2,1);
 }
-@keyframes slideUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 
 /* ══════════════════════════════════════════
    NAVBAR
@@ -387,6 +381,50 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 /* ══════════════════════════════════════════
    ADD TASK ROW
 ══════════════════════════════════════════ */
+.fab-add {
+  position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:center;
+  width:100%; padding:10px 0 6px; margin-bottom:4px;
+}
+.fab-add button {
+  background:linear-gradient(150deg,#0B2A3D,#1A5F8A); border:1px solid rgba(91,168,204,0.25);
+  color:var(--gold); font-family:var(--fc); font-size:14px; font-weight:800;
+  letter-spacing:1px; padding:10px 24px; border-radius:var(--r); cursor:pointer;
+  display:flex; align-items:center; gap:8px; transition:background .15s;
+}
+.fab-add button:active { background:var(--royal2); }
+.task-swipe-wrap {
+  position:relative; overflow:hidden; border-radius:var(--r);
+  margin-bottom:2px; touch-action:pan-y;
+}
+.task-swipe-bg {
+  position:absolute; top:0; bottom:0; left:0; width:100%;
+  display:flex; align-items:center; padding-left:20px;
+  background:#2d6a4f; color:#fff; font-family:var(--fc); font-size:13px;
+  font-weight:800; letter-spacing:1px; pointer-events:none;
+}
+.task-swipe-inner { position:relative; z-index:1; background:var(--panel); transition:transform .2s ease; }
+.task-swipe-inner.swiping { transition:none; }
+.sop-top-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.sop-item-actions { display:flex; gap:6px; opacity:0; transition:opacity .15s; margin-left:auto; flex-shrink:0; }
+.cl-item:hover .sop-item-actions, .cl-item:focus-within .sop-item-actions { opacity:1; }
+.sop-item-actions button {
+  background:none; border:none; color:var(--g1); cursor:pointer; padding:2px 6px; font-size:14px;
+}
+.sop-item-actions button:hover { color:var(--blue); }
+.sop-add-item {
+  background:none; border:1px dashed rgba(91,168,204,0.2); border-radius:var(--r-sm);
+  color:var(--g1); font-family:var(--fc); font-size:13px; font-weight:700;
+  padding:10px; width:100%; cursor:pointer; letter-spacing:.5px; margin-top:4px;
+}
+.sop-add-item:hover { border-color:var(--blue); color:var(--blue); }
+.mtg-card {
+  background:var(--panel); border:1px solid rgba(91,168,204,0.08);
+  border-radius:var(--r); padding:16px; margin-bottom:10px; cursor:pointer;
+}
+.mtg-card:active { background:rgba(91,168,204,0.04); }
+.mtg-date { font-family:var(--fc); font-size:12px; font-weight:700; color:var(--g1); letter-spacing:1px; margin-bottom:4px; }
+.mtg-title { font-family:var(--fb); font-size:17px; font-weight:700; color:var(--white); margin-bottom:6px; }
+.mtg-agenda-item { font-family:var(--fb); font-size:14px; color:var(--g1); padding:4px 0 4px 14px; border-left:2px solid var(--royal2); margin-bottom:4px; }
 .add-bar {
   display:flex; gap:6px; padding-top:12px;
   border-top:1px solid rgba(255,255,255,0.12); margin-top:10px;
@@ -2063,6 +2101,20 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 #app.light .cl-text.done { color: #6B7A8D !important; }
 #app.light .cl-reset { color: #6B7A8D !important; }
 
+/* Light mode: new elements */
+#app.light .task-swipe-inner { background:#FFFFFF !important; }
+#app.light .task-swipe-bg { background:#2d6a4f !important; }
+#app.light .fab-add button { background:linear-gradient(150deg,#0B2A3D,#1A5F8A) !important; color:#F5C518 !important; }
+#app.light .mtg-card { background:#FFFFFF !important; border:1px solid rgba(0,0,0,0.08) !important; }
+#app.light .mtg-date { color:#6B7A8D !important; }
+#app.light .mtg-title { color:#0D1117 !important; }
+#app.light .mtg-agenda-item { color:#3D4A5C !important; border-left-color:#1A5F8A !important; }
+#app.light .sop-item-actions button { color:#6B7A8D !important; }
+#app.light .sop-item-actions button:hover { color:#1A5F8A !important; }
+#app.light .sop-add-item { border-color:rgba(0,0,0,0.15) !important; color:#6B7A8D !important; }
+#app.light .sop-add-item:hover { border-color:#1A5F8A !important; color:#1A5F8A !important; }
+#app.light .sop-top-bar .sec-lbl { color:#0D1117 !important; }
+
 /* Section labels white on dark bg */
 
 
@@ -2070,9 +2122,13 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
    DESKTOP LAYOUT — 768px and above
 ══════════════════════════════════════════════════════════════ */
 
+.task-clear-btn { display:none; }
 @media (min-width: 768px) {
 
   /* App fills full screen, no mobile max-width */
+  .task-clear-btn { display:inline-flex !important; opacity:0; transition:opacity .15s; background:none; border:1px solid rgba(91,168,204,0.15); color:var(--g1); font-family:var(--fc); font-size:11px; font-weight:700; padding:3px 10px; border-radius:var(--r-sm); cursor:pointer; letter-spacing:.5px; white-space:nowrap; margin-left:8px; }
+  .titem:hover .task-clear-btn { opacity:1; }
+  .task-clear-btn:hover { color:#2d6a4f !important; border-color:#2d6a4f !important; }
   #app {
     max-width: 100% !important;
     flex-direction: column !important;
@@ -2449,6 +2505,10 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
     SOPs
   </button>
+  <button class="sidebar-item" data-sidebar="meetings" onclick="nav('meetings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Meetings
+  </button>
 
   <div class="sidebar-spacer"></div>
 </div>
@@ -2542,7 +2602,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
   <!-- CRITICAL TASKS -->
   <div data-hs="critical" id="hs-critical">
-    <div class="sec-lbl">Critical Tasks <span class="badge red" id="h-crit-ct">0</span> <button class="hs-x" onclick="hideHS('critical')">&#10005;</button></div>
+    <div class="sec-lbl" style="display:flex;align-items:center">Critical Tasks <span class="badge red" id="h-crit-ct">0</span> <button onclick="openQuickTask()" style="margin-left:auto;background:none;border:1px solid rgba(91,168,204,0.2);color:var(--gold);font-family:var(--fc);font-size:12px;font-weight:800;padding:5px 12px;border-radius:var(--r-sm);cursor:pointer;letter-spacing:.5px;margin-right:4px">+ TASK</button><button class="hs-x" onclick="hideHS('critical')">&#10005;</button></div>
     <div id="h-critical"></div>
   </div>
 
@@ -2588,6 +2648,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
 <!-- ████ TASKS ████ -->
 <div id="sc-tasks" class="screen">
+  <div class="fab-add"><button onclick="openQuickTask()">+ ADD TASK</button></div>
   <div class="filter-bar" id="task-filter-bar">
     <button class="chip active" onclick="filterTasks('all',this)">All</button>
     <button class="chip active red" onclick="filterTasks('Critical',this)" style="display:none" id="chip-critical">Critical</button>
@@ -2606,6 +2667,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <button class="chip" onclick="filterTasks('Safety',this)">Safety</button>
     <button class="chip" onclick="filterTasks('Facility',this)">Facility</button>
     <button class="chip" onclick="filterTasks('Programs',this)">Programs</button>
+    <button class="chip" onclick="filterTasks('Cleared',this)">Cleared</button>
   </div>
   <div id="task-list"></div>
   <div class="add-bar">
@@ -2790,12 +2852,25 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
 
 <!-- ████ SOPs ████ -->
 <div id="sc-sops" class="screen">
-  <div class="sec-lbl">Daily Operations</div>
+  <div class="sop-top-bar">
+    <div class="sec-lbl" style="margin:0">Daily Operations</div>
+    <button class="btn-blue" onclick="openNewSOP()" style="padding:8px 16px;font-size:12px">+ NEW SOP</button>
+  </div>
   <div id="cl-container"></div>
 </div>
 
-</div><!-- /desktop-main -->
-</div><!-- /content -->
+<!-- ████ STAFF MEETINGS ████ -->
+<div id="sc-meetings" class="screen">
+  <div class="sop-top-bar">
+    <div class="sec-lbl" style="margin:0">Staff Meetings</div>
+    <button class="btn-blue" onclick="openMeetingModal()" style="padding:8px 16px;font-size:12px">+ NEW MEETING</button>
+  </div>
+  <div id="mtg-upcoming-lbl" class="sec-lbl" style="font-size:13px">Upcoming</div>
+  <div id="mtg-upcoming"></div>
+  <div id="mtg-past-lbl" class="sec-lbl" style="font-size:13px">Past</div>
+  <div id="mtg-past"></div>
+</div>
+
 
 <!-- ████ DOCS & FILES ████ -->
 <div id="sc-docs" class="screen">
@@ -2883,6 +2958,10 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     <div id="mkt-saved-list"></div>
   </div>
 </div>
+
+
+</div><!-- /desktop-main -->
+</div><!-- /content -->
 
 <!-- TEMPLATE EDITOR OVERLAY -->
 <div class="overlay" id="template-editor" onclick="if(event.target===this)closeModal('template-editor')">
@@ -3038,6 +3117,124 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       <span>SOPs</span>
     </button>
+    <button class="more-btn" onclick="nav('meetings');toggleMore()">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Meetings</span>
+    </button>
+  </div>
+</div>
+
+<!-- QUICK TASK MODAL -->
+<div class="overlay" id="quick-task-modal" onclick="if(event.target===this)closeModal('quick-task-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span>Add Task</span>
+      <button class="modal-close" onclick="closeModal('quick-task-modal')">&#10005;</button>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Task</label>
+      <input class="fi-full" id="qt-txt" placeholder="What needs to be done?">
+    </div>
+    <div style="display:flex;gap:8px">
+      <div class="fgrp" style="flex:1">
+        <label class="flbl">Priority</label>
+        <select class="fsel-full" id="qt-pri">
+          <option value="1">Critical</option>
+          <option value="2" selected>High</option>
+          <option value="3">Medium</option>
+          <option value="4">Low</option>
+        </select>
+      </div>
+      <div class="fgrp" style="flex:1">
+        <label class="flbl">Bucket</label>
+        <select class="fsel-full" id="qt-bucket">
+          <option>Revenue</option><option>Booking &amp; Payments</option>
+          <option>Operations</option><option>Staffing</option>
+          <option>Marketing</option><option>Safety</option>
+          <option>Facility</option><option>Programs</option>
+        </select>
+      </div>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Notes (optional)</label>
+      <textarea class="fta" id="qt-notes" placeholder="Additional details..." rows="2"></textarea>
+    </div>
+    <button class="btn-blue full" onclick="submitQuickTask()">ADD TASK</button>
+  </div>
+</div>
+
+<!-- MEETING MODAL -->
+<div class="overlay" id="meeting-modal" onclick="if(event.target===this)closeModal('meeting-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span id="mtg-modal-title">New Meeting</span>
+      <button class="modal-close" onclick="closeModal('meeting-modal')">&#10005;</button>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Title</label>
+      <input class="fi-full" id="mtg-title" placeholder="e.g. Weekly Staff Sync">
+    </div>
+    <div style="display:flex;gap:8px">
+      <div class="fgrp" style="flex:1">
+        <label class="flbl">Date</label>
+        <input class="fi-full" id="mtg-date" type="date">
+      </div>
+      <div class="fgrp" style="flex:1">
+        <label class="flbl">Time</label>
+        <input class="fi-full" id="mtg-time" type="time">
+      </div>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Location</label>
+      <input class="fi-full" id="mtg-location" placeholder="e.g. Front desk, Cage area...">
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Agenda Items (one per line)</label>
+      <textarea class="fta" id="mtg-agenda" placeholder="Item 1&#10;Item 2&#10;Item 3..." rows="4"></textarea>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Notes</label>
+      <textarea class="fta" id="mtg-notes" placeholder="Additional notes..." rows="3"></textarea>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" id="mtg-del-btn" onclick="deleteMeeting()" style="flex:1;display:none">DELETE</button>
+      <button class="btn-blue" style="flex:1" onclick="saveMeeting()">SAVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- SOP EDIT MODAL -->
+<div class="overlay" id="sop-modal" onclick="if(event.target===this)closeModal('sop-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span id="sop-modal-title">New SOP Checklist</span>
+      <button class="modal-close" onclick="closeModal('sop-modal')">&#10005;</button>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Checklist Title</label>
+      <input class="fi-full" id="sop-title" placeholder="e.g. Closing Checklist">
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Header Color</label>
+      <select class="fsel-full" id="sop-color">
+        <option value="#5BA8CC">Blue</option>
+        <option value="#F5C518">Gold</option>
+        <option value="#2d6a4f">Green</option>
+        <option value="#F59E0B">Amber</option>
+        <option value="#e07c5a">Coral</option>
+      </select>
+    </div>
+    <div class="fgrp">
+      <label class="flbl">Items (one per line)</label>
+      <textarea class="fta" id="sop-items" placeholder="Step 1&#10;Step 2&#10;Step 3..." rows="8"></textarea>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" id="sop-del-btn" onclick="deleteSOP()" style="flex:1;display:none">DELETE</button>
+      <button class="btn-blue" style="flex:1" onclick="saveSOP()">SAVE</button>
+    </div>
   </div>
 </div>
 
@@ -3350,6 +3547,8 @@ function loadState() {
       if(!S.savedMaterials) S.savedMaterials=[];
       if(!S.spaceRental) S.spaceRental={overhead:{rent:0,util:0,ins:0,other:0},hours:{perDay:14,daysWk:7,blocked:0,utilPct:65},margin:50,peakMarkup:25,spaces:[],comps:[]};
       if(!S.homeHidden) S.homeHidden=[];
+      if(!S.clearedTasks) S.clearedTasks=[];
+      if(!S.meetings) S.meetings=[];
     } else {
       S = {
         tasks: JSON.parse(JSON.stringify(WORKBOOK_TASKS)),
@@ -3363,6 +3562,8 @@ function loadState() {
         savedMaterials: [],
         spaceRental: {overhead:{rent:0,util:0,ins:0,other:0},hours:{perDay:14,daysWk:7,blocked:0,utilPct:65},margin:50,peakMarkup:25,spaces:[],comps:[]},
         homeHidden: [],
+        clearedTasks: [],
+        meetings: [],
         currentTab: 'home',
         sheetsConfig: {lastSync:null}
       };
@@ -3376,6 +3577,8 @@ function loadState() {
       checklists: JSON.parse(JSON.stringify(DEFAULT_CHECKLISTS)),
       spaceRental: {overhead:{rent:0,util:0,ins:0,other:0},hours:{perDay:14,daysWk:7,blocked:0,utilPct:65},margin:50,peakMarkup:25,spaces:[],comps:[]},
       homeHidden: [],
+      clearedTasks: [],
+      meetings: [],
       currentTab: 'home',
     };
   }
@@ -3454,7 +3657,7 @@ const DEFAULT_CHECKLISTS = {
     state:{}
   },
   weekly:{
-    title:'Weekly Staff Meeting — Sat 5pm',color:'var(--red)',
+    title:'Weekly Staff Meeting — Sat 5pm',color:'var(--amber)',
     items:['Review next 7 days of bookings','Flag scheduling conflicts','Review incident log','Update task status with team','Coaching feedback discussion','Review budget actuals'],
     state:{}
   }
@@ -3479,24 +3682,23 @@ function nav(t) {
     if(d) d.style.display='none';
     document.querySelector('[data-tab="more"]')?.classList.remove('active');
   }
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('#navbar .nb').forEach(b=>b.classList.remove('active'));
-  // Desktop sidebar active state
-  document.querySelectorAll('.sidebar-item').forEach(b=>b.classList.remove('active'));
-  const sc = document.getElementById('sc-'+t);
-  if(sc) sc.classList.add('active');
-  document.querySelectorAll('#navbar .nb').forEach(b=>{
-    if(b.getAttribute('data-tab')===t) b.classList.add('active');
-  });
-  // Sync sidebar
-  document.querySelectorAll('.sidebar-item').forEach(b=>{
-    if(b.getAttribute('data-sidebar')===t) b.classList.add('active');
-  });
-  // Scroll desktop main to top on nav
-  const dm = document.getElementById('desktop-main');
-  if(dm) dm.scrollTop = 0;
+  // Render new screen content while still hidden
   S.currentTab = t;
   if(RENDERS[t]) RENDERS[t]();
+  // Swap screens in one shot — activate new THEN deactivate old
+  const next = document.getElementById('sc-'+t);
+  if(next) next.classList.add('active');
+  document.querySelectorAll('.screen').forEach(s=>{
+    if(s.id !== 'sc-'+t) s.classList.remove('active');
+  });
+  document.querySelectorAll('#navbar .nb').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('data-tab')===t);
+  });
+  document.querySelectorAll('.sidebar-item').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('data-sidebar')===t);
+  });
+  const dm = document.getElementById('desktop-main');
+  if(dm) dm.scrollTop = 0;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -3704,24 +3906,50 @@ let _tf = 'all';
 
 const PRIORITY_ORDER = {Critical:1, High:2, Medium:3, Low:4};
 
-function taskItemHTML(t) {
+function taskItemHTML(t, isCleared) {
   const pl = (t.priorityLabel||'').toLowerCase();
   const isDone = t.status==='Done';
-  return `<div class="titem ${pl} ${isDone?'done':''}">
-    <span class="tpill ${pl}">${t.priorityLabel||''}</span>
-    <div class="titem-body">
-      <div class="titem-name">${t.task}</div>
-      <div class="titem-meta">
-        <span class="titem-bucket">${t.bucket||''}</span>
-        <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
-          ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
-        </select>
+  if(isCleared) {
+    return `<div class="titem ${pl}" style="opacity:.5">
+      <span class="tpill ${pl}">${t.priorityLabel||''}</span>
+      <div class="titem-body">
+        <div class="titem-name">${t.task}</div>
+        <div class="titem-meta">
+          <span class="titem-bucket">${t.bucket||''}</span>
+          <button onclick="event.stopPropagation();restoreTask('${t.id}')" style="background:none;border:1px solid var(--royal2);color:var(--blue);font-family:var(--fc);font-size:11px;font-weight:700;padding:3px 10px;border-radius:var(--r-sm);cursor:pointer;letter-spacing:.5px">RESTORE</button>
+        </div>
+      </div>
+    </div>`;
+  }
+  return `<div class="task-swipe-wrap" id="tsw-${t.id}" ontouchstart="tSwipeStart(event,'${t.id}')" ontouchmove="tSwipeMove(event,'${t.id}')" ontouchend="tSwipeEnd(event,'${t.id}')">
+    <div class="task-swipe-bg">CLEAR</div>
+    <div class="task-swipe-inner" id="tsi-${t.id}">
+      <div class="titem ${pl} ${isDone?'done':''}">
+        <span class="tpill ${pl}">${t.priorityLabel||''}</span>
+        <div class="titem-body">
+          <div class="titem-name">${t.task}</div>
+          <div class="titem-meta">
+            <span class="titem-bucket">${t.bucket||''}</span>
+            <select class="tsel" onchange="setTaskStatus('${t.id}',this.value)" onclick="event.stopPropagation()">
+              ${['Open','In Progress','Waiting','Done'].map(s=>`<option${t.status===s?' selected':''}>${s}</option>`).join('')}
+            </select>
+            <button class="task-clear-btn" onclick="event.stopPropagation();clearTask('${t.id}')">CLEAR</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>`;
 }
 
 function renderTasks() {
+  // Cleared archive view
+  if(_tf === 'Cleared') {
+    const cleared = S.clearedTasks||[];
+    document.getElementById('task-list').innerHTML = cleared.length
+      ? cleared.map(t=>taskItemHTML(t, true)).join('')
+      : '<div style="font-family:var(--fc);font-size:14px;font-weight:500;color:var(--g1);padding:24px 0;text-align:center;letter-spacing:0.5px">NO CLEARED TASKS</div>';
+    return;
+  }
   let list = [...(S.tasks||[])];
   if(_tf !== 'all') {
     list = list.filter(t=>
@@ -3730,14 +3958,13 @@ function renderTasks() {
       t.bucket===_tf
     );
   }
-  // Sort: priority first, then done at bottom
   list.sort((a,b)=>{
     if(a.status==='Done' && b.status!=='Done') return 1;
     if(a.status!=='Done' && b.status==='Done') return -1;
     return (PRIORITY_ORDER[a.priorityLabel]||9) - (PRIORITY_ORDER[b.priorityLabel]||9);
   });
   document.getElementById('task-list').innerHTML = list.length
-    ? list.map(t=>taskItemHTML(t)).join('')
+    ? list.map(t=>taskItemHTML(t, false)).join('')
     : '<div style="font-family:var(--fc);font-size:14px;font-weight:500;color:var(--g1);padding:24px 0;text-align:center;letter-spacing:0.5px">NO TASKS MATCH THIS FILTER</div>';
 }
 RENDERS.tasks = renderTasks;
@@ -3942,6 +4169,7 @@ function quickBook(time){
   },30);
 }
 
+function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 function calcPrice(svcId, startTime, dur){
@@ -4673,9 +4901,10 @@ function renderSOPs(){
     const state=cl.state||{};
     const done=cl.items.filter((_,i)=>state[i]).length;
     return `<div class="cl-block">
-      <div class="cl-hd">
-        <span class="cl-title" style="color:${cl.color}">${cl.title}</span>
+      <div class="cl-hd" style="display:flex;align-items:center;gap:8px">
+        <span class="cl-title" style="color:${cl.color};flex:1">${cl.title}</span>
         <span class="cl-prog">${done}/${cl.items.length}</span>
+        <button onclick="event.stopPropagation();editSOP('${key}')" style="background:none;border:none;color:var(--g1);cursor:pointer;font-size:14px;padding:2px 6px" title="Edit SOP">&#9998;</button>
       </div>
       <div class="cl-items">
         ${cl.items.map((item,i)=>{
@@ -4683,8 +4912,13 @@ function renderSOPs(){
           return `<div class="cl-item" onclick="toggleCheck('${key}',${i})">
             <div class="cbox${chk?' done':''}"></div>
             <span class="cl-text${chk?' done':''}">${item}</span>
+            <div class="sop-item-actions">
+              <button onclick="event.stopPropagation();editSOPItem('${key}',${i})" title="Edit">&#9998;</button>
+              <button onclick="event.stopPropagation();removeSOPItem('${key}',${i})" title="Remove">&#10005;</button>
+            </div>
           </div>`;
         }).join('')}
+        <button class="sop-add-item" onclick="event.stopPropagation();addSOPItem('${key}')">+ ADD ITEM</button>
         <button class="cl-reset" onclick="event.stopPropagation();resetCL('${key}')">RESET CHECKLIST</button>
       </div>
     </div>`;
@@ -4699,6 +4933,273 @@ function toggleCheck(key,i){
   saveState();renderSOPs();
 }
 function resetCL(key){if(S.checklists&&S.checklists[key]){S.checklists[key].state={};saveState();renderSOPs();}}
+
+// ═══════════════════════════════════════════════════════════
+// TASK SWIPE TO CLEAR
+// ═══════════════════════════════════════════════════════════
+const _tSwipe = {};
+function tSwipeStart(e, id) {
+  const t = e.touches[0];
+  _tSwipe[id] = { sx: t.clientX, sy: t.clientY, moved: false };
+  const el = document.getElementById('tsi-'+id);
+  if(el) el.classList.add('swiping');
+}
+function tSwipeMove(e, id) {
+  const s = _tSwipe[id]; if(!s) return;
+  const t = e.touches[0];
+  const dx = t.clientX - s.sx;
+  const dy = t.clientY - s.sy;
+  if(!s.moved && Math.abs(dy) > Math.abs(dx)) { delete _tSwipe[id]; return; }
+  if(dx > 10) { s.moved = true; e.preventDefault(); }
+  if(s.moved) {
+    const el = document.getElementById('tsi-'+id);
+    if(el) el.style.transform = 'translateX('+Math.max(0,dx)+'px)';
+  }
+}
+function tSwipeEnd(e, id) {
+  const s = _tSwipe[id]; if(!s) return;
+  const el = document.getElementById('tsi-'+id);
+  if(el) el.classList.remove('swiping');
+  delete _tSwipe[id];
+  if(!s.moved) { if(el) el.style.transform=''; return; }
+  const wrap = document.getElementById('tsw-'+id);
+  const w = wrap ? wrap.offsetWidth : 300;
+  const ct = e.changedTouches[0];
+  const dx = ct.clientX - s.sx;
+  if(dx > w * 0.4) {
+    if(el) el.style.transform='translateX('+w+'px)';
+    setTimeout(()=>clearTask(id), 200);
+  } else {
+    if(el) { el.classList.remove('swiping'); el.style.transform=''; }
+  }
+}
+function clearTask(id) {
+  if(!S.clearedTasks) S.clearedTasks=[];
+  const idx = (S.tasks||[]).findIndex(t=>t.id===id);
+  if(idx>=0) {
+    const task = S.tasks.splice(idx,1)[0];
+    task.clearedAt = Date.now();
+    S.clearedTasks.unshift(task);
+    saveState(); renderTasks(); renderHome();
+    toast('Task cleared');
+  }
+}
+function restoreTask(id) {
+  const idx = (S.clearedTasks||[]).findIndex(t=>t.id===id);
+  if(idx>=0) {
+    const task = S.clearedTasks.splice(idx,1)[0];
+    delete task.clearedAt;
+    if(!S.tasks) S.tasks=[];
+    S.tasks.unshift(task);
+    saveState(); renderTasks(); renderHome();
+    toast('Task restored');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUICK TASK MODAL
+// ═══════════════════════════════════════════════════════════
+function openQuickTask() {
+  document.getElementById('qt-txt').value='';
+  document.getElementById('qt-pri').value='2';
+  document.getElementById('qt-bucket').value='Revenue';
+  document.getElementById('qt-notes').value='';
+  openModal('quick-task-modal');
+  setTimeout(()=>document.getElementById('qt-txt').focus(),200);
+}
+function submitQuickTask() {
+  const txt = document.getElementById('qt-txt').value.trim();
+  if(!txt) { toast('Enter a task','err'); return; }
+  const p = parseInt(document.getElementById('qt-pri').value)||2;
+  const labels = {1:'Critical',2:'High',3:'Medium',4:'Low'};
+  if(!S.tasks) S.tasks=[];
+  const now = Date.now();
+  S.tasks.unshift({
+    id:'T'+now, task:txt, priority:p, priorityLabel:labels[p],
+    bucket:document.getElementById('qt-bucket').value,
+    status:'Open', notes:document.getElementById('qt-notes').value.trim(),
+    createdAt:now, updatedAt:now
+  });
+  saveState(); renderTasks(); renderHome();
+  closeModal('quick-task-modal');
+  toast('Task added');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SOP EDITING
+// ═══════════════════════════════════════════════════════════
+let _editSOPKey = null;
+
+function openNewSOP() {
+  _editSOPKey = null;
+  document.getElementById('sop-modal-title').textContent='New SOP Checklist';
+  document.getElementById('sop-title').value='';
+  document.getElementById('sop-color').value='#5BA8CC';
+  document.getElementById('sop-items').value='';
+  document.getElementById('sop-del-btn').style.display='none';
+  openModal('sop-modal');
+}
+function editSOP(key) {
+  _editSOPKey = key;
+  const cl = (S.checklists||{})[key];
+  if(!cl) return;
+  document.getElementById('sop-modal-title').textContent='Edit: '+cl.title;
+  document.getElementById('sop-title').value=cl.title;
+  document.getElementById('sop-color').value=cl.color||'#5BA8CC';
+  document.getElementById('sop-items').value=(cl.items||[]).join('\n');
+  document.getElementById('sop-del-btn').style.display='';
+  openModal('sop-modal');
+}
+function saveSOP() {
+  const title = document.getElementById('sop-title').value.trim();
+  if(!title) { toast('Enter a title','err'); return; }
+  const items = document.getElementById('sop-items').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!items.length) { toast('Add at least one item','err'); return; }
+  const color = document.getElementById('sop-color').value;
+  if(!S.checklists) S.checklists={};
+  const key = _editSOPKey || 'sop_'+Date.now();
+  const existing = S.checklists[key];
+  S.checklists[key] = {
+    title, items, color,
+    state: existing ? existing.state : {}
+  };
+  saveState(); renderSOPs(); closeModal('sop-modal');
+  toast(_editSOPKey ? 'SOP updated' : 'SOP created');
+}
+function deleteSOP() {
+  if(!_editSOPKey) return;
+  if(!confirm('Delete this checklist?')) return;
+  delete S.checklists[_editSOPKey];
+  saveState(); renderSOPs(); closeModal('sop-modal');
+  toast('SOP deleted');
+}
+function addSOPItem(key) {
+  const txt = prompt('New checklist item:');
+  if(!txt || !txt.trim()) return;
+  if(S.checklists && S.checklists[key]) {
+    S.checklists[key].items.push(txt.trim());
+    saveState(); renderSOPs();
+  }
+}
+function removeSOPItem(key, idx) {
+  if(!confirm('Remove this item?')) return;
+  if(S.checklists && S.checklists[key]) {
+    S.checklists[key].items.splice(idx, 1);
+    // Clean up state indices
+    const newState = {};
+    Object.keys(S.checklists[key].state||{}).forEach(k=>{
+      const ki = parseInt(k);
+      if(ki < idx) newState[ki] = S.checklists[key].state[ki];
+      else if(ki > idx) newState[ki-1] = S.checklists[key].state[ki];
+    });
+    S.checklists[key].state = newState;
+    saveState(); renderSOPs();
+  }
+}
+function editSOPItem(key, idx) {
+  const cl = (S.checklists||{})[key];
+  if(!cl) return;
+  const txt = prompt('Edit item:', cl.items[idx]);
+  if(txt === null) return;
+  if(!txt.trim()) { removeSOPItem(key, idx); return; }
+  cl.items[idx] = txt.trim();
+  saveState(); renderSOPs();
+}
+
+// ═══════════════════════════════════════════════════════════
+// STAFF MEETINGS
+// ═══════════════════════════════════════════════════════════
+let _editMtgId = null;
+
+function renderMeetings() {
+  const mtgs = (S.meetings||[]).sort((a,b)=>new Date(b.date+'T'+(b.time||'00:00')) - new Date(a.date+'T'+(a.time||'00:00')));
+  const now = new Date();
+  const todayKey = dateKey(now);
+  const upcoming = mtgs.filter(m=>m.date >= todayKey);
+  const past = mtgs.filter(m=>m.date < todayKey);
+
+  const cardHTML = (m) => {
+    const d = new Date(m.date+'T12:00:00');
+    const dl = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const agenda = (m.agenda||[]).slice(0,3).map(a=>`<div class="mtg-agenda-item">${a}</div>`).join('');
+    const extra = (m.agenda||[]).length > 3 ? `<div style="font-size:12px;color:var(--g1);padding-left:14px">+${m.agenda.length-3} more</div>` : '';
+    return `<div class="mtg-card" onclick="openMeetingModal('${m.id}')">
+      <div class="mtg-date">${dl}${m.time?' · '+m.time:''}${m.location?' · '+m.location:''}</div>
+      <div class="mtg-title">${m.title}</div>
+      ${agenda}${extra}
+      ${m.notes?'<div style="font-size:13px;color:var(--g2);margin-top:6px;font-family:var(--fb)">'+m.notes.substring(0,100)+(m.notes.length>100?'...':'')+'</div>':''}
+    </div>`;
+  };
+
+  document.getElementById('mtg-upcoming').innerHTML = upcoming.length
+    ? upcoming.reverse().map(cardHTML).join('')
+    : '<div style="font-family:var(--fc);font-size:14px;color:var(--g1);padding:12px 0;letter-spacing:.5px">No upcoming meetings</div>';
+  document.getElementById('mtg-past').innerHTML = past.length
+    ? past.map(cardHTML).join('')
+    : '<div style="font-family:var(--fc);font-size:14px;color:var(--g1);padding:12px 0;letter-spacing:.5px">No past meetings</div>';
+}
+RENDERS.meetings = renderMeetings;
+
+function openMeetingModal(id) {
+  if(id) {
+    _editMtgId = id;
+    const m = (S.meetings||[]).find(m=>m.id===id);
+    if(!m) return;
+    document.getElementById('mtg-modal-title').textContent='Edit Meeting';
+    document.getElementById('mtg-title').value=m.title||'';
+    document.getElementById('mtg-date').value=m.date||'';
+    document.getElementById('mtg-time').value=m.time||'';
+    document.getElementById('mtg-location').value=m.location||'';
+    document.getElementById('mtg-agenda').value=(m.agenda||[]).join('\n');
+    document.getElementById('mtg-notes').value=m.notes||'';
+    document.getElementById('mtg-del-btn').style.display='';
+  } else {
+    _editMtgId = null;
+    document.getElementById('mtg-modal-title').textContent='New Meeting';
+    document.getElementById('mtg-title').value='';
+    document.getElementById('mtg-date').value='';
+    document.getElementById('mtg-time').value='';
+    document.getElementById('mtg-location').value='';
+    document.getElementById('mtg-agenda').value='';
+    document.getElementById('mtg-notes').value='';
+    document.getElementById('mtg-del-btn').style.display='none';
+  }
+  openModal('meeting-modal');
+}
+
+function saveMeeting() {
+  const title = document.getElementById('mtg-title').value.trim();
+  const date = document.getElementById('mtg-date').value;
+  if(!title) { toast('Enter a title','err'); return; }
+  if(!date) { toast('Pick a date','err'); return; }
+  if(!S.meetings) S.meetings=[];
+  const obj = {
+    id: _editMtgId || 'MTG'+Date.now(),
+    title,
+    date,
+    time: document.getElementById('mtg-time').value,
+    location: document.getElementById('mtg-location').value.trim(),
+    agenda: document.getElementById('mtg-agenda').value.split('\n').map(s=>s.trim()).filter(Boolean),
+    notes: document.getElementById('mtg-notes').value.trim(),
+    updatedAt: Date.now()
+  };
+  if(_editMtgId) {
+    const idx = S.meetings.findIndex(m=>m.id===_editMtgId);
+    if(idx>=0) S.meetings[idx]=obj; else S.meetings.push(obj);
+  } else {
+    S.meetings.push(obj);
+  }
+  saveState(); renderMeetings(); closeModal('meeting-modal');
+  toast(_editMtgId ? 'Meeting updated' : 'Meeting created');
+}
+
+function deleteMeeting() {
+  if(!_editMtgId) return;
+  if(!confirm('Delete this meeting?')) return;
+  S.meetings = (S.meetings||[]).filter(m=>m.id!==_editMtgId);
+  saveState(); renderMeetings(); closeModal('meeting-modal');
+  toast('Meeting deleted');
+}
 
 // ═══════════════════════════════════════════════════════════
 // MORE DRAWER
