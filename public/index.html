@@ -3152,7 +3152,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   <div class="card" style="margin-bottom:12px;padding:16px;display:flex;align-items:center;justify-content:space-between">
     <div>
       <div style="font-family:var(--fb);font-size:15px;font-weight:700;color:var(--white)">Backup &amp; Restore</div>
-      <div style="font-family:var(--fm);font-size:12px;color:var(--g1)">Checkpoints, export, and import</div>
+      <div style="font-family:var(--fm);font-size:12px;color:var(--g1)">Sync between devices, checkpoints, export/import</div>
     </div>
     <button onclick="openBackupModal()" class="btn-ghost" style="padding:8px 16px;font-size:12px">OPEN</button>
   </div>
@@ -3343,9 +3343,20 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
       <button class="modal-close" onclick="closeModal('backup-modal')">&#10005;</button>
     </div>
     <div style="padding:0 4px">
-      <div class="sec-lbl" style="margin:12px 0 8px;font-size:13px">Quick Actions</div>
+      <div class="sec-lbl" style="margin:12px 0 8px;font-size:13px">Direct Sync</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px">
+        <button class="btn-blue" style="flex:1;padding:10px" onclick="generateSyncCode()">COPY SYNC CODE</button>
+        <button class="btn-ghost" style="flex:1;padding:10px" onclick="showPasteSync()">PASTE SYNC CODE</button>
+      </div>
+      <div id="sync-paste-area" style="display:none;margin-bottom:12px">
+        <textarea class="fta" id="sync-paste-input" placeholder="Paste sync code from other device..." rows="3" style="font-size:11px;word-break:break-all"></textarea>
+        <button class="btn-blue full" style="margin-top:6px" onclick="applySyncCode()">APPLY SYNC</button>
+      </div>
+      <div id="sync-status" style="font-family:var(--fm);font-size:12px;color:var(--g1);margin-bottom:14px;display:none"></div>
+
+      <div class="sec-lbl" style="margin:0 0 8px;font-size:13px">Backup</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-        <button class="btn-blue" style="flex:1;padding:10px" onclick="createCheckpoint()">CHECKPOINT</button>
+        <button class="btn-ghost" style="flex:1;padding:10px" onclick="createCheckpoint()">CHECKPOINT</button>
         <button class="btn-ghost" style="flex:1;padding:10px" onclick="exportBackup()">EXPORT JSON</button>
         <button class="btn-ghost" style="flex:1;padding:10px" onclick="document.getElementById('import-file').click()">IMPORT JSON</button>
         <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(event)">
@@ -5465,6 +5476,76 @@ function renderSettings() {
   if(btn) btn.textContent = document.getElementById('app').classList.contains('light') ? 'LIGHT' : 'DARK';
 }
 RENDERS.settings = renderSettings;
+
+// ═══════════════════════════════════════════════════════════
+// DIRECT SYNC (copy/paste between devices)
+// ═══════════════════════════════════════════════════════════
+function generateSyncCode() {
+  try {
+    const payload = JSON.stringify(S);
+    const encoded = btoa(unescape(encodeURIComponent(payload)));
+    const code = 'TUCCI1:' + encoded;
+    navigator.clipboard.writeText(code).then(()=>{
+      const ss = document.getElementById('sync-status');
+      ss.style.display='block';
+      ss.style.color='var(--green)';
+      ss.textContent='Sync code copied to clipboard (' + Math.round(code.length/1024) + 'KB). Paste it on your other device.';
+      toast('Sync code copied');
+    }).catch(()=>{
+      // Fallback: show in a textarea for manual copy
+      const area = document.getElementById('sync-paste-area');
+      area.style.display='block';
+      const input = document.getElementById('sync-paste-input');
+      input.value = code;
+      input.select();
+      document.execCommand('copy');
+      toast('Code shown below. Long-press to copy.');
+    });
+  } catch(e) {
+    toast('Failed to generate sync code','err');
+  }
+}
+
+function showPasteSync() {
+  const area = document.getElementById('sync-paste-area');
+  area.style.display = area.style.display === 'none' ? 'block' : 'none';
+  if(area.style.display === 'block') {
+    document.getElementById('sync-paste-input').value = '';
+    setTimeout(()=>document.getElementById('sync-paste-input').focus(), 200);
+  }
+}
+
+function applySyncCode() {
+  const raw = document.getElementById('sync-paste-input').value.trim();
+  if(!raw) { toast('Paste a sync code first','err'); return; }
+  try {
+    let json;
+    if(raw.startsWith('TUCCI1:')) {
+      const b64 = raw.substring(7);
+      json = decodeURIComponent(escape(atob(b64)));
+    } else if(raw.startsWith('{')) {
+      json = raw;
+    } else {
+      toast('Invalid sync code','err'); return;
+    }
+    const data = JSON.parse(json);
+    if(!data.tasks && !data.bookings && !data.checklists) {
+      toast('Invalid data format','err'); return;
+    }
+    if(!confirm('Apply sync data? This will overwrite everything on this device.')) return;
+    S = data;
+    saveState();
+    const ss = document.getElementById('sync-status');
+    ss.style.display='block';
+    ss.style.color='var(--green)';
+    ss.textContent='Sync applied. All data updated from other device.';
+    document.getElementById('sync-paste-area').style.display='none';
+    if(RENDERS[S.currentTab||'home']) RENDERS[S.currentTab||'home']();
+    toast('Sync complete');
+  } catch(e) {
+    toast('Failed to parse sync code','err');
+  }
+}
 
 // ═══════════════════════════════════════════════════════════
 // BACKUP / CHECKPOINT / IMPORT / EXPORT
