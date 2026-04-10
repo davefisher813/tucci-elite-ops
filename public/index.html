@@ -2570,7 +2570,7 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   <div class="topbar-right">
     <div class="days-pill" id="days-pill">— DAYS</div>
     <button class="sync-btn" id="sync-btn" onclick="syncSheets()">⟳ SYNC</button>
-    <button class="sync-btn" onclick="openBackupModal()" title="Backup / Restore">💾</button>
+    <button class="sync-btn" onclick="openBackupModal()" title="Backup &amp; Sync">💾</button>
     <button onclick="openSyncSettings()" style="background:none;border:none;color:var(--g1);font-size:18px;cursor:pointer;padding:2px 4px;line-height:1;transition:color .15s" title="Sync Settings">⚙</button>
     <button onclick="openStaffModal()" id="staff-mgr-btn" style="display:none;background:none;border:none;color:var(--g1);font-size:17px;cursor:pointer;padding:2px 4px;line-height:1;transition:color .15s" title="Staff & PINs">👤</button>
     <button class="logout-btn" onclick="doLogout()" id="logout-btn" style="display:none">Sign out</button>
@@ -2880,97 +2880,149 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
     </div>
   </div>
 
-  <!-- ████ SPACE RENTAL CALCULATOR ████ -->
-  <div class="sec-lbl">Space Rental Calculator</div>
+  <!-- ████ RENTAL QUOTE BUILDER ████ -->
+  <div class="sec-lbl">Rental Quote Builder</div>
   <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:4px">Facility Overhead</div>
-    <div style="font-family:var(--fm);font-size:11px;color:var(--g1);margin-bottom:12px">Monthly costs that get spread across all bookable hours</div>
-    <div id="sr-overhead-inputs">
-      <div class="frow" style="margin-bottom:8px">
-        <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Rent / Mortgage</label><input class="fi-full" id="sr-rent" type="number" placeholder="0" oninput="calcSpaceRental()"></div>
-        <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Utilities</label><input class="fi-full" id="sr-util" type="number" placeholder="0" oninput="calcSpaceRental()"></div>
-      </div>
-      <div class="frow" style="margin-bottom:8px">
-        <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Insurance</label><input class="fi-full" id="sr-ins" type="number" placeholder="0" oninput="calcSpaceRental()"></div>
-        <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Other Monthly</label><input class="fi-full" id="sr-other" type="number" placeholder="0" oninput="calcSpaceRental()"></div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--panel2);border-radius:8px;padding:10px 12px;margin-top:6px">
-      <span style="font-family:var(--fc);font-size:12px;color:var(--g1)">Total Monthly Overhead</span>
-      <span id="sr-total-overhead" style="font-family:var(--fc);font-size:18px;font-weight:700;color:var(--amber)">$0</span>
-    </div>
-  </div>
 
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:4px">Facility Hours</div>
-    <div style="font-family:var(--fm);font-size:11px;color:var(--g1);margin-bottom:12px">How many hours is the facility open and available?</div>
-    <div class="frow" style="margin-bottom:8px">
-      <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Hours Open / Day</label><input class="fi-full" id="sr-hrs-day" type="number" value="14" oninput="calcSpaceRental()"></div>
-      <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Days Open / Week</label><input class="fi-full" id="sr-days-wk" type="number" value="7" oninput="calcSpaceRental()"></div>
+    <!-- STEP 1: SPACE -->
+    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:8px">1. Space</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px" id="rq-space-btns">
+      <button class="chip active" onclick="rqSetSpace('half-cage',this)">Half Cage</button>
+      <button class="chip" onclick="rqSetSpace('full-cage',this)">Full Cage</button>
+      <button class="chip" onclick="rqSetSpace('half-turf',this)">Half Turf</button>
+      <button class="chip" onclick="rqSetSpace('full-turf',this)">Full Turf</button>
+      <button class="chip" onclick="rqSetSpace('outside-cage',this)">Outside Cage</button>
     </div>
-    <div class="frow" style="margin-bottom:8px">
-      <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Hours Blocked for Own Programs</label><input class="fi-full" id="sr-blocked" type="number" value="0" placeholder="0" oninput="calcSpaceRental()"></div>
-      <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Target Utilization %</label><input class="fi-full" id="sr-util-pct" type="number" value="65" placeholder="65" oninput="calcSpaceRental()"></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
-      <div style="flex:1;min-width:120px;background:var(--panel2);border-radius:8px;padding:10px 12px;text-align:center">
-        <div style="font-family:var(--fm);font-size:11px;color:var(--g1)">Total Weekly Hours</div>
-        <div id="sr-total-wk-hrs" style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--white)">98</div>
-      </div>
-      <div style="flex:1;min-width:120px;background:var(--panel2);border-radius:8px;padding:10px 12px;text-align:center">
-        <div style="font-family:var(--fm);font-size:11px;color:var(--g1)">Rentable Weekly Hours</div>
-        <div id="sr-rentable-hrs" style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--white)">98</div>
-      </div>
-      <div style="flex:1;min-width:120px;background:var(--panel2);border-radius:8px;padding:10px 12px;text-align:center">
-        <div style="font-family:var(--fm);font-size:11px;color:var(--g1)">Realistic Booked Hours</div>
-        <div id="sr-booked-hrs" style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--amber)">64</div>
+    <div class="fgrp" style="margin-bottom:14px">
+      <label class="flbl">How many?</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn-ghost" style="padding:6px 14px;font-size:16px" onclick="rqAdjustQty(-1)">−</button>
+        <span id="rq-qty" style="font-family:var(--fc);font-size:20px;font-weight:800;color:var(--white);min-width:30px;text-align:center">1</span>
+        <button class="btn-ghost" style="padding:6px 14px;font-size:16px" onclick="rqAdjustQty(1)">+</button>
       </div>
     </div>
-  </div>
 
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:4px">Bookable Spaces</div>
-    <div style="font-family:var(--fm);font-size:11px;color:var(--g1);margin-bottom:12px">Define each rentable space. Values save automatically.</div>
-    <div id="sr-spaces-list"></div>
-    <button class="add-ev-btn" onclick="addSRSpace()" style="margin-top:8px;width:100%">+ ADD SPACE</button>
-  </div>
+    <!-- STEP 2: DURATION -->
+    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:8px">2. Duration</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px" id="rq-dur-btns">
+      <button class="chip" onclick="rqSetDur(30,this)">30 min</button>
+      <button class="chip active" onclick="rqSetDur(60,this)">1 hour</button>
+      <button class="chip" onclick="rqSetDur(90,this)">1.5 hours</button>
+      <button class="chip" onclick="rqSetDur(120,this)">2 hours</button>
+    </div>
 
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:4px">Target Margin</div>
-    <div style="font-family:var(--fm);font-size:11px;color:var(--g1);margin-bottom:12px">What profit margin do you want on top of your costs?</div>
-    <div class="frow">
+    <!-- STEP 3: DAY & TIME -->
+    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:8px">3. Day &amp; Time</div>
+    <div class="frow" style="margin-bottom:4px">
       <div class="fgrp" style="margin:0;flex:1">
-        <label class="flbl">Margin %</label>
-        <input class="fi-full" id="sr-margin" type="number" value="50" placeholder="50" oninput="calcSpaceRental()">
+        <label class="flbl">Day</label>
+        <select class="fsel-full" id="rq-day" onchange="rqCalc()">
+          <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+          <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+        </select>
       </div>
       <div class="fgrp" style="margin:0;flex:1">
-        <label class="flbl">Peak Markup %</label>
-        <input class="fi-full" id="sr-peak-markup" type="number" value="25" placeholder="25" oninput="calcSpaceRental()">
+        <label class="flbl">Start Time</label>
+        <select class="fsel-full" id="rq-time" onchange="rqCalc()">
+          <option value="7:00">7:00 AM</option><option value="7:30">7:30 AM</option>
+          <option value="8:00">8:00 AM</option><option value="8:30">8:30 AM</option>
+          <option value="9:00" selected>9:00 AM</option><option value="9:30">9:30 AM</option>
+          <option value="10:00">10:00 AM</option><option value="10:30">10:30 AM</option>
+          <option value="11:00">11:00 AM</option><option value="11:30">11:30 AM</option>
+          <option value="12:00">12:00 PM</option><option value="12:30">12:30 PM</option>
+          <option value="13:00">1:00 PM</option><option value="13:30">1:30 PM</option>
+          <option value="14:00">2:00 PM</option><option value="14:30">2:30 PM</option>
+          <option value="15:00">3:00 PM</option><option value="15:30">3:30 PM</option>
+          <option value="16:00">4:00 PM</option><option value="16:30">4:30 PM</option>
+          <option value="17:00">5:00 PM</option><option value="17:30">5:30 PM</option>
+          <option value="18:00">6:00 PM</option><option value="18:30">6:30 PM</option>
+          <option value="19:00">7:00 PM</option><option value="19:30">7:30 PM</option>
+          <option value="20:00">8:00 PM</option><option value="20:30">8:30 PM</option>
+          <option value="21:00">9:00 PM</option>
+        </select>
       </div>
     </div>
-  </div>
+    <div id="rq-peak-badge" style="font-family:var(--fm);font-size:11px;font-weight:700;color:var(--g1);margin-bottom:14px;letter-spacing:.5px">OFF-PEAK</div>
 
-  <div class="card" style="margin-bottom:12px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px">Market Comps</div>
+    <!-- STEP 4: RECURRING -->
+    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:8px">4. How Often?</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px" id="rq-recur-btns">
+      <button class="chip active" onclick="rqSetRecur('once',this)">One-Time</button>
+      <button class="chip" onclick="rqSetRecur('weekly',this)">Weekly</button>
+      <button class="chip" onclick="rqSetRecur('season',this)">Full Season</button>
     </div>
-    <div style="font-family:var(--fm);font-size:11px;color:var(--g1);margin-bottom:12px">What are competitors charging? Used to benchmark your rates.</div>
-    <div id="sr-comps-list"></div>
-    <button class="add-ev-btn" onclick="addSRComp()" style="margin-top:8px;width:100%">+ ADD COMPETITOR</button>
-  </div>
-
-  <div id="sr-results" style="display:none">
-    <div class="sec-lbl">Calculated Rates</div>
-    <div id="sr-rate-cards"></div>
-
-    <div class="sec-lbl" style="margin-top:16px">Revenue Projections</div>
-    <div class="card">
-      <div id="sr-projections"></div>
+    <div id="rq-weeks-row" style="display:none;margin-bottom:14px">
+      <div class="fgrp" style="margin:0">
+        <label class="flbl">Number of Weeks</label>
+        <input class="fi-full" id="rq-weeks" type="number" value="8" min="1" max="52" oninput="rqCalc()" style="max-width:120px">
+      </div>
     </div>
 
-    <div class="sec-lbl" style="margin-top:16px">Opportunity Cost Check</div>
-    <div class="card">
-      <div id="sr-opp-cost"></div>
+    <!-- STEP 5: ADD-ONS -->
+    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:8px">5. Add-Ons</div>
+    <div style="margin-bottom:14px">
+      <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--white)">
+        <input type="checkbox" id="rq-hittrax" onchange="rqCalc()" style="width:18px;height:18px;accent-color:#5BA8CC"> HitTrax <span id="rq-ht-price" style="color:var(--g1);font-family:var(--fm);font-size:12px">$25/session</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--white)">
+        <input type="checkbox" id="rq-probatter" onchange="rqCalc()" style="width:18px;height:18px;accent-color:#5BA8CC"> ProBatter <span id="rq-pb-price" style="color:var(--g1);font-family:var(--fm);font-size:12px">$75/session</span>
+      </label>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+        <input type="checkbox" id="rq-balls" onchange="rqCalc()" style="width:18px;height:18px;accent-color:#5BA8CC">
+        <span style="font-family:var(--fb);font-size:14px;color:var(--white)">Balls</span>
+        <span id="rq-bl-price" style="color:var(--g1);font-family:var(--fm);font-size:12px">$10/bucket</span>
+        <span style="margin-left:auto;display:flex;align-items:center;gap:6px">
+          <button class="btn-ghost" style="padding:4px 10px;font-size:14px" onclick="rqAdjustBalls(-1)">−</button>
+          <span id="rq-ball-qty" style="font-family:var(--fc);font-size:16px;font-weight:700;color:var(--white);min-width:20px;text-align:center">1</span>
+          <button class="btn-ghost" style="padding:4px 10px;font-size:14px" onclick="rqAdjustBalls(1)">+</button>
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- QUOTE TOTAL -->
+  <div class="card" style="margin-bottom:12px;border:1px solid rgba(91,168,204,0.20)">
+    <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:12px">Quote Summary</div>
+    <div id="rq-summary" style="font-family:var(--fb);font-size:14px;color:var(--g0);line-height:1.8"></div>
+    <div style="border-top:1px solid rgba(91,168,204,0.12);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-family:var(--fc);font-size:16px;font-weight:800;letter-spacing:1px;color:var(--white)">TOTAL</span>
+      <span id="rq-total" style="font-family:var(--fc);font-size:28px;font-weight:800;color:var(--royal2)">$0</span>
+    </div>
+  </div>
+
+  <!-- EDIT RATES -->
+  <div style="margin-bottom:12px">
+    <button onclick="document.getElementById('rq-edit-rates').style.display=document.getElementById('rq-edit-rates').style.display==='none'?'block':'none'" style="background:none;border:none;color:var(--royal2);font-family:var(--fc);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;padding:8px 0">&#9662; EDIT RATES &amp; SETTINGS</button>
+    <div id="rq-edit-rates" style="display:none">
+      <div class="card" style="margin-bottom:10px">
+        <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:10px">Space Rates</div>
+        <div id="rq-rate-editor"></div>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:10px">Add-On Prices</div>
+        <div class="frow" style="margin-bottom:6px">
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">HitTrax $/session</label><input class="fi-full" id="rq-cfg-hittrax" type="number" oninput="rqSaveConfig()"></div>
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">ProBatter $/session</label><input class="fi-full" id="rq-cfg-probatter" type="number" oninput="rqSaveConfig()"></div>
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Balls $/bucket</label><input class="fi-full" id="rq-cfg-balls" type="number" oninput="rqSaveConfig()"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <div style="font-family:var(--fc);font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:10px">Peak &amp; Discounts</div>
+        <div class="frow" style="margin-bottom:6px">
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Peak Markup %</label><input class="fi-full" id="rq-cfg-peak" type="number" oninput="rqSaveConfig()"></div>
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Peak Starts At (hr)</label><input class="fi-full" id="rq-cfg-peakafter" type="number" min="0" max="23" oninput="rqSaveConfig()"></div>
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Season Weeks</label><input class="fi-full" id="rq-cfg-season" type="number" oninput="rqSaveConfig()"></div>
+        </div>
+        <div class="frow">
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Short Discount (weeks)</label><input class="fi-full" id="rq-cfg-disc-short-wk" type="number" oninput="rqSaveConfig()"></div>
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Short Discount %</label><input class="fi-full" id="rq-cfg-disc-short-pct" type="number" oninput="rqSaveConfig()"></div>
+        </div>
+        <div class="frow" style="margin-top:6px">
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Long Discount (weeks)</label><input class="fi-full" id="rq-cfg-disc-long-wk" type="number" oninput="rqSaveConfig()"></div>
+          <div class="fgrp" style="margin:0;flex:1"><label class="flbl">Long Discount %</label><input class="fi-full" id="rq-cfg-disc-long-pct" type="number" oninput="rqSaveConfig()"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -3151,8 +3203,8 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   </div>
   <div class="card" style="margin-bottom:12px;padding:16px;display:flex;align-items:center;justify-content:space-between">
     <div>
-      <div style="font-family:var(--fb);font-size:15px;font-weight:700;color:var(--white)">Backup &amp; Restore</div>
-      <div style="font-family:var(--fm);font-size:12px;color:var(--g1)">Sync between devices, checkpoints, export/import</div>
+      <div style="font-family:var(--fb);font-size:15px;font-weight:700;color:var(--white)">Backup &amp; Sync</div>
+      <div style="font-family:var(--fm);font-size:12px;color:var(--g1)">Push/pull between devices, checkpoints, export</div>
     </div>
     <button onclick="openBackupModal()" class="btn-ghost" style="padding:8px 16px;font-size:12px">OPEN</button>
   </div>
@@ -3339,18 +3391,43 @@ button:active, .card:active, .titem:active, .chip:active, .bk-block:active, .mc-
   <div class="modal" style="max-height:90vh">
     <div class="modal-handle"></div>
     <div class="modal-title">
-      <span>Backup &amp; Restore</span>
+      <span>Backup &amp; Sync</span>
       <button class="modal-close" onclick="closeModal('backup-modal')">&#10005;</button>
     </div>
     <div style="padding:0 4px">
-      <div class="sec-lbl" style="margin:12px 0 8px;font-size:13px">Direct Sync</div>
+      <div class="sec-lbl" style="margin:12px 0 8px;font-size:13px">Cloud Sync</div>
+      <div id="supa-connected" style="display:none">
+        <div style="font-family:var(--fm);font-size:12px;color:var(--g1);margin-bottom:10px">Connected to Supabase. Changes sync automatically.</div>
+        <div style="display:flex;gap:8px;margin-bottom:6px">
+          <button class="btn-blue" style="flex:1;padding:12px" onclick="supaPush()">PUSH NOW</button>
+          <button class="btn-ghost" style="flex:1;padding:12px" onclick="supaPull()">PULL NOW</button>
+        </div>
+        <div id="supa-status" style="font-family:var(--fm);font-size:11px;color:var(--g1);margin-bottom:10px"></div>
+        <button onclick="document.getElementById('supa-setup').style.display='block'" style="background:none;border:none;color:var(--g1);font-family:var(--fm);font-size:11px;cursor:pointer;text-decoration:underline;margin-bottom:12px">Edit connection</button>
+      </div>
+      <div id="supa-setup">
+        <div style="font-family:var(--fm);font-size:12px;color:var(--g1);margin-bottom:10px;line-height:1.5">
+          Enter your Supabase project URL and anon key to enable automatic sync between all devices.
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Supabase URL</label>
+          <input class="fi-full" id="supa-url" placeholder="https://xxxxx.supabase.co">
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Anon Key</label>
+          <input class="fi-full" id="supa-key" placeholder="eyJhbGciOiJIUzI1NiIs...">
+        </div>
+        <button class="btn-blue full" style="margin-bottom:12px" onclick="saveSupaConfig()">CONNECT &amp; SYNC</button>
+      </div>
+
+      <div class="sec-lbl" style="margin:0 0 8px;font-size:13px">Manual Sync (no Supabase)</div>
       <div style="display:flex;gap:8px;margin-bottom:6px">
-        <button class="btn-blue" style="flex:1;padding:10px" onclick="generateSyncCode()">COPY SYNC CODE</button>
-        <button class="btn-ghost" style="flex:1;padding:10px" onclick="showPasteSync()">PASTE SYNC CODE</button>
+        <button class="btn-ghost" style="flex:1;padding:10px;font-size:12px" onclick="generateSyncCode()">COPY CODE</button>
+        <button class="btn-ghost" style="flex:1;padding:10px;font-size:12px" onclick="showPasteSync()">PASTE CODE</button>
       </div>
       <div id="sync-paste-area" style="display:none;margin-bottom:12px">
-        <textarea class="fta" id="sync-paste-input" placeholder="Paste sync code from other device..." rows="3" style="font-size:11px;word-break:break-all"></textarea>
-        <button class="btn-blue full" style="margin-top:6px" onclick="applySyncCode()">APPLY SYNC</button>
+        <textarea class="fta" id="sync-paste-input" placeholder="Paste the code you received from your other device..." rows="3" style="font-size:11px;word-break:break-all"></textarea>
+        <button class="btn-blue full" style="margin-top:6px" onclick="applySyncCode()">PULL &amp; OVERWRITE THIS DEVICE</button>
       </div>
       <div id="sync-status" style="font-family:var(--fm);font-size:12px;color:var(--g1);margin-bottom:14px;display:none"></div>
 
@@ -3801,6 +3878,7 @@ function loadState() {
       if(!S.homeHidden) S.homeHidden=[];
       if(!S.clearedTasks) S.clearedTasks=[];
       if(!S.meetings) S.meetings=[];
+      if(!S.quoteConfig) S.quoteConfig=null;
     } else {
       S = {
         tasks: JSON.parse(JSON.stringify(WORKBOOK_TASKS)),
@@ -3846,6 +3924,8 @@ function saveState() {
       toast('Storage nearly full — consider removing large files','err');
     }
     localStorage.setItem(SK, serialized);
+    // Auto-push to Supabase if connected
+    if(_supaUrl && _supaKey) supaPush();
   } catch(e) {
     if(e.name === 'QuotaExceededError') {
       toast('Storage full — remove files to free space','err');
@@ -4744,9 +4824,6 @@ function renderPricing(){
   pt.style.color=peakOn?'var(--white)':'var(--g0)';
   pt.style.borderColor=peakOn?'var(--royal2)':'rgba(255,255,255,0.1)';
   document.getElementById('peak-cfg').style.display=peakOn?'block':'none';
-
-  // Load space rental calculator saved data
-  loadSRInputs();
 }
 RENDERS.pricing = renderPricing;
 
@@ -4812,339 +4889,242 @@ function calcDiscount(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// SPACE RENTAL CALCULATOR
+// RENTAL QUOTE BUILDER
 // ═══════════════════════════════════════════════════════════
 
-function getSR() {
-  if (!S.spaceRental) S.spaceRental = { overhead:{rent:0,util:0,ins:0,other:0}, hours:{perDay:14,daysWk:7,blocked:0,utilPct:65}, margin:50, peakMarkup:25, spaces:[], comps:[] };
-  return S.spaceRental;
+const RQ_DEFAULTS = {
+  rates: {
+    'half-cage':  { label:'Half Cage',    '30':30,  '60':50,  '90':75,  '120':95  },
+    'full-cage':  { label:'Full Cage',    '30':40,  '60':75,  '90':110, '120':140 },
+    'half-turf':  { label:'Half Turf',    '30':55,  '60':100, '90':145, '120':185 },
+    'full-turf':  { label:'Full Turf',    '30':95,  '60':175, '90':255, '120':330 },
+    'outside-cage':{ label:'Outside Cage','30':30,  '60':50,  '90':70,  '120':90  },
+  },
+  addons: { hittrax:25, probatter:75, balls:10 },
+  peakMarkup: 15,
+  peakAfter: 16,
+  seasonWeeks: 16,
+  discounts: { short:{ weeks:8, pct:5 }, long:{ weeks:12, pct:10 } }
+};
+
+function getRQ() {
+  if(!S.quoteConfig) S.quoteConfig = JSON.parse(JSON.stringify(RQ_DEFAULTS));
+  // Merge any missing defaults
+  const qc = S.quoteConfig;
+  if(!qc.rates) qc.rates = JSON.parse(JSON.stringify(RQ_DEFAULTS.rates));
+  if(!qc.addons) qc.addons = {...RQ_DEFAULTS.addons};
+  if(qc.peakMarkup==null) qc.peakMarkup = RQ_DEFAULTS.peakMarkup;
+  if(qc.peakAfter==null) qc.peakAfter = RQ_DEFAULTS.peakAfter;
+  if(qc.seasonWeeks==null) qc.seasonWeeks = RQ_DEFAULTS.seasonWeeks;
+  if(!qc.discounts) qc.discounts = JSON.parse(JSON.stringify(RQ_DEFAULTS.discounts));
+  return qc;
 }
 
-function escSR(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+let _rqSpace = 'half-cage';
+let _rqDur = 60;
+let _rqQty = 1;
+let _rqRecur = 'once';
+let _rqBallQty = 1;
 
-function addSRSpace() {
-  const sr = getSR();
-  sr.spaces.push({ id:'sp-'+Date.now(), name:'', type:'cage', sqft:0, programRevPerHr:0 });
-  saveState(); renderSRSpaces(); calcSpaceRental();
+function rqSetSpace(space, btn) {
+  _rqSpace = space;
+  document.querySelectorAll('#rq-space-btns .chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  rqCalc();
+}
+function rqSetDur(dur, btn) {
+  _rqDur = dur;
+  document.querySelectorAll('#rq-dur-btns .chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  rqCalc();
+}
+function rqSetRecur(recur, btn) {
+  _rqRecur = recur;
+  document.querySelectorAll('#rq-recur-btns .chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('rq-weeks-row').style.display = recur==='weekly' ? 'block' : 'none';
+  rqCalc();
+}
+function rqAdjustQty(d) {
+  _rqQty = Math.max(1, Math.min(14, _rqQty + d));
+  document.getElementById('rq-qty').textContent = _rqQty;
+  rqCalc();
+}
+function rqAdjustBalls(d) {
+  _rqBallQty = Math.max(1, Math.min(20, _rqBallQty + d));
+  document.getElementById('rq-ball-qty').textContent = _rqBallQty;
+  rqCalc();
 }
 
-function removeSRSpace(i) {
-  const sr = getSR();
-  sr.spaces.splice(i, 1);
-  saveState(); renderSRSpaces(); calcSpaceRental();
+function rqIsPeak() {
+  const qc = getRQ();
+  const day = document.getElementById('rq-day').value;
+  const timeVal = document.getElementById('rq-time').value;
+  const hr = parseInt(timeVal.split(':')[0]);
+  if(['Saturday','Sunday'].includes(day)) return true;
+  if(hr >= (qc.peakAfter||16)) return true;
+  return false;
 }
 
-function updateSRSpace(i, field, val) {
-  const sr = getSR();
-  if (!sr.spaces[i]) return;
-  if (field === 'name' || field === 'type') sr.spaces[i][field] = val;
-  else sr.spaces[i][field] = parseFloat(val) || 0;
-  saveState(); calcSpaceRental();
-}
+function rqCalc() {
+  const qc = getRQ();
+  const rate = qc.rates[_rqSpace];
+  if(!rate) return;
 
-function renderSRSpaces() {
-  const sr = getSR();
-  const el = document.getElementById('sr-spaces-list');
-  if (!el) return;
-  el.innerHTML = sr.spaces.map((sp, i) => `
-    <div class="sr-space-card">
-      <div class="sr-space-hdr">
-        <span class="sr-space-name">${escSR(sp.name) || 'Space ' + (i+1)}</span>
-        <button class="sr-del-btn" onclick="removeSRSpace(${i})" title="Remove">&#10005;</button>
-      </div>
-      <div class="frow" style="margin-bottom:8px">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Name</label>
-          <input class="fi-full" value="${escSR(sp.name)}" placeholder="e.g. Cage 1" onchange="updateSRSpace(${i},'name',this.value)">
-        </div>
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Type</label>
-          <select class="fsel-full" onchange="updateSRSpace(${i},'type',this.value)">
-            ${['cage','half-cage','turf','field','mound','gym','full-facility','other'].map(t => `<option value="${t}"${sp.type===t?' selected':''}>${t.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-      <div class="frow">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Sq Ft</label>
-          <input class="fi-full" type="number" value="${sp.sqft||''}" placeholder="0" onchange="updateSRSpace(${i},'sqft',this.value)">
-        </div>
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Your Program $/hr</label>
-          <input class="fi-full" type="number" value="${sp.programRevPerHr||''}" placeholder="0" onchange="updateSRSpace(${i},'programRevPerHr',this.value)">
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function addSRComp() {
-  const sr = getSR();
-  sr.comps.push({ id:'comp-'+Date.now(), name:'', type:'cage', rate:0, notes:'', amenities:'' });
-  saveState(); renderSRComps();
-}
-
-function removeSRComp(i) {
-  const sr = getSR();
-  sr.comps.splice(i, 1);
-  saveState(); renderSRComps(); calcSpaceRental();
-}
-
-function updateSRComp(i, field, val) {
-  const sr = getSR();
-  if (!sr.comps[i]) return;
-  if (field === 'name' || field === 'type' || field === 'notes' || field === 'amenities') sr.comps[i][field] = val;
-  else sr.comps[i][field] = parseFloat(val) || 0;
-  saveState(); calcSpaceRental();
-}
-
-function toggleCompAdv(i) {
-  const el = document.getElementById('comp-adv-' + i);
-  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-function renderSRComps() {
-  const sr = getSR();
-  const el = document.getElementById('sr-comps-list');
-  if (!el) return;
-  el.innerHTML = sr.comps.map((c, i) => `
-    <div class="sr-space-card">
-      <div class="sr-space-hdr">
-        <span class="sr-space-name">${escSR(c.name) || 'Competitor ' + (i+1)}</span>
-        <button class="sr-del-btn" onclick="removeSRComp(${i})" title="Remove">&#10005;</button>
-      </div>
-      <div class="frow" style="margin-bottom:8px">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Facility Name</label>
-          <input class="fi-full" value="${escSR(c.name)}" placeholder="e.g. XYZ Baseball" onchange="updateSRComp(${i},'name',this.value)">
-        </div>
-        <div class="fgrp" style="margin:0;flex:0 0 90px">
-          <label class="flbl">Rate / hr</label>
-          <input class="fi-full" type="number" value="${c.rate||''}" placeholder="0" onchange="updateSRComp(${i},'rate',this.value)">
-        </div>
-      </div>
-      <div class="frow" style="margin-bottom:6px">
-        <div class="fgrp" style="margin:0;flex:1">
-          <label class="flbl">Space Type</label>
-          <select class="fsel-full" onchange="updateSRComp(${i},'type',this.value)">
-            ${['cage','half-cage','turf','field','mound','gym','full-facility','other'].map(t => `<option value="${t}"${c.type===t?' selected':''}>${t.replace(/-/g,' ').replace(/\b\w/g,x=>x.toUpperCase())}</option>`).join('')}
-          </select>
-        </div>
-        <div class="fgrp" style="margin:0;flex:0 0 80px;display:flex;align-items:flex-end">
-          <button class="btn-blue" style="padding:5px 10px;font-size:11px;width:100%" onclick="toggleCompAdv(${i})">Advanced</button>
-        </div>
-      </div>
-      <div id="comp-adv-${i}" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06)">
-        <div class="fgrp" style="margin:0;margin-bottom:8px">
-          <label class="flbl">Amenities Included</label>
-          <input class="fi-full" value="${escSR(c.amenities)}" placeholder="e.g. Balls included, HitTrax, coaching" onchange="updateSRComp(${i},'amenities',this.value)">
-        </div>
-        <div class="fgrp" style="margin:0">
-          <label class="flbl">Notes</label>
-          <input class="fi-full" value="${escSR(c.notes)}" placeholder="e.g. Old facility, limited hours" onchange="updateSRComp(${i},'notes',this.value)">
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function roundTo5(n) { return Math.round(n / 5) * 5; }
-
-function calcSpaceRental(skipSave) {
-  const sr = getSR();
-
-  // Read inputs and sync to state
-  const rent = parseFloat(document.getElementById('sr-rent')?.value) || 0;
-  const util = parseFloat(document.getElementById('sr-util')?.value) || 0;
-  const ins = parseFloat(document.getElementById('sr-ins')?.value) || 0;
-  const other = parseFloat(document.getElementById('sr-other')?.value) || 0;
-  sr.overhead = { rent, util, ins, other };
-
-  const hrsDay = parseFloat(document.getElementById('sr-hrs-day')?.value) || 14;
-  const daysWk = parseFloat(document.getElementById('sr-days-wk')?.value) || 7;
-  const blocked = parseFloat(document.getElementById('sr-blocked')?.value) || 0;
-  const utilPct = parseFloat(document.getElementById('sr-util-pct')?.value) || 65;
-  sr.hours = { perDay: hrsDay, daysWk, blocked, utilPct };
-
-  const marginRaw = parseFloat(document.getElementById('sr-margin')?.value);
-  sr.margin = Math.min(99, Math.max(0, isNaN(marginRaw) ? 50 : marginRaw));
-  const peakRaw = parseFloat(document.getElementById('sr-peak-markup')?.value);
-  sr.peakMarkup = isNaN(peakRaw) ? 25 : Math.max(0, peakRaw);
-
-  if (!skipSave) saveState();
-
-  // Calculations
-  const totalOverhead = rent + util + ins + other;
-  const totalWkHrs = hrsDay * daysWk;
-  const rentableHrs = Math.max(0, totalWkHrs - blocked);
-  const bookedHrs = Math.round(rentableHrs * (utilPct / 100));
-  const monthlyHrs = bookedHrs * 4.33; // avg weeks/month
-  const numSpaces = Math.max(1, sr.spaces.length);
-  const totalSqFt = sr.spaces.reduce((s, sp) => s + (sp.sqft || 0), 0);
-
-  // Update summary displays
-  const oe = document.getElementById('sr-total-overhead');
-  if (oe) oe.textContent = '$' + totalOverhead.toLocaleString();
-  const twh = document.getElementById('sr-total-wk-hrs');
-  if (twh) twh.textContent = totalWkHrs;
-  const rh = document.getElementById('sr-rentable-hrs');
-  if (rh) rh.textContent = rentableHrs;
-  const bh = document.getElementById('sr-booked-hrs');
-  if (bh) bh.textContent = bookedHrs;
-
-  // Need spaces to show results
-  const resultsEl = document.getElementById('sr-results');
-  if (!resultsEl) return;
-  if (sr.spaces.length === 0 || totalOverhead === 0) {
-    resultsEl.style.display = 'none';
-    return;
+  const peak = rqIsPeak();
+  const badge = document.getElementById('rq-peak-badge');
+  if(badge) {
+    badge.textContent = peak ? 'PEAK HOURS' : 'OFF-PEAK';
+    badge.style.color = peak ? 'var(--amber)' : 'var(--g1)';
   }
-  resultsEl.style.display = 'block';
 
-  // Cost allocation per space (by sq ft proportion, or equal split)
-  const rateCards = sr.spaces.map((sp, si) => {
-    const proportion = totalSqFt > 0 ? (sp.sqft || 0) / totalSqFt : 1 / numSpaces;
-    const spaceMonthlyCost = totalOverhead * proportion;
-    const spaceMonthlyHrs = monthlyHrs; // each space has same hours
-    const costPerHr = spaceMonthlyHrs > 0 ? spaceMonthlyCost / spaceMonthlyHrs : 0;
-    const suggestedRate = roundTo5(costPerHr / (1 - sr.margin / 100));
-    const peakRate = roundTo5(suggestedRate * (1 + sr.peakMarkup / 100));
-    const breakEven = roundTo5(costPerHr);
+  // Base rate per session
+  let perSession = rate[String(_rqDur)] || rate['60'];
+  if(peak) perSession = Math.round(perSession * (1 + (qc.peakMarkup||15)/100));
 
-    // Market comp for this space type
-    const typeComps = sr.comps.filter(c => c.type === sp.type && c.rate > 0);
-    const compLow = typeComps.length > 0 ? Math.min(...typeComps.map(c => c.rate)) : null;
-    const compHigh = typeComps.length > 0 ? Math.max(...typeComps.map(c => c.rate)) : null;
-    let marketPosition = '';
-    if (compLow !== null) {
-      if (suggestedRate < compLow) marketPosition = 'below';
-      else if (suggestedRate > compHigh) marketPosition = 'above';
-      else marketPosition = 'within';
-    }
+  // Quantity
+  const perSessionTotal = perSession * _rqQty;
 
-    return { sp, proportion, spaceMonthlyCost, costPerHr, suggestedRate, peakRate, breakEven, compLow, compHigh, marketPosition, typeComps };
-  });
+  // Sessions count
+  let sessions = 1;
+  let recurLabel = 'One-time';
+  if(_rqRecur === 'weekly') {
+    sessions = parseInt(document.getElementById('rq-weeks').value) || 8;
+    recurLabel = sessions + ' weeks';
+  } else if(_rqRecur === 'season') {
+    sessions = qc.seasonWeeks||16;
+    recurLabel = 'Full season (' + sessions + ' weeks)';
+  }
 
-  // Render rate cards
-  document.getElementById('sr-rate-cards').innerHTML = rateCards.map(rc => {
-    let marketHtml = '';
-    if (rc.compLow !== null) {
-      const posColor = rc.marketPosition === 'below' ? 'var(--amber)' : rc.marketPosition === 'above' ? 'var(--royal2)' : 'var(--g0)';
-      const posLabel = rc.marketPosition === 'below' ? 'Below Market (room to increase)' : rc.marketPosition === 'above' ? 'Above Market (justify with value)' : 'Within Market Range';
-      const compNames = rc.typeComps.map(c => {
-        let label = escSR(c.name || 'Competitor') + ': $' + c.rate + '/hr';
-        if (c.amenities) label += ' (' + escSR(c.amenities) + ')';
-        return label;
-      }).join(' | ');
-      marketHtml = `
-        <div class="sr-rate-row">
-          <span class="sr-rate-lbl">Market Range</span>
-          <span class="sr-rate-val" style="color:var(--g0)">$${rc.compLow} - $${rc.compHigh}/hr</span>
-        </div>
-        <div class="sr-rate-row">
-          <span class="sr-rate-lbl">Your Position</span>
-          <span style="font-family:var(--fc);font-size:11px;font-weight:700;color:${posColor}">${posLabel}</span>
-        </div>
-        <div style="font-family:var(--fm);font-size:11px;color:var(--g1);padding:4px 0 0">${compNames}</div>`;
-    }
+  // Add-ons per session
+  let addonsPerSession = 0;
+  let addonLines = [];
+  if(document.getElementById('rq-hittrax').checked) {
+    addonsPerSession += qc.addons.hittrax;
+    addonLines.push('HitTrax: $' + qc.addons.hittrax);
+  }
+  if(document.getElementById('rq-probatter').checked) {
+    addonsPerSession += qc.addons.probatter;
+    addonLines.push('ProBatter: $' + qc.addons.probatter);
+  }
+  if(document.getElementById('rq-balls').checked) {
+    const ballCost = qc.addons.balls * _rqBallQty;
+    addonsPerSession += ballCost;
+    addonLines.push('Balls (' + _rqBallQty + '): $' + ballCost);
+  }
 
-    return `<div class="sr-rate-card">
-      <div class="sr-rate-name">${escSR(rc.sp.name) || 'Unnamed Space'} <span style="font-family:var(--fm);font-size:11px;color:var(--g1);font-weight:400">${rc.sp.type.replace(/-/g,' ')} | ${rc.sp.sqft || 0} sqft | ${Math.round(rc.proportion * 100)}% of overhead</span></div>
-      <div class="sr-rate-row">
-        <span class="sr-rate-lbl">Cost / Hour</span>
-        <span class="sr-rate-val break">$${rc.costPerHr.toFixed(2)}</span>
-      </div>
-      <div class="sr-rate-row">
-        <span class="sr-rate-lbl">Break Even</span>
-        <span class="sr-rate-val break">$${rc.breakEven}/hr</span>
-      </div>
-      <div class="sr-rate-row">
-        <span class="sr-rate-lbl">Suggested Rate (${sr.margin}% margin)</span>
-        <span class="sr-rate-val suggest">$${rc.suggestedRate}/hr</span>
-      </div>
-      <div class="sr-rate-row">
-        <span class="sr-rate-lbl">Peak Rate (+${sr.peakMarkup}%)</span>
-        <span class="sr-rate-val peak">$${rc.peakRate}/hr</span>
-      </div>
-      ${marketHtml}
-    </div>`;
-  }).join('');
+  const sessionTotal = perSessionTotal + addonsPerSession;
+  const grandTotal = sessionTotal * sessions;
 
-  // Revenue projections (all spaces combined)
-  const totalSuggestedRevWk = rateCards.reduce((s, rc) => s + rc.suggestedRate * bookedHrs, 0);
-  const totalPeakEstWk = rateCards.reduce((s, rc) => {
-    const peakHrs = Math.round(bookedHrs * 0.4); // assume 40% of booked hours are peak
-    const offPeakHrs = bookedHrs - peakHrs;
-    return s + (rc.peakRate * peakHrs) + (rc.suggestedRate * offPeakHrs);
-  }, 0);
-  const totalCostWk = totalOverhead / 4.33;
+  // Discount for commitment
+  let discount = 0;
+  let discountLabel = '';
+  const disc = qc.discounts||{};
+  if(disc.long && sessions >= disc.long.weeks) { discount = disc.long.pct/100; discountLabel = disc.long.pct+'% season discount'; }
+  else if(disc.short && sessions >= disc.short.weeks) { discount = disc.short.pct/100; discountLabel = disc.short.pct+'% multi-week discount'; }
 
-  document.getElementById('sr-projections').innerHTML = `
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Weekly Revenue (all at base rate)</span>
-      <span class="sr-proj-val">$${Math.round(totalSuggestedRevWk).toLocaleString()}</span>
-    </div>
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Weekly Revenue (with peak pricing)</span>
-      <span class="sr-proj-val">$${Math.round(totalPeakEstWk).toLocaleString()}</span>
-    </div>
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Monthly Revenue (base)</span>
-      <span class="sr-proj-val">$${Math.round(totalSuggestedRevWk * 4.33).toLocaleString()}</span>
-    </div>
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Monthly Overhead</span>
-      <span class="sr-proj-val" style="color:var(--g1)">$${totalOverhead.toLocaleString()}</span>
-    </div>
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Monthly Profit (base)</span>
-      <span class="sr-proj-val amber">$${Math.round(totalSuggestedRevWk * 4.33 - totalOverhead).toLocaleString()}</span>
-    </div>
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Annual Revenue (base)</span>
-      <span class="sr-proj-val">$${Math.round(totalSuggestedRevWk * 52).toLocaleString()}</span>
-    </div>
-    <div class="sr-proj-row">
-      <span class="sr-proj-lbl">Annual Profit (base)</span>
-      <span class="sr-proj-val amber">$${Math.round((totalSuggestedRevWk * 4.33 - totalOverhead) * 12).toLocaleString()}</span>
-    </div>`;
+  const discountAmt = Math.round(grandTotal * discount);
+  const finalTotal = grandTotal - discountAmt;
 
-  // Opportunity cost check
-  const oppRows = rateCards.filter(rc => rc.sp.programRevPerHr > 0).map(rc => {
-    const diff = rc.sp.programRevPerHr - rc.suggestedRate;
-    const color = diff > 0 ? 'var(--amber)' : 'var(--g0)';
-    const verdict = diff > 0
-      ? 'Your programs earn more. Rent only when you have open hours.'
-      : 'Rental rate matches or beats your program revenue. Good to rent.';
-    return `
-      <div class="sr-proj-row">
-        <span class="sr-proj-lbl">${escSR(rc.sp.name) || 'Space'}</span>
-        <span class="sr-proj-val" style="font-size:13px">Program: $${rc.sp.programRevPerHr}/hr vs Rental: $${rc.suggestedRate}/hr</span>
-      </div>
-      <div style="font-family:var(--fm);font-size:11px;color:${color};padding:0 0 8px">${verdict}</div>`;
-  });
+  // Duration label
+  const durLabels = {'30':'30 min','60':'1 hour','90':'1.5 hours','120':'2 hours'};
+  const durLabel = durLabels[String(_rqDur)] || _rqDur + ' min';
 
-  document.getElementById('sr-opp-cost').innerHTML = oppRows.length > 0
-    ? oppRows.join('')
-    : '<div style="font-family:var(--fm);font-size:11px;color:var(--g1);padding:8px 0">Add "Your Program $/hr" to spaces above to see opportunity cost analysis</div>';
+  // Build summary
+  let html = '';
+  html += `<div style="display:flex;justify-content:space-between"><span>${rate.label} × ${_rqQty}${peak?' (peak)':''}</span><span style="color:var(--white)">$${perSessionTotal}</span></div>`;
+  html += `<div style="display:flex;justify-content:space-between;color:var(--g1)"><span>${durLabel} per session</span></div>`;
+  if(addonLines.length) {
+    addonLines.forEach(l => {
+      html += `<div style="display:flex;justify-content:space-between"><span>${l}</span></div>`;
+    });
+  }
+  html += `<div style="display:flex;justify-content:space-between;margin-top:4px;padding-top:4px;border-top:1px solid rgba(91,168,204,0.08)"><span style="font-weight:700">Per session</span><span style="color:var(--white);font-weight:700">$${sessionTotal}</span></div>`;
+  html += `<div style="display:flex;justify-content:space-between"><span>${recurLabel}</span><span>× ${sessions}</span></div>`;
+  if(discount > 0) {
+    html += `<div style="display:flex;justify-content:space-between;color:var(--royal2)"><span>${discountLabel}</span><span>-$${discountAmt}</span></div>`;
+  }
+
+  document.getElementById('rq-summary').innerHTML = html;
+  document.getElementById('rq-total').textContent = '$' + finalTotal.toLocaleString();
 }
 
-function loadSRInputs() {
-  const sr = getSR();
-  const o = sr.overhead || {};
-  const h = sr.hours || {};
-  const setVal = (id, v) => { const el = document.getElementById(id); if (el && v != null) el.value = v; };
-  setVal('sr-rent', o.rent);
-  setVal('sr-util', o.util);
-  setVal('sr-ins', o.ins);
-  setVal('sr-other', o.other);
-  setVal('sr-hrs-day', h.perDay || 14);
-  setVal('sr-days-wk', h.daysWk || 7);
-  setVal('sr-blocked', h.blocked);
-  setVal('sr-util-pct', h.utilPct || 65);
-  setVal('sr-margin', sr.margin || 50);
-  setVal('sr-peak-markup', sr.peakMarkup || 25);
-  renderSRSpaces();
-  renderSRComps();
-  calcSpaceRental(true);
+// Init on pricing render
+const _origRenderPricing = RENDERS.pricing;
+RENDERS.pricing = function() {
+  if(_origRenderPricing) _origRenderPricing();
+  rqLoadConfig();
+  rqCalc();
+};
+
+function rqLoadConfig() {
+  const qc = getRQ();
+  // Render space rate editor
+  const editor = document.getElementById('rq-rate-editor');
+  if(editor) {
+    const durations = ['30','60','90','120'];
+    const durLabels = {'30':'30m','60':'1hr','90':'1.5hr','120':'2hr'};
+    editor.innerHTML = Object.entries(qc.rates).map(([key, r]) => {
+      return `<div style="margin-bottom:10px">
+        <div style="font-family:var(--fb);font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px">${r.label}</div>
+        <div style="display:flex;gap:6px">
+          ${durations.map(d => `<div style="flex:1"><label class="flbl">${durLabels[d]}</label><input class="fi-full" type="number" value="${r[d]||0}" oninput="rqUpdateRate('${key}','${d}',this.value)" style="text-align:center"></div>`).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  }
+  // Load add-on config
+  const setVal = (id,v) => { const el=document.getElementById(id); if(el) el.value=v; };
+  setVal('rq-cfg-hittrax', qc.addons.hittrax);
+  setVal('rq-cfg-probatter', qc.addons.probatter);
+  setVal('rq-cfg-balls', qc.addons.balls);
+  setVal('rq-cfg-peak', qc.peakMarkup);
+  setVal('rq-cfg-peakafter', qc.peakAfter);
+  setVal('rq-cfg-season', qc.seasonWeeks);
+  setVal('rq-cfg-disc-short-wk', qc.discounts.short.weeks);
+  setVal('rq-cfg-disc-short-pct', qc.discounts.short.pct);
+  setVal('rq-cfg-disc-long-wk', qc.discounts.long.weeks);
+  setVal('rq-cfg-disc-long-pct', qc.discounts.long.pct);
+  // Update add-on labels in the menu
+  const htLabel = document.getElementById('rq-ht-price');
+  if(htLabel) htLabel.textContent = '$'+qc.addons.hittrax+'/session';
+  const pbLabel = document.getElementById('rq-pb-price');
+  if(pbLabel) pbLabel.textContent = '$'+qc.addons.probatter+'/session';
+  const blLabel = document.getElementById('rq-bl-price');
+  if(blLabel) blLabel.textContent = '$'+qc.addons.balls+'/bucket';
+}
+
+function rqUpdateRate(spaceKey, durKey, val) {
+  const qc = getRQ();
+  if(qc.rates[spaceKey]) {
+    qc.rates[spaceKey][durKey] = parseInt(val)||0;
+    saveState();
+    rqCalc();
+  }
+}
+
+function rqSaveConfig() {
+  const qc = getRQ();
+  const getVal = (id) => parseInt(document.getElementById(id)?.value)||0;
+  qc.addons.hittrax = getVal('rq-cfg-hittrax');
+  qc.addons.probatter = getVal('rq-cfg-probatter');
+  qc.addons.balls = getVal('rq-cfg-balls');
+  qc.peakMarkup = getVal('rq-cfg-peak');
+  qc.peakAfter = getVal('rq-cfg-peakafter');
+  qc.seasonWeeks = getVal('rq-cfg-season');
+  qc.discounts.short.weeks = getVal('rq-cfg-disc-short-wk');
+  qc.discounts.short.pct = getVal('rq-cfg-disc-short-pct');
+  qc.discounts.long.weeks = getVal('rq-cfg-disc-long-wk');
+  qc.discounts.long.pct = getVal('rq-cfg-disc-long-pct');
+  saveState();
+  // Refresh price labels
+  const htLabel = document.getElementById('rq-ht-price');
+  if(htLabel) htLabel.textContent = '$'+qc.addons.hittrax+'/session';
+  const pbLabel = document.getElementById('rq-pb-price');
+  if(pbLabel) pbLabel.textContent = '$'+qc.addons.probatter+'/session';
+  const blLabel = document.getElementById('rq-bl-price');
+  if(blLabel) blLabel.textContent = '$'+qc.addons.balls+'/bucket';
+  rqCalc();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -5478,6 +5458,124 @@ function renderSettings() {
 RENDERS.settings = renderSettings;
 
 // ═══════════════════════════════════════════════════════════
+// SUPABASE CLOUD SYNC
+// ═══════════════════════════════════════════════════════════
+const SUPA_CFG_KEY = 'tucci_supa_config';
+let _supaUrl = '';
+let _supaKey = '';
+let _supaPushing = false;
+let _supaPushQueued = false;
+
+function loadSupaConfig() {
+  try {
+    const cfg = JSON.parse(localStorage.getItem(SUPA_CFG_KEY)||'null');
+    if(cfg && cfg.url && cfg.key) {
+      _supaUrl = cfg.url.replace(/\/$/,'');
+      _supaKey = cfg.key;
+      return true;
+    }
+  } catch(e){}
+  return false;
+}
+
+function saveSupaConfig() {
+  const url = document.getElementById('supa-url').value.trim();
+  const key = document.getElementById('supa-key').value.trim();
+  if(!url || !key) { toast('Enter both URL and key','err'); return; }
+  _supaUrl = url.replace(/\/$/,'');
+  _supaKey = key;
+  localStorage.setItem(SUPA_CFG_KEY, JSON.stringify({url:_supaUrl, key:_supaKey}));
+  toast('Connecting...');
+  updateSupaUI();
+  supaPush().then(()=>{
+    toast('Connected and synced');
+  }).catch(()=>{
+    toast('Connection failed — check URL and key','err');
+  });
+}
+
+function updateSupaUI() {
+  const connected = !!(_supaUrl && _supaKey);
+  const connEl = document.getElementById('supa-connected');
+  const setupEl = document.getElementById('supa-setup');
+  if(connEl) connEl.style.display = connected ? 'block' : 'none';
+  if(setupEl) setupEl.style.display = connected ? 'none' : 'block';
+  if(connected) {
+    document.getElementById('supa-url').value = _supaUrl;
+    document.getElementById('supa-key').value = _supaKey;
+  }
+}
+
+function supaHeaders() {
+  return {
+    'Content-Type':'application/json',
+    'apikey':_supaKey,
+    'Authorization':'Bearer '+_supaKey,
+    'Prefer':'return=representation'
+  };
+}
+
+async function supaPush() {
+  if(!_supaUrl || !_supaKey) return;
+  if(_supaPushing) { _supaPushQueued = true; return; }
+  _supaPushing = true;
+  try {
+    const payload = {
+      id: 'tucci_ops_state',
+      data: S,
+      updated_at: new Date().toISOString()
+    };
+    const res = await fetch(_supaUrl+'/rest/v1/tucci_sync', {
+      method:'POST',
+      headers:{...supaHeaders(), 'Prefer':'resolution=merge-duplicates,return=representation'},
+      body: JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const ss = document.getElementById('supa-status');
+    if(ss) ss.textContent = 'Last push: '+new Date().toLocaleTimeString();
+  } catch(e) {
+    console.error('Supa push error:', e);
+  } finally {
+    _supaPushing = false;
+    if(_supaPushQueued) {
+      _supaPushQueued = false;
+      setTimeout(()=>supaPush(), 500);
+    }
+  }
+}
+
+async function supaPull() {
+  if(!_supaUrl || !_supaKey) { toast('Not connected','err'); return; }
+  try {
+    const res = await fetch(_supaUrl+'/rest/v1/tucci_sync?id=eq.tucci_ops_state&select=data,updated_at', {
+      headers: supaHeaders()
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const rows = await res.json();
+    if(!rows.length) { toast('No data found in cloud — push first'); return; }
+    const remote = rows[0];
+    const remoteTime = new Date(remote.updated_at).getTime();
+    const localTime = S._savedAt || 0;
+    if(remoteTime > localTime) {
+      S = remote.data;
+      S._savedAt = remoteTime;
+      localStorage.setItem(SK, JSON.stringify(S));
+      if(RENDERS[S.currentTab||'home']) RENDERS[S.currentTab||'home']();
+      const ss = document.getElementById('supa-status');
+      if(ss) ss.textContent = 'Pulled newer data from cloud: '+new Date(remoteTime).toLocaleTimeString();
+      toast('Pulled latest from cloud');
+    } else {
+      const ss = document.getElementById('supa-status');
+      if(ss) ss.textContent = 'This device is already up to date.';
+      toast('Already up to date');
+    }
+  } catch(e) {
+    console.error('Supa pull error:', e);
+    toast('Pull failed — check connection','err');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
 // DIRECT SYNC (copy/paste between devices)
 // ═══════════════════════════════════════════════════════════
 function generateSyncCode() {
@@ -5489,8 +5587,8 @@ function generateSyncCode() {
       const ss = document.getElementById('sync-status');
       ss.style.display='block';
       ss.style.color='var(--green)';
-      ss.textContent='Sync code copied to clipboard (' + Math.round(code.length/1024) + 'KB). Paste it on your other device.';
-      toast('Sync code copied');
+      ss.textContent='Data copied to clipboard (' + Math.round(code.length/1024) + 'KB). Send it to yourself, then PULL on your other device.';
+      toast('Data copied — send to other device');
     }).catch(()=>{
       // Fallback: show in a textarea for manual copy
       const area = document.getElementById('sync-paste-area');
@@ -5499,7 +5597,7 @@ function generateSyncCode() {
       input.value = code;
       input.select();
       document.execCommand('copy');
-      toast('Code shown below. Long-press to copy.');
+      toast('Code shown below — long-press to copy, then send to yourself.');
     });
   } catch(e) {
     toast('Failed to generate sync code','err');
@@ -5532,16 +5630,16 @@ function applySyncCode() {
     if(!data.tasks && !data.bookings && !data.checklists) {
       toast('Invalid data format','err'); return;
     }
-    if(!confirm('Apply sync data? This will overwrite everything on this device.')) return;
+    if(!confirm('Pull data from other device? Everything on THIS device will be overwritten.')) return;
     S = data;
     saveState();
     const ss = document.getElementById('sync-status');
     ss.style.display='block';
     ss.style.color='var(--green)';
-    ss.textContent='Sync applied. All data updated from other device.';
+    ss.textContent='Pull complete. This device now matches your other device.';
     document.getElementById('sync-paste-area').style.display='none';
     if(RENDERS[S.currentTab||'home']) RENDERS[S.currentTab||'home']();
-    toast('Sync complete');
+    toast('Pull complete — devices synced');
   } catch(e) {
     toast('Failed to parse sync code','err');
   }
@@ -5561,6 +5659,7 @@ function saveCheckpoints(cps) {
 }
 
 function openBackupModal() {
+  updateSupaUI();
   renderCheckpointList();
   openModal('backup-modal');
 }
@@ -5748,6 +5847,7 @@ function saveMeeting() {
   if(!title) { toast('Enter a title','err'); return; }
   if(!date) { toast('Pick a date','err'); return; }
   if(!S.meetings) S.meetings=[];
+      if(!S.quoteConfig) S.quoteConfig=null;
   const obj = {
     id: _editMtgId || 'MTG'+Date.now(),
     title,
@@ -5804,12 +5904,12 @@ const FOLDERS = [
   {id:'staff',     name:'Staff Docs', icon:'👤', color:'#5BA8CC'},
   {id:'financial', name:'Financials', icon:'💰', color:'#F59E0B'},
   {id:'photos',    name:'Photos',     icon:'📸', color:'#5A6A82'},
-  {id:'marketing', name:'Marketing',  icon:'⭐', color:'#E8394A'},
+  {id:'marketing', name:'Marketing',  icon:'⭐', color:'#1A5F8A'},
   {id:'other',     name:'Other',      icon:'📁', color:'#5A6A82'},
 ];
 
 const FILE_EXT_COLOR = {
-  pdf:'#E8394A',doc:'#1B4FD8',docx:'#1B4FD8',
+  pdf:'#1A5F8A',doc:'#1B4FD8',docx:'#1B4FD8',
   xls:'#5BA8CC',xlsx:'#5BA8CC',png:'#5A6A82',
   jpg:'#5A6A82',jpeg:'#5A6A82',txt:'#5A6A82',
 };
@@ -6894,9 +6994,13 @@ function enterFromWelcome() {
     document.getElementById('staff-mgr-btn').style.display = session.role === 'admin' ? 'block' : 'none';
     applyRoleUI(session);
     loadState();
+    loadSupaConfig();
+    updateSupaUI();
     initHeader();
     if(RENDERS.home) RENDERS.home();
     if(S.currentTab && S.currentTab !== 'home') nav(S.currentTab);
+    // Auto-pull from cloud if connected
+    if(_supaUrl && _supaKey) supaPull();
   } else {
     showLogin();
   }
@@ -6928,9 +7032,12 @@ function hideLogin(user) {
   applyRoleUI(user);
   // Boot the app
   loadState();
+  loadSupaConfig();
+  updateSupaUI();
   initHeader();
   if(RENDERS.home) RENDERS.home();
   if(S.currentTab && S.currentTab !== 'home') nav(S.currentTab);
+  if(_supaUrl && _supaKey) supaPull();
 }
 
 function applyRoleUI(user) {
